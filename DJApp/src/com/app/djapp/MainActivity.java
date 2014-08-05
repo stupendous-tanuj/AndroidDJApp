@@ -24,12 +24,12 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.pheelicks.utils.TunnelPlayerWorkaround;
-import com.pheelicks.visualizer.VisualizerView;
-import com.pheelicks.visualizer.renderer.BarGraphRenderer;
-import com.pheelicks.visualizer.renderer.CircleBarRenderer;
-import com.pheelicks.visualizer.renderer.CircleRenderer;
-import com.pheelicks.visualizer.renderer.LineRenderer;
+import com.app.djapp.utils.TunnelPlayerWorkaround;
+import com.app.djapp.visualizer.VisualizerView;
+import com.app.djapp.visualizer.renderer.BarGraphRenderer;
+import com.app.djapp.visualizer.renderer.CircleBarRenderer;
+import com.app.djapp.visualizer.renderer.CircleRenderer;
+import com.app.djapp.visualizer.renderer.LineRenderer;
 
 public class MainActivity extends Activity implements OnClickListener {
 

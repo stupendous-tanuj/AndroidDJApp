@@ -5,7 +5,7 @@
  * http://creativecommons.org/licenses/MIT/
  */
 
-package com.pheelicks.utils;
+package com.app.djapp.utils;
 
 import java.io.IOException;
 

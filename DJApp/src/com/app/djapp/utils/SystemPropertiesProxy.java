@@ -9,7 +9,7 @@
  * from http://stackoverflow.com/questions/2641111/where-is-android-os-systemproperties
  */
 
-package com.pheelicks.utils;
+package com.app.djapp.utils;
 
 import java.lang.reflect.Method;
 

@@ -4,13 +4,13 @@
  * Licensed under the MIT license:
  * http://creativecommons.org/licenses/MIT/
  */
-package com.pheelicks.visualizer.renderer;
+package com.app.djapp.visualizer.renderer;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-import com.pheelicks.visualizer.AudioData;
-import com.pheelicks.visualizer.FFTData;
+import com.app.djapp.visualizer.AudioData;
+import com.app.djapp.visualizer.FFTData;
 
 abstract public class Renderer
 {

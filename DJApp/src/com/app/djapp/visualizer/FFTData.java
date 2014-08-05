@@ -4,7 +4,7 @@
  * Licensed under the MIT license:
  * http://creativecommons.org/licenses/MIT/
  */
-package com.pheelicks.visualizer;
+package com.app.djapp.visualizer;
 
 // Data class to explicitly indicate that these bytes are the FFT of audio data
 public class FFTData

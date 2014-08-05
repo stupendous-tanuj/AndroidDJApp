@@ -195,11 +195,11 @@
                     android:layout_weight="1"
                     android:background="#000" >
 
-                    <com.pheelicks.visualizer.VisualizerView
+                    <com.app.djapp.visualizer.VisualizerView
                         android:id="@+id/visualizerView"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" >
-                    </com.pheelicks.visualizer.VisualizerView>
+                    </com.app.djapp.visualizer.VisualizerView>
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>
@@ -349,11 +349,11 @@
                     android:layout_weight="1"
                     android:background="#000" >
 
-                    <com.pheelicks.visualizer.VisualizerView
+                    <com.app.djapp.visualizer.VisualizerView
                         android:id="@+id/visualizerView"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" >
-                    </com.pheelicks.visualizer.VisualizerView>
+                    </com.app.djapp.visualizer.VisualizerView>
                 </FrameLayout>
              
             </LinearLayout>
@@ -389,11 +389,11 @@
                     android:layout_weight="1"
                     android:background="#000" >
 
-                    <com.pheelicks.visualizer.VisualizerView
+                    <com.app.djapp.visualizer.VisualizerView
                         android:id="@+id/visualizerView"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" >
-                    </com.pheelicks.visualizer.VisualizerView>
+                    </com.app.djapp.visualizer.VisualizerView>
                 </FrameLayout>
            
             </LinearLayout>

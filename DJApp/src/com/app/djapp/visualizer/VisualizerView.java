@@ -4,7 +4,7 @@
  * Licensed under the MIT license:
  * http://creativecommons.org/licenses/MIT/
  */
-package com.pheelicks.visualizer;
+package com.app.djapp.visualizer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +25,7 @@ import android.media.audiofx.Visualizer.OnDataCaptureListener;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.pheelicks.visualizer.renderer.Renderer;
+import com.app.djapp.visualizer.renderer.Renderer;
 
 /**
  * A class that draws visualizations of data received from a
