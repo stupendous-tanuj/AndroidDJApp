@@ -85,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <Button
+                <ImageView
+                    android:id="@+id/iv_speaker_left"
                     android:layout_width="@dimen/dp_wt_speaker_left"
                     android:layout_height="@dimen/dp_ht_speaker_left"
                     android:layout_margin="5dp"
@@ -242,7 +243,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <Button
+                <ImageView
+                    android:id="@+id/iv_speaker_right"
                     android:layout_width="@dimen/dp_wt_speaker_left"
                     android:layout_height="@dimen/dp_ht_speaker_left"
                     android:layout_margin="5dp"
