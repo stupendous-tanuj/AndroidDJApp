@@ -81,7 +81,7 @@ public final class R {
         public static final int vertical_equlizer_bg=0x7f020027;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a001c;
+        public static final int action_settings=0x7f0a001f;
         public static final int bt_mainactivity_f_f1=0x7f0a000f;
         public static final int bt_mainactivity_f_f2=0x7f0a0010;
         public static final int bt_mainactivity_f_f3=0x7f0a0011;
@@ -97,27 +97,33 @@ public final class R {
         public static final int bt_mainactivity_load_mixer=0x7f0a0008;
         public static final int bt_mainactivity_loadfirst=0x7f0a0005;
         public static final int bt_mainactivity_loadsecond=0x7f0a000c;
-        public static final int bt_mainactivity_menu=0x7f0a001b;
         public static final int bt_mainactivity_mixer=0x7f0a0001;
         public static final int bt_mainactivity_record=0x7f0a0006;
         public static final int bt_mainactivity_second_load_pause=0x7f0a0009;
         public static final int bt_mainactivity_second_load_play=0x7f0a000a;
-        public static final int button1=0x7f0a0018;
-        public static final int button2=0x7f0a0019;
-        public static final int button3=0x7f0a001a;
+        public static final int button1=0x7f0a001b;
+        public static final int imageButton1=0x7f0a001d;
         public static final int iv_speaker_left=0x7f0a0004;
         public static final int iv_speaker_right=0x7f0a000b;
+        public static final int listView_bluetooth=0x7f0a0018;
+        public static final int listView_music=0x7f0a0019;
+        public static final int listView_other=0x7f0a001a;
+        public static final int pager=0x7f0a001c;
         public static final int slider_2=0x7f0a000d;
+        public static final int tv_tab_pager_custom_songname=0x7f0a001e;
         public static final int verticalSeekbar=0x7f0a000e;
         public static final int visualizerView=0x7f0a0007;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int gg=0x7f030001;
-        public static final int main_activity=0x7f030002;
-        public static final int menu_activity=0x7f030003;
-        public static final int second_activity_fx=0x7f030004;
-        public static final int thirtd_activity_mixer=0x7f030005;
+        public static final int fragment_bluetooth=0x7f030001;
+        public static final int fragment_music=0x7f030002;
+        public static final int fragment_others=0x7f030003;
+        public static final int menu_activity=0x7f030004;
+        public static final int second_activity_fx=0x7f030005;
+        public static final int tab_pager=0x7f030006;
+        public static final int tab_pager_custom=0x7f030007;
+        public static final int thirtd_activity_mixer=0x7f030008;
     }
     public static final class menu {
         public static final int main=0x7f090000;

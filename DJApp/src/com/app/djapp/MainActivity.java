@@ -1,12 +1,19 @@
 package com.app.djapp;
- 
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -21,7 +28,9 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.djapp.utils.TunnelPlayerWorkaround;
@@ -33,6 +42,10 @@ import com.app.djapp.visualizer.renderer.LineRenderer;
 
 public class MainActivity extends Activity implements OnClickListener {
 
+	
+	public static Boolean setLoad;
+	
+	public static Context ctx;
 	private Intent intent;
 	private Cursor cursor;
 	private static ArrayList<GSC> songs = null;
@@ -40,16 +53,23 @@ public class MainActivity extends Activity implements OnClickListener {
 	private MediaPlayer mPlayer;
 	private MediaPlayer mSilentPlayer; /* to avoid tunnel player issue */
 	private VisualizerView mVisualizerView;
-	private MediaPlayer mediaPlayer1, mediaPlayer2 , mediaPlayer3;
+	public static MediaPlayer mediaPlayer1, mediaPlayer2;
+	private MediaPlayer mediaPlayer3;
 	SoundManager snd;
-	int  explode, pickup;
-
+	int explode, pickup;
+	Bundle b1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		ctx = this;
 		initUI();
+
+		musicArrayList.clear();
+		bluetoothArrayList.clear();
+		othersArrayList.clear();
+
 		bindAllSongs();
 	}
 
@@ -58,33 +78,36 @@ public class MainActivity extends Activity implements OnClickListener {
 		findViewById(R.id.bt_mainactivity_mixer).setOnClickListener(this);
 		findViewById(R.id.bt_mainactivity_loadfirst).setOnClickListener(this);
 		findViewById(R.id.bt_mainactivity_loadsecond).setOnClickListener(this);
-		findViewById(R.id.bt_mainactivity_first_load_pause).setOnClickListener(this);
-		findViewById(R.id.bt_mainactivity_first_load_play).setOnClickListener(this);
-		findViewById(R.id.bt_mainactivity_second_load_pause).setOnClickListener(this);
-		findViewById(R.id.bt_mainactivity_second_load_play).setOnClickListener(this);
-		findViewById(R.id.bt_mainactivity_record).setOnClickListener(this);				
-		findViewById(R.id.bt_mainactivity_load_mixer).setOnClickListener(this);		
-		
-		findViewById(R.id.bt_mainactivity_f_f1).setOnClickListener(this);		
-		findViewById(R.id.bt_mainactivity_f_f2).setOnClickListener(this);		
-		findViewById(R.id.bt_mainactivity_f_f3).setOnClickListener(this);		
-		findViewById(R.id.bt_mainactivity_f_f4).setOnClickListener(this);		
-		findViewById(R.id.bt_mainactivity_f_f5).setOnClickListener(this);		
-		findViewById(R.id.bt_mainactivity_f_f6).setOnClickListener(this);		
-		findViewById(R.id.bt_mainactivity_f_f7).setOnClickListener(this);		
-		findViewById(R.id.bt_mainactivity_f_f8).setOnClickListener(this);		
-		findViewById(R.id.bt_mainactivity_f_f9).setOnClickListener(this);		
-		
-		
+		findViewById(R.id.bt_mainactivity_first_load_pause).setOnClickListener(
+				this);
+		findViewById(R.id.bt_mainactivity_first_load_play).setOnClickListener(
+				this);
+		findViewById(R.id.bt_mainactivity_second_load_pause)
+				.setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_second_load_play).setOnClickListener(
+				this);
+		findViewById(R.id.bt_mainactivity_record).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_load_mixer).setOnClickListener(this);
+
+		findViewById(R.id.bt_mainactivity_f_f1).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_f_f2).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_f_f3).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_f_f4).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_f_f5).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_f_f6).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_f_f7).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_f_f8).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_f_f9).setOnClickListener(this);
+
 		wheel1 = (ImageView) findViewById(R.id.iv_speaker_left);
 		wheel2 = (ImageView) findViewById(R.id.iv_speaker_right);
-		
-		 snd = new SoundManager(getApplicationContext());
-	        
-	        // Set volume rocker mode to media volume
-	        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-		   explode = snd.load(R.raw.explosion);
-	       pickup = snd.load(R.raw.pickup);
+
+		snd = new SoundManager(getApplicationContext());
+
+		// Set volume rocker mode to media volume
+		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+		explode = snd.load(R.raw.explosion);
+		pickup = snd.load(R.raw.pickup);
 
 	}
 
@@ -92,135 +115,160 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-		
+
 		Intent callIntent = new Intent(MainActivity.this, RecordService.class);
 		stopService(callIntent);
-		/*mediaPlayer1.stop();
-		mediaPlayer2.stop();*/
-		
+		/*
+		 * mediaPlayer1.stop(); mediaPlayer2.stop();
+		 */
+
 	}
 
 	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View viewID) {
 		switch (viewID.getId()) {
-		
+
 		case R.id.bt_mainactivity_f_f1:
-			  snd.play(explode);
+			snd.play(explode);
 			break;
 		case R.id.bt_mainactivity_f_f2:
-			  snd.play(pickup);
+			snd.play(pickup);
 			break;
-			
+
 		case R.id.bt_mainactivity_f_f3:
-			  snd.play(explode);
+			snd.play(explode);
 			break;
 		case R.id.bt_mainactivity_f_f4:
-			  snd.play(pickup);
+			snd.play(pickup);
 			break;
-			
+
 		case R.id.bt_mainactivity_f_f5:
-			  snd.play(explode);
+			snd.play(explode);
 			break;
 		case R.id.bt_mainactivity_f_f6:
-			  snd.play(pickup);
+			snd.play(pickup);
 			break;
-			
+
 		case R.id.bt_mainactivity_f_f7:
-			  snd.play(explode);
+			snd.play(explode);
 			break;
 		case R.id.bt_mainactivity_f_f8:
-			  snd.play(pickup);
+			snd.play(pickup);
 			break;
-			
-		case R.id.bt_mainactivity_f_f9:
-			  snd.play(explode);
-			break;
-		 
-			////////////////////
 
-			
+		case R.id.bt_mainactivity_f_f9:
+			snd.play(explode);
+			break;
+
+		// //////////////////
+
 		case R.id.bt_mainactivity_first_load_pause:
-			
-			if(mediaPlayer1!=null)
-			mediaPlayer1.pause();
+
+			if (mediaPlayer1 != null)
+				mediaPlayer1.pause();
 			wheelSet1.cancel();
 			break;
-			
+
 		case R.id.bt_mainactivity_first_load_play:
-			if(mediaPlayer1!=null)
-			mediaPlayer1.start();
+			if (mediaPlayer1 != null)
+				mediaPlayer1.start();
 			rotatedWheel1();
 			break;
-			
+
 		case R.id.bt_mainactivity_second_load_pause:
-			if(mediaPlayer2!=null)
-			mediaPlayer2.pause();
+			if (mediaPlayer2 != null)
+				mediaPlayer2.pause();
 			wheelSet2.cancel();
 			break;
-			
+
 		case R.id.bt_mainactivity_second_load_play:
-			if(mediaPlayer2!=null)
-			mediaPlayer2.start();
+			if (mediaPlayer2 != null)
+				mediaPlayer2.start();
 			rotatedWheel2();
 			break;
-			
+
 		case R.id.bt_mainactivity_fx:
 			intent = new Intent(MainActivity.this, SecondActivity_FX.class);
 			startActivity(intent);
 			break;
-			
+
 		case R.id.bt_mainactivity_mixer:
 			intent = new Intent(MainActivity.this, ThirtdActivity_MIXER.class);
 			startActivity(intent);
 			break;
 		case R.id.bt_mainactivity_loadfirst:
 			try {
+				/*
+				 * mediaPlayer1 = new MediaPlayer();
+				 * mediaPlayer1.setDataSource(path); mediaPlayer1.prepare();
+				 * mediaPlayer1.start(); rotatedWheel1();
+				 */
+
+				/*
+				 * Intent intent = new
+				 * Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER);
+				 * startActivity(intent); String d = intent.getData().getPath();
+				 */
+
+				 init();
+				 rotatedWheel1();
+				setLoad = false;
 				mediaPlayer1 = new MediaPlayer();
-				mediaPlayer1.setDataSource(path);
-				mediaPlayer1.prepare();
-				mediaPlayer1.start();
-				rotatedWheel1();
-				
-			/*	Intent intent = new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER);
-				startActivity(intent);
-				String d = intent.getData().getPath();*/
-				init();
-				
+				Intent i = new Intent(MainActivity.this, TabPagerActivity.class);
+				startActivity(i);
+
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 			break;
 		case R.id.bt_mainactivity_loadsecond:
 
-			try {
+			/*try {
 				mediaPlayer2 = new MediaPlayer();
+
+				mediaPlayer1 = new MediaPlayer();
+				
+
 				mediaPlayer2.setDataSource(path);
 				mediaPlayer2.prepare();
 				mediaPlayer2.start();
 				rotatedWheel2();
 			} catch (Exception e) {
 				// TODO: handle exception
-			}
+			}*/
+			setLoad = true;
+			mediaPlayer2 = new MediaPlayer();
+			Intent i = new Intent(MainActivity.this, TabPagerActivity.class);
+			 rotatedWheel2();
 
+		 
+			startActivity(i);
 			break;
 
 		case R.id.bt_mainactivity_record:
 
-			Toast.makeText(MainActivity.this, "Recorging audio path : /sdcard/AudioRecordingDj ", Toast.LENGTH_LONG).show();
-			
-			Intent callIntent = new Intent(MainActivity.this, RecordService.class);
+			Toast.makeText(MainActivity.this,
+					"Recorging audio path : /sdcard/AudioRecordingDj ",
+					Toast.LENGTH_LONG).show();
+
+			Intent callIntent = new Intent(MainActivity.this,
+					RecordService.class);
 			startService(callIntent);
+		
+			
 			break;
 
 		case R.id.bt_mainactivity_load_mixer:
 
+			if(mediaPlayer1 !=null )
 			mediaPlayer1.pause();
+			if(mediaPlayer2 !=null )
 			mediaPlayer2.pause();
 			callIntent = new Intent(MainActivity.this, RecordService.class);
 			stopService(callIntent);
-			
-			try {
+
+			/*try {
 				mediaPlayer3 = new MediaPlayer();
 				mediaPlayer3.setDataSource(path);
 				mediaPlayer3.prepare();
@@ -228,11 +276,16 @@ public class MainActivity extends Activity implements OnClickListener {
 				rotatedWheel2();
 			} catch (Exception e) {
 				// TODO: handle exception
-			}			
+			}*/
+						
+			Intent intent = new Intent();  
+			intent.setAction(android.content.Intent.ACTION_VIEW);  
+			File file = new File("/sdcard/AudioRecordingDj");  
+			intent.setDataAndType(Uri.fromFile(file), "*/*");  
+			startActivity(intent);
+			
 			break;
 
-
-		
 		default:
 			break;
 		}
@@ -293,16 +346,23 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	String path;
+	String ss1 = "", ss2 = "", ss3 = "";
+	public static ArrayList<String> musicArrayList = new ArrayList<String>();
+	public static ArrayList<String> bluetoothArrayList = new ArrayList<String>();
+	public static ArrayList<String> othersArrayList = new ArrayList<String>();
 
 	private void bindAllSongs() {
+
+		System.out.println("dddddddd dfsd ");
+
 		/** Making custom drawable */
+
 		String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 		final String[] projection = new String[] {
 				MediaStore.Audio.Media.DISPLAY_NAME,
-				MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DATA ,
-				MediaStore.Audio.Media.ALBUM		
-		};
-		final String sortOrder = MediaStore.Audio.AudioColumns.TITLE
+				MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DATA,
+				MediaStore.Audio.Media.ALBUM };
+		final String sortOrder = MediaStore.Audio.AudioColumns.ALBUM
 				+ " COLLATE LOCALIZED ASC";
 
 		try {
@@ -322,18 +382,21 @@ public class MainActivity extends Activity implements OnClickListener {
 					gsc.songData = cursor.getString(2);
 					gsc.songAlbum = cursor.getString(3);
 					songs.add(gsc);
-					
-					System.out.println("dddddddd  " + gsc.songAlbum );
-					
-				/*	System.out.println("dddddddd  " + gsc.songTitle + " , "
-							+ gsc.songArtist + " , " + gsc.songData);*/
-					
-					
+					path = gsc.songData;
+
+					if (gsc.songAlbum.equalsIgnoreCase("Music")) {
+						musicArrayList.add(gsc.songTitle + "~" + path);
+					} else if (gsc.songAlbum.equalsIgnoreCase("bluetooth")) {
+						bluetoothArrayList.add(gsc.songTitle + "~" + path);
+					} else {
+						othersArrayList.add(gsc.songTitle + "~" + path);
+					}
+
 					cursor.moveToNext();
 				}
 
-				path = gsc.songData;
-				 
+				System.out.println("ddddddddd " + musicArrayList + " , "
+						+ bluetoothArrayList + " , " + othersArrayList);
 			}
 		} catch (Exception ex) {
 
