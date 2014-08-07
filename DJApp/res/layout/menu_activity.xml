@@ -11,8 +11,8 @@
         android:gravity="center" >
 
         <ImageView
-            android:layout_width="@dimen/dp_wt_menu_logo"
-            android:layout_height="@dimen/dp_ht_menu_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:background="@drawable/image12" />
     </LinearLayout>
 

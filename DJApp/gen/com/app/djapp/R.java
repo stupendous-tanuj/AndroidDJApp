@@ -18,59 +18,83 @@ public final class R {
  hdpi 240 , per the Android Design guidelines. 
  xhdpi 320 , per the Android Design guidelines. 
  xxhdpi 480, per the Android Design guidelines. 
-
-         Customize dimensions originally defined in res/values/dimens.xml (such as
-         screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
-    
+ tablet 7 , per the Android Design guidelines. 
+ - 10 
          */
         public static final int activity_horizontal_margin=0x7f060000;
         public static final int activity_vertical_margin=0x7f060001;
+        public static final int dp_ht_6_seekbar=0x7f060020;
         public static final int dp_ht_image3=0x7f060009;
         public static final int dp_ht_ll_vrtcl_progressbar=0x7f06000b;
-        public static final int dp_ht_menu_logo=0x7f06000d;
+        public static final int dp_ht_main_vis=0x7f060015;
         public static final int dp_ht_scroll_btn=0x7f060007;
+        public static final int dp_ht_seekbar=0x7f06001a;
         public static final int dp_ht_speaker_left=0x7f060005;
+        public static final int dp_ht_vs_second=0x7f060019;
+        public static final int dp_margin_3=0x7f06000c;
+        public static final int dp_margin_buttom_6_slidder=0x7f060021;
+        public static final int dp_margin_seek_bar=0x7f060012;
+        public static final int dp_margin_top=0x7f060011;
+        public static final int dp_margin_top_3_btn=0x7f06001d;
+        public static final int dp_margin_top_load=0x7f060016;
+        public static final int dp_margin_top_two_slider=0x7f06001e;
+        public static final int dp_morgin_top_main=0x7f06001b;
+        public static final int dp_pad_size=0x7f06000e;
+        public static final int dp_padding_6_slider=0x7f06000f;
+        public static final int dp_scroll_margin=0x7f060010;
+        public static final int dp_speaker_margin=0x7f06000d;
+        public static final int dp_vis_ht=0x7f060013;
+        public static final int dp_vs_second_left=0x7f060017;
+        public static final int dp_vseekbar_margin_left=0x7f06001c;
         public static final int dp_wt_image3=0x7f060008;
-        public static final int dp_wt_menu_logo=0x7f06000c;
+        public static final int dp_wt_main_vis=0x7f060014;
+        /**  - new  
+ - new  
+ - new  
+ - new  
+ - new  
+         */
+        public static final int dp_wt_mainslidder=0x7f06001f;
         public static final int dp_wt_progress=0x7f06000a;
         public static final int dp_wt_scroll_btn=0x7f060006;
         public static final int dp_wt_speaker_left=0x7f060004;
+        public static final int dp_wt_vs_second=0x7f060018;
         public static final int ll_btn_height=0x7f060003;
         public static final int ll_btn_width=0x7f060002;
     }
     public static final class drawable {
         public static final int about=0x7f020000;
-        public static final int bg=0x7f020001;
-        public static final int bpm=0x7f020002;
-        public static final int btn=0x7f020003;
-        public static final int buy=0x7f020004;
-        public static final int equ_bg=0x7f020005;
-        public static final int fx=0x7f020006;
-        public static final int gue=0x7f020007;
-        public static final int ic_launcher=0x7f020008;
-        public static final int image1=0x7f020009;
-        public static final int image10=0x7f02000a;
-        public static final int image11=0x7f02000b;
-        public static final int image12=0x7f02000c;
-        public static final int image13=0x7f02000d;
-        public static final int image14=0x7f02000e;
-        public static final int image2=0x7f02000f;
-        public static final int image21=0x7f020010;
-        public static final int image3=0x7f020011;
-        public static final int image4=0x7f020012;
-        public static final int image5=0x7f020013;
-        public static final int image6=0x7f020014;
-        public static final int image7=0x7f020015;
-        public static final int image8=0x7f020016;
-        public static final int image9=0x7f020017;
-        public static final int like_us=0x7f020018;
-        public static final int load=0x7f020019;
-        public static final int load_mix=0x7f02001a;
-        public static final int menu=0x7f02001b;
-        public static final int mixer=0x7f02001c;
-        public static final int progress=0x7f02001d;
-        public static final int progress_bar_bg=0x7f02001e;
-        public static final int progress_blank=0x7f02001f;
+        public static final int audio_image1=0x7f020001;
+        public static final int audio_image2=0x7f020002;
+        public static final int bg=0x7f020003;
+        public static final int bpm=0x7f020004;
+        public static final int btn=0x7f020005;
+        public static final int buy=0x7f020006;
+        public static final int equ_bg=0x7f020007;
+        public static final int fx=0x7f020008;
+        public static final int gue=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
+        public static final int image1=0x7f02000b;
+        public static final int image10=0x7f02000c;
+        public static final int image11=0x7f02000d;
+        public static final int image12=0x7f02000e;
+        public static final int image13=0x7f02000f;
+        public static final int image14=0x7f020010;
+        public static final int image2=0x7f020011;
+        public static final int image21=0x7f020012;
+        public static final int image3=0x7f020013;
+        public static final int image4=0x7f020014;
+        public static final int image5=0x7f020015;
+        public static final int image6=0x7f020016;
+        public static final int image7=0x7f020017;
+        public static final int image8=0x7f020018;
+        public static final int image9=0x7f020019;
+        public static final int like_us=0x7f02001a;
+        public static final int load=0x7f02001b;
+        public static final int load_mix=0x7f02001c;
+        public static final int menu=0x7f02001d;
+        public static final int mixer=0x7f02001e;
+        public static final int progress=0x7f02001f;
         public static final int scroll_btn=0x7f020020;
         public static final int scroll_btn1=0x7f020021;
         public static final int speaker_left=0x7f020022;
@@ -81,38 +105,61 @@ public final class R {
         public static final int vertical_equlizer_bg=0x7f020027;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a001f;
-        public static final int bt_mainactivity_f_f1=0x7f0a000f;
-        public static final int bt_mainactivity_f_f2=0x7f0a0010;
-        public static final int bt_mainactivity_f_f3=0x7f0a0011;
-        public static final int bt_mainactivity_f_f4=0x7f0a0012;
-        public static final int bt_mainactivity_f_f5=0x7f0a0013;
-        public static final int bt_mainactivity_f_f6=0x7f0a0014;
-        public static final int bt_mainactivity_f_f7=0x7f0a0015;
-        public static final int bt_mainactivity_f_f8=0x7f0a0016;
-        public static final int bt_mainactivity_f_f9=0x7f0a0017;
+        public static final int action_settings=0x7f0a0036;
+        public static final int bt_mainactivity_b1=0x7f0a0016;
+        public static final int bt_mainactivity_b2=0x7f0a0017;
+        public static final int bt_mainactivity_b3=0x7f0a0018;
+        public static final int bt_mainactivity_b4=0x7f0a0019;
+        public static final int bt_mainactivity_b5=0x7f0a001a;
+        public static final int bt_mainactivity_b6=0x7f0a001b;
+        public static final int bt_mainactivity_bmp=0x7f0a0007;
+        public static final int bt_mainactivity_cue_left=0x7f0a0005;
+        public static final int bt_mainactivity_cue_right=0x7f0a000f;
+        public static final int bt_mainactivity_f_f1=0x7f0a001d;
+        public static final int bt_mainactivity_f_f2=0x7f0a001e;
+        public static final int bt_mainactivity_f_f3=0x7f0a001f;
+        public static final int bt_mainactivity_f_f4=0x7f0a0020;
+        public static final int bt_mainactivity_f_f5=0x7f0a0021;
+        public static final int bt_mainactivity_f_f6=0x7f0a0022;
+        public static final int bt_mainactivity_f_f7=0x7f0a0023;
+        public static final int bt_mainactivity_f_f8=0x7f0a0024;
+        public static final int bt_mainactivity_f_f9=0x7f0a0025;
         public static final int bt_mainactivity_first_load_pause=0x7f0a0002;
         public static final int bt_mainactivity_first_load_play=0x7f0a0003;
         public static final int bt_mainactivity_fx=0x7f0a0000;
-        public static final int bt_mainactivity_load_mixer=0x7f0a0008;
-        public static final int bt_mainactivity_loadfirst=0x7f0a0005;
-        public static final int bt_mainactivity_loadsecond=0x7f0a000c;
+        public static final int bt_mainactivity_load_mixer=0x7f0a000b;
+        public static final int bt_mainactivity_loadfirst=0x7f0a0006;
+        public static final int bt_mainactivity_loadsecond=0x7f0a0010;
         public static final int bt_mainactivity_mixer=0x7f0a0001;
-        public static final int bt_mainactivity_record=0x7f0a0006;
-        public static final int bt_mainactivity_second_load_pause=0x7f0a0009;
-        public static final int bt_mainactivity_second_load_play=0x7f0a000a;
-        public static final int button1=0x7f0a001b;
-        public static final int imageButton1=0x7f0a001d;
+        public static final int bt_mainactivity_record=0x7f0a0009;
+        public static final int bt_mainactivity_s_f1=0x7f0a0026;
+        public static final int bt_mainactivity_s_f2=0x7f0a0027;
+        public static final int bt_mainactivity_s_f3=0x7f0a0028;
+        public static final int bt_mainactivity_s_f4=0x7f0a0029;
+        public static final int bt_mainactivity_s_f5=0x7f0a002a;
+        public static final int bt_mainactivity_s_f6=0x7f0a002b;
+        public static final int bt_mainactivity_s_f7=0x7f0a002c;
+        public static final int bt_mainactivity_s_f8=0x7f0a002d;
+        public static final int bt_mainactivity_s_f9=0x7f0a002e;
+        public static final int bt_mainactivity_second_load_pause=0x7f0a000c;
+        public static final int bt_mainactivity_second_load_play=0x7f0a000d;
+        public static final int bt_mainactivity_sync=0x7f0a0008;
+        public static final int button1=0x7f0a0032;
+        public static final int iv_audio_image=0x7f0a0034;
         public static final int iv_speaker_left=0x7f0a0004;
-        public static final int iv_speaker_right=0x7f0a000b;
-        public static final int listView_bluetooth=0x7f0a0018;
-        public static final int listView_music=0x7f0a0019;
-        public static final int listView_other=0x7f0a001a;
-        public static final int pager=0x7f0a001c;
-        public static final int slider_2=0x7f0a000d;
-        public static final int tv_tab_pager_custom_songname=0x7f0a001e;
-        public static final int verticalSeekbar=0x7f0a000e;
-        public static final int visualizerView=0x7f0a0007;
+        public static final int iv_speaker_right=0x7f0a000e;
+        public static final int listView_bluetooth=0x7f0a002f;
+        public static final int listView_music=0x7f0a0030;
+        public static final int listView_other=0x7f0a0031;
+        public static final int pager=0x7f0a0033;
+        public static final int seekBar1=0x7f0a0015;
+        public static final int seekbar_second_first=0x7f0a0011;
+        public static final int seekbar_second_second=0x7f0a0013;
+        public static final int tv_tab_pager_custom_songname=0x7f0a0035;
+        public static final int vis_second_first=0x7f0a0012;
+        public static final int vis_second_second=0x7f0a0014;
+        public static final int visualizerView=0x7f0a000a;
+        public static final int vseekBar1=0x7f0a001c;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

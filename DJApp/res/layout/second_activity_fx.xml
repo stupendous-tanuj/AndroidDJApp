@@ -39,16 +39,12 @@
                 android:gravity="center"
                 android:orientation="vertical" >
 
-                <SeekBar
-                    android:id="@+id/slider_2"
-                    android:layout_width="@dimen/dp_wt_progress"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:max="95"
-                    android:progress="10"
-                    android:progressDrawable="@drawable/progress_blank"
-                    android:secondaryProgress="50"
-                    android:thumb="@drawable/scroll_btn1" />
+            <SeekBar
+                android:id="@+id/seekbar_second_first"
+                style="@android:style/Widget.Holo.SeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                  />
             </LinearLayout>
 
             <LinearLayout

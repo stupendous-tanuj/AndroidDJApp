@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.djapp.MainActivity;
@@ -63,33 +64,46 @@ public class ListViewAdapterClass extends BaseAdapter {
 		View rowView = inflater.inflate(R.layout.tab_pager_custom, null, true);
 		TextView songTitle = (TextView) rowView
 				.findViewById(R.id.tv_tab_pager_custom_songname);
+		ImageView iv_audio_image = (ImageView) rowView.findViewById(R.id.iv_audio_image);
+		
+		if(pos % 2 == 0)
+		{
+			iv_audio_image.setBackgroundResource(R.drawable.audio_image1);
+		}
+		else
+		{
+			iv_audio_image.setBackgroundResource(R.drawable.audio_image2);
+		}
+		
+		if (arrayListData.size() > 0) {
+			String dataTitle = arrayListData.get(pos);
+			d = Split.splitclass(dataTitle, "~");
 
-		String dataTitle = arrayListData.get(pos);
-		d = Split.splitclass(dataTitle, "~");
+			if (d.length >= 0)
+				songTitle.setText(d[0]);
+		}
 
-		if (d.length >= 0)
-			songTitle.setText(d[0]);
-
+		MainActivity.flagMoveSpeakerSelectAudio = false;
+		
 		songTitle.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
 				try {
-					
-					if(MainActivity.setLoad)
-					{
+
+					if (MainActivity.setLoad) {
 						MainActivity.mediaPlayer2.setDataSource(d[1]);
 						MainActivity.mediaPlayer2.prepare();
 						MainActivity.mediaPlayer2.start();
-					}
-					else
-					{
+					} else {
 						MainActivity.mediaPlayer1.setDataSource(d[1]);
 						MainActivity.mediaPlayer1.prepare();
 						MainActivity.mediaPlayer1.start();
 					}
-				
+					
+					MainActivity.flagMoveSpeakerSelectAudio = true;
+					
 				} catch (Exception e) {
 					// TODO: handle exception
 				}

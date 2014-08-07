@@ -3,16 +3,12 @@ package com.app.djapp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
+import android.R.bool;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -26,39 +22,41 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.app.dj.vis.LineRenderer;
+import com.app.dj.vis.VisualizerView;
 import com.app.djapp.utils.TunnelPlayerWorkaround;
-import com.app.djapp.visualizer.VisualizerView;
-import com.app.djapp.visualizer.renderer.BarGraphRenderer;
-import com.app.djapp.visualizer.renderer.CircleBarRenderer;
-import com.app.djapp.visualizer.renderer.CircleRenderer;
-import com.app.djapp.visualizer.renderer.LineRenderer;
 
 public class MainActivity extends Activity implements OnClickListener {
 
-	
 	public static Boolean setLoad;
-	
+
 	public static Context ctx;
 	private Intent intent;
 	private Cursor cursor;
 	private static ArrayList<GSC> songs = null;
-
+	private VisualizerView mVisualizerView, mVisSecondFirst, mVisSecondSecond;
 	private MediaPlayer mPlayer;
 	private MediaPlayer mSilentPlayer; /* to avoid tunnel player issue */
-	private VisualizerView mVisualizerView;
+
 	public static MediaPlayer mediaPlayer1, mediaPlayer2;
 	private MediaPlayer mediaPlayer3;
 	SoundManager snd;
 	int explode, pickup;
 	Bundle b1;
-	
+
+	SeekBar seekbar_second_first, seekbar_second_second;
+	private AudioManager audioManager;
+
+	ImageView iv_speaker_left, iv_speaker_right;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,8 +67,94 @@ public class MainActivity extends Activity implements OnClickListener {
 		musicArrayList.clear();
 		bluetoothArrayList.clear();
 		othersArrayList.clear();
-
+		rotatediv_speaker_left();
+		rotatediv_speaker_right();
 		bindAllSongs();
+
+		audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+		MAX_VOLUME = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		seekBarMethod();
+	}
+
+	 
+	private int MAX_VOLUME;
+
+	private boolean flagForSpeakerSpin, flagForSpeakerMoveLoad_First,
+			flagForSpeakerMoveLoad_Second;
+	public static boolean flagMoveSpeakerSelectAudio;
+
+	private void seekBarMethod() {
+		seekbar_second_first.setMax(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekbar_second_first.setProgress(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekbar_second_first
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						// TODO Auto-generated method stub
+						/*
+						 * audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
+						 * , progress, 0);
+						 */
+
+						System.out.println("ffffffffffffffff v2   " + progress);
+						float volume = (float) (1 - (Math.log(MAX_VOLUME
+								- progress) / Math.log(MAX_VOLUME)));
+
+						if (mediaPlayer1 != null)
+							mediaPlayer1.setVolume(volume, volume);
+					}
+				});
+
+		seekbar_second_second.setMax(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekbar_second_second.setProgress(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekbar_second_second
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						// TODO Auto-generated method stub
+						/*
+						 * audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
+						 * , progress, 0);
+						 */
+						float volume = (float) (1 - (Math.log(MAX_VOLUME
+								- progress) / Math.log(MAX_VOLUME)));
+
+						if (mediaPlayer2 != null)
+							mediaPlayer2.setVolume(volume, volume);
+					}
+				});
 	}
 
 	private void initUI() {
@@ -89,6 +173,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		findViewById(R.id.bt_mainactivity_record).setOnClickListener(this);
 		findViewById(R.id.bt_mainactivity_load_mixer).setOnClickListener(this);
 
+		// //////////////////////
 		findViewById(R.id.bt_mainactivity_f_f1).setOnClickListener(this);
 		findViewById(R.id.bt_mainactivity_f_f2).setOnClickListener(this);
 		findViewById(R.id.bt_mainactivity_f_f3).setOnClickListener(this);
@@ -99,13 +184,77 @@ public class MainActivity extends Activity implements OnClickListener {
 		findViewById(R.id.bt_mainactivity_f_f8).setOnClickListener(this);
 		findViewById(R.id.bt_mainactivity_f_f9).setOnClickListener(this);
 
-		wheel1 = (ImageView) findViewById(R.id.iv_speaker_left);
-		wheel2 = (ImageView) findViewById(R.id.iv_speaker_right);
+		// ///////////////////////////////
+
+		findViewById(R.id.bt_mainactivity_s_f1).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_s_f2).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_s_f3).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_s_f4).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_s_f5).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_s_f6).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_s_f7).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_s_f8).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_s_f9).setOnClickListener(this);
+
+		seekbar_second_first = (SeekBar) findViewById(R.id.seekbar_second_first);
+		seekbar_second_second = (SeekBar) findViewById(R.id.seekbar_second_second);
+
+		findViewById(R.id.bt_mainactivity_b1).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_b2).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_b3).setOnClickListener(this);
+
+		findViewById(R.id.bt_mainactivity_b4).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_b5).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_b6).setOnClickListener(this);
+
+		findViewById(R.id.bt_mainactivity_cue_left).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_cue_right).setOnClickListener(this);
+
+		findViewById(R.id.bt_mainactivity_bmp).setOnClickListener(this);
+		findViewById(R.id.bt_mainactivity_sync).setOnClickListener(this);
+
+		iv_speaker_left = (ImageView) findViewById(R.id.iv_speaker_left);
+		iv_speaker_right = (ImageView) findViewById(R.id.iv_speaker_right);
+
+		iv_speaker_left.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_MOVE:
+					if (flagForSpeakerSpin && flagForSpeakerMoveLoad_First)
+						snd.play(explode);
+					break;
+
+				default:
+					break;
+				}
+
+				return true;
+			}
+		});
+
+		iv_speaker_right.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_MOVE:
+					if (flagForSpeakerSpin && flagForSpeakerMoveLoad_Second)
+						snd.play(pickup);
+					break;
+
+				default:
+					break;
+				}
+
+				return true;
+			}
+		});
 
 		snd = new SoundManager(getApplicationContext());
-
-		// Set volume rocker mode to media volume
-		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 		explode = snd.load(R.raw.explosion);
 		pickup = snd.load(R.raw.pickup);
 
@@ -129,6 +278,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View viewID) {
 		switch (viewID.getId()) {
 
+		// ///////////////// first pad /////////////////
 		case R.id.bt_mainactivity_f_f1:
 			snd.play(explode);
 			break;
@@ -161,31 +311,103 @@ public class MainActivity extends Activity implements OnClickListener {
 			snd.play(explode);
 			break;
 
-		// //////////////////
+		// /////// second pad ///////////
+
+		case R.id.bt_mainactivity_s_f1:
+			snd.play(explode);
+			break;
+		case R.id.bt_mainactivity_s_f2:
+			snd.play(pickup);
+			break;
+
+		case R.id.bt_mainactivity_s_f3:
+			snd.play(explode);
+			break;
+		case R.id.bt_mainactivity_s_f4:
+			snd.play(pickup);
+			break;
+
+		case R.id.bt_mainactivity_s_f5:
+			snd.play(explode);
+			break;
+		case R.id.bt_mainactivity_s_f6:
+			snd.play(pickup);
+			break;
+
+		case R.id.bt_mainactivity_s_f7:
+			snd.play(explode);
+			break;
+		case R.id.bt_mainactivity_s_f8:
+			snd.play(pickup);
+			break;
+
+		case R.id.bt_mainactivity_s_f9:
+			snd.play(explode);
+			break;
+
+		// //////////////////////////// six btn ///////////////////////////////
+
+		case R.id.bt_mainactivity_b1:
+			snd.play(pickup);
+			break;
+
+		case R.id.bt_mainactivity_b2:
+			snd.play(explode);
+			break;
+		case R.id.bt_mainactivity_b3:
+			snd.play(pickup);
+			break;
+
+		case R.id.bt_mainactivity_b4:
+			snd.play(explode);
+			break;
+		case R.id.bt_mainactivity_b5:
+			snd.play(pickup);
+			break;
+
+		case R.id.bt_mainactivity_b6:
+			snd.play(explode);
+			break;
+
+		// ////////////////////////////
+
+		case R.id.bt_mainactivity_sync:
+			flagForSpeakerSpin = true;
+			break;
+
+		// /////////////////////////
 
 		case R.id.bt_mainactivity_first_load_pause:
 
 			if (mediaPlayer1 != null)
 				mediaPlayer1.pause();
+			flagForSpeakerMoveLoad_First = false;
 			wheelSet1.cancel();
 			break;
 
 		case R.id.bt_mainactivity_first_load_play:
 			if (mediaPlayer1 != null)
 				mediaPlayer1.start();
-			rotatedWheel1();
+			if (flagMoveSpeakerSelectAudio)
+				wheelSet1.start();
+			flagForSpeakerMoveLoad_First = true;
 			break;
 
 		case R.id.bt_mainactivity_second_load_pause:
 			if (mediaPlayer2 != null)
 				mediaPlayer2.pause();
+			flagForSpeakerMoveLoad_Second = false;
 			wheelSet2.cancel();
 			break;
 
 		case R.id.bt_mainactivity_second_load_play:
 			if (mediaPlayer2 != null)
 				mediaPlayer2.start();
-			rotatedWheel2();
+			if (flagMoveSpeakerSelectAudio)
+				wheelSet2.start();
+
+			flagForSpeakerMoveLoad_Second = true;
+
 			break;
 
 		case R.id.bt_mainactivity_fx:
@@ -202,7 +424,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				/*
 				 * mediaPlayer1 = new MediaPlayer();
 				 * mediaPlayer1.setDataSource(path); mediaPlayer1.prepare();
-				 * mediaPlayer1.start(); rotatedWheel1();
+				 * mediaPlayer1.start(); rotatediv_speaker_left();
 				 */
 
 				/*
@@ -211,12 +433,24 @@ public class MainActivity extends Activity implements OnClickListener {
 				 * startActivity(intent); String d = intent.getData().getPath();
 				 */
 
-				 init();
-				 rotatedWheel1();
+				// init();
+
+				flagForSpeakerMoveLoad_First = true;
+				if (mediaPlayer1 != null) {
+					mediaPlayer1.stop();
+					mediaPlayer1.release();
+
+					mediaPlayer1 = null;
+				}
 				setLoad = false;
 				mediaPlayer1 = new MediaPlayer();
 				Intent i = new Intent(MainActivity.this, TabPagerActivity.class);
 				startActivity(i);
+				if (flagMoveSpeakerSelectAudio)
+					wheelSet1.start();
+
+				initVisSecondFirst(mediaPlayer1);
+				// /initVisMain(mediaPlayer1);
 
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -224,26 +458,31 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.bt_mainactivity_loadsecond:
 
-			/*try {
-				mediaPlayer2 = new MediaPlayer();
+			/*
+			 * try { mediaPlayer2 = new MediaPlayer(); mediaPlayer1 = new
+			 * MediaPlayer(); mediaPlayer2.setDataSource(path);
+			 * mediaPlayer2.prepare(); mediaPlayer2.start();
+			 * rotatediv_speaker_right(); } catch (Exception e) { // TODO:
+			 * handle exception }
+			 */
 
-				mediaPlayer1 = new MediaPlayer();
-				
-
-				mediaPlayer2.setDataSource(path);
-				mediaPlayer2.prepare();
-				mediaPlayer2.start();
-				rotatedWheel2();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}*/
+			flagForSpeakerMoveLoad_Second = true;
 			setLoad = true;
+
+			if (mediaPlayer2 != null) {
+
+				mediaPlayer2.stop();
+				mediaPlayer2.release();
+				mediaPlayer2 = null;
+			}
+
 			mediaPlayer2 = new MediaPlayer();
 			Intent i = new Intent(MainActivity.this, TabPagerActivity.class);
-			 rotatedWheel2();
-
-		 
 			startActivity(i);
+			if (flagMoveSpeakerSelectAudio)
+				wheelSet2.start();
+			initVisSecondSecond(mediaPlayer2);
+
 			break;
 
 		case R.id.bt_mainactivity_record:
@@ -255,35 +494,38 @@ public class MainActivity extends Activity implements OnClickListener {
 			Intent callIntent = new Intent(MainActivity.this,
 					RecordService.class);
 			startService(callIntent);
-		
-			
+
 			break;
 
 		case R.id.bt_mainactivity_load_mixer:
 
-			if(mediaPlayer1 !=null )
-			mediaPlayer1.pause();
-			if(mediaPlayer2 !=null )
-			mediaPlayer2.pause();
+			flagForSpeakerSpin = false;
+
+			if (mediaPlayer1 != null)
+				mediaPlayer1.pause();
+			if (mediaPlayer2 != null)
+				mediaPlayer2.pause();
+
+			if (wheelSet2 != null)
+				wheelSet2.cancel();
+			if (wheelSet1 != null)
+				wheelSet1.cancel();
 			callIntent = new Intent(MainActivity.this, RecordService.class);
 			stopService(callIntent);
 
-			/*try {
-				mediaPlayer3 = new MediaPlayer();
-				mediaPlayer3.setDataSource(path);
-				mediaPlayer3.prepare();
-				mediaPlayer3.start();
-				rotatedWheel2();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}*/
-						
-			Intent intent = new Intent();  
-			intent.setAction(android.content.Intent.ACTION_VIEW);  
-			File file = new File("/sdcard/AudioRecordingDj");  
-			intent.setDataAndType(Uri.fromFile(file), "*/*");  
+			/*
+			 * try { mediaPlayer3 = new MediaPlayer();
+			 * mediaPlayer3.setDataSource(path); mediaPlayer3.prepare();
+			 * mediaPlayer3.start(); rotatediv_speaker_right(); } catch
+			 * (Exception e) { // TODO: handle exception }
+			 */
+
+			Intent intent = new Intent();
+			intent.setAction(android.content.Intent.ACTION_VIEW);
+			File file = new File("/sdcard/AudioRecordingDj");
+			intent.setDataAndType(Uri.fromFile(file), "audio/*");
 			startActivity(intent);
-			
+
 			break;
 
 		default:
@@ -299,28 +541,28 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	AnimatorSet wheelSet1, wheelSet2;
-	ImageView wheel1, wheel2;
 
 	@SuppressLint("NewApi")
-	public void rotatedWheel1() {
+	public void rotatediv_speaker_left() {
 		// load the wheel animation
+
 		wheelSet1 = (AnimatorSet) AnimatorInflater.loadAnimator(this,
 				R.animator.wheel_spin);
 
-		wheelSet1.setTarget(wheel1);
-		wheelSet1.start();
+		wheelSet1.setTarget(iv_speaker_left);
 
 	}
 
 	@SuppressLint("NewApi")
-	public void rotatedWheel2() {
+	public void rotatediv_speaker_right() {
+
 		wheelSet2 = (AnimatorSet) AnimatorInflater.loadAnimator(this,
 				R.animator.wheel_spin);
 		// set the view as target
 
-		wheelSet2.setTarget(wheel2);
+		wheelSet2.setTarget(iv_speaker_right);
+
 		// start the animation
-		wheelSet2.start();
 
 	}
 
@@ -342,6 +584,14 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onDestroy() {
 		cleanUp();
+		if (mediaPlayer1 != null) {
+			mediaPlayer1.release();
+			mediaPlayer1 = null;
+		}
+		if (mediaPlayer2 != null) {
+			mediaPlayer2.release();
+			mediaPlayer2 = null;
+		}
 		super.onDestroy();
 	}
 
@@ -416,15 +666,28 @@ public class MainActivity extends Activity implements OnClickListener {
 		String isChecked = "false";
 	}
 
-	private void init() {
-		mPlayer = MediaPlayer.create(this, R.raw.test);
-		mPlayer.setLooping(true);
-		mPlayer.start();
+	private void initVisSecondFirst(MediaPlayer secondFirstMediaPlayer) {
 
-		// We need to link the visualizer view to the media player so that
-		// it displays something
+		mVisualizerView = (VisualizerView) findViewById(R.id.vis_second_first);
+		mVisualizerView.link(secondFirstMediaPlayer);
+
+		// Start with just line renderer
+		addLineRenderer();
+	}
+
+	private void initVisSecondSecond(MediaPlayer secondSecondMediaPlayer) {
+
+		mVisualizerView = (VisualizerView) findViewById(R.id.vis_second_second);
+		mVisualizerView.link(secondSecondMediaPlayer);
+
+		// Start with just line renderer
+		addLineRenderer();
+	}
+
+	private void initVisMain(MediaPlayer mainMediaPlayer) {
+
 		mVisualizerView = (VisualizerView) findViewById(R.id.visualizerView);
-		mVisualizerView.link(mPlayer);
+		mVisualizerView.link(mainMediaPlayer);
 
 		// Start with just line renderer
 		addLineRenderer();
@@ -441,18 +704,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			mSilentPlayer.release();
 			mSilentPlayer = null;
 		}
+
 	}
 
-	// Workaround (for Galaxy S4)
-	//
-	// "Visualization does not work on the new Galaxy devices"
-	// https://github.com/felixpalmer/android-visualizer/issues/5
-	//
-	// NOTE:
-	// This code is not required for visualizing default "test.mp3" file,
-	// because tunnel player is used when duration is longer than 1 minute.
-	// (default "test.mp3" file: 8 seconds)
-	//
 	private void initTunnelPlayerWorkaround() {
 		// Read "tunnel.decode" system property to determine
 		// the workaround is needed
@@ -462,55 +716,19 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	// Methods for adding renderers to visualizer
-	private void addBarGraphRenderers() {
-		Paint paint = new Paint();
-		paint.setStrokeWidth(50f);
-		paint.setAntiAlias(true);
-		paint.setColor(Color.argb(200, 56, 138, 252));
-		BarGraphRenderer barGraphRendererBottom = new BarGraphRenderer(16,
-				paint, false);
-		mVisualizerView.addRenderer(barGraphRendererBottom);
-
-		Paint paint2 = new Paint();
-		paint2.setStrokeWidth(12f);
-		paint2.setAntiAlias(true);
-		paint2.setColor(Color.argb(200, 181, 111, 233));
-		BarGraphRenderer barGraphRendererTop = new BarGraphRenderer(4, paint2,
-				true);
-		mVisualizerView.addRenderer(barGraphRendererTop);
-	}
-
-	private void addCircleBarRenderer() {
-		Paint paint = new Paint();
-		paint.setStrokeWidth(8f);
-		paint.setAntiAlias(true);
-		paint.setXfermode(new PorterDuffXfermode(Mode.LIGHTEN));
-		paint.setColor(Color.argb(255, 222, 92, 143));
-		CircleBarRenderer circleBarRenderer = new CircleBarRenderer(paint, 32,
-				true);
-		mVisualizerView.addRenderer(circleBarRenderer);
-	}
-
-	private void addCircleRenderer() {
-		Paint paint = new Paint();
-		paint.setStrokeWidth(3f);
-		paint.setAntiAlias(true);
-		paint.setColor(Color.argb(255, 222, 92, 143));
-		CircleRenderer circleRenderer = new CircleRenderer(paint, true);
-		mVisualizerView.addRenderer(circleRenderer);
-	}
-
 	private void addLineRenderer() {
 		Paint linePaint = new Paint();
-		linePaint.setStrokeWidth(1f);
+		linePaint.setStrokeWidth(3f);
 		linePaint.setAntiAlias(true);
-		linePaint.setColor(Color.argb(88, 0, 128, 255));
-
+		// linePaint.setColor(Color.argb(88, 0, 128, 255));
+		linePaint.setColor(Color.BLUE);
 		Paint lineFlashPaint = new Paint();
-		lineFlashPaint.setStrokeWidth(5f);
+		lineFlashPaint.setStrokeWidth(3f);
 		lineFlashPaint.setAntiAlias(true);
-		lineFlashPaint.setColor(Color.argb(188, 255, 255, 255));
+		// lineFlashPaint.setColor(Color.argb(188, 255, 255, 255));
+
+		lineFlashPaint.setColor(Color.BLUE);
+
 		LineRenderer lineRenderer = new LineRenderer(linePaint, lineFlashPaint,
 				true);
 		mVisualizerView.addRenderer(lineRenderer);
@@ -528,18 +746,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	public void stopPressed(View view) {
 		mPlayer.stop();
-	}
-
-	public void barPressed(View view) {
-		addBarGraphRenderers();
-	}
-
-	public void circlePressed(View view) {
-		addCircleRenderer();
-	}
-
-	public void circleBarPressed(View view) {
-		addCircleBarRenderer();
 	}
 
 	public void linePressed(View view) {

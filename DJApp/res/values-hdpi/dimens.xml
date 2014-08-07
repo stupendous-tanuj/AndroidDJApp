@@ -3,15 +3,41 @@
     <!-- hdpi 240 , per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="ll_btn_width">38dp</dimen>
-    <dimen name="ll_btn_height">20dp</dimen>
+    <dimen name="ll_btn_width">33dp</dimen>
+    <dimen name="ll_btn_height">19dp</dimen>
     <dimen name="dp_wt_speaker_left">70dp</dimen>
     <dimen name="dp_ht_speaker_left">70dp</dimen>
     <dimen name="dp_wt_scroll_btn">20dp</dimen>
     <dimen name="dp_ht_scroll_btn">20dp</dimen>
     <dimen name="dp_wt_image3">32dp</dimen>
     <dimen name="dp_ht_image3">32dp</dimen>
-    <dimen name="dp_wt_progress">90dp</dimen>
-    <dimen  name="dp_ht_ll_vrtcl_progressbar">75dp</dimen>
+    <dimen name="dp_wt_progress">120dp</dimen>
+    <dimen name="dp_ht_ll_vrtcl_progressbar">85dp</dimen>
+    <dimen name="dp_margin_3">3dp</dimen>
+    <dimen name="dp_speaker_margin">10dp</dimen>
+    <dimen name="dp_pad_size">30dp</dimen>
+    <dimen name="dp_padding_6_slider">2dp</dimen>
+    <dimen name="dp_scroll_margin">10dp</dimen>
+    <dimen name="dp_margin_top">6dp</dimen>
+    <dimen name="dp_margin_seek_bar">20dp</dimen>
+    <dimen name="dp_vis_ht">20dp</dimen>
+    <dimen name="dp_wt_main_vis">70dp</dimen>
+    <dimen name="dp_ht_main_vis">45dp</dimen>
+    <dimen name="dp_margin_top_load">2dp</dimen>
+    <dimen name="dp_vs_second_left">20dp</dimen>
+    <dimen name="dp_wt_vs_second">95dp</dimen>
+    <dimen name="dp_ht_vs_second">20dp</dimen>
+    <dimen name="dp_ht_seekbar">17dp</dimen>
+    <dimen  name="dp_morgin_top_main">2dp</dimen>
+    <dimen  name="dp_vseekbar_margin_left">4dp</dimen>
+    <dimen  name="dp_margin_top_3_btn">2dp</dimen>
+    <dimen  name="dp_margin_top_two_slider">2dp</dimen>
+    <!-- - new  -->
+    <dimen  name="dp_wt_mainslidder">130dp</dimen>
+    <dimen  name="dp_ht_6_seekbar">60dp</dimen>
+    <dimen  name="dp_margin_buttom_6_slidder">10dp</dimen>
+    
+    
+    
     
 </resources>
