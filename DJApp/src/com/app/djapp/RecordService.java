@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class RecordService extends Service implements
 
 	private File makeOutputFile(SharedPreferences prefs) 
 	{
+	 
 		
 		File dir = new File(DEFAULT_STORAGE_LOCATION);
 		// test dir for existence and writeability
@@ -88,25 +90,13 @@ public class RecordService extends Service implements
 
 	 
 	public void onStart(Intent intent, int startId) {
-		 
-
+		
 		if (isRecording)
 			return;
- 
-		
-		
 		Context c = getApplicationContext();
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(c);
-
-		/*Boolean shouldRecord = prefs.getBoolean(Preferences.PREF_RECORD_CALLS,
-				false);
-		if (!shouldRecord) {
-			Log.i("CallRecord",
-					"RecordService::onStartCommand with PREF_RECORD_CALLS false, not recording");
-			// return START_STICKY;
-			return;
-		}*/
+ 
 		recording = makeOutputFile(prefs);
 		if (recording == null) {
 			recorder = null;
@@ -114,25 +104,13 @@ public class RecordService extends Service implements
 		}
 
 		try {
-			// These calls will throw exceptions unless you set the
-			// android.permission.RECORD_AUDIO permission for your app
-			
-			 System.out.println("ssssssssssss");
-			
-			
-		//	recorder.reset();
-			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-			//recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
-			recorder.setOutputFormat(audioformat);
-	 
-			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-			
 		 
+			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+	 
+			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+			 recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			recorder.setOutputFile(recording.getAbsolutePath());
 			 
-			// recorder.setMaxDuration(msDuration); //1000); // 1 seconds
-			// recorder.setMaxFileSize(bytesMax); //1024*1024); // 1KB
-
 			recorder.setOnInfoListener(this);
 			recorder.setOnErrorListener(this);
 
