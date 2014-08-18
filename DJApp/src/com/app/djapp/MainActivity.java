@@ -62,6 +62,15 @@ public class MainActivity extends Activity implements OnClickListener {
 		ctx = this;
 		initUI();
 
+		
+		System.out.println("ddddddddon create");
+	}
+
+	@Override
+	protected void onResume() {
+		
+		System.out.println("ddddddddon resume");
+		initTunnelPlayerWorkaround();
 		musicArrayList.clear();
 		bluetoothArrayList.clear();
 		othersArrayList.clear();
@@ -74,11 +83,80 @@ public class MainActivity extends Activity implements OnClickListener {
 		audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
 		MAX_VOLUME = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		seekBarMethod();
+		
+		
+		if(flagPause)
+		{
+			if (mediaPlayer1 != null) {
+				mediaPlayer1.start();
+				 
+			}
+			if (mediaPlayer2 != null) {
+				mediaPlayer2.start();
+				 
+			}
+		}
+		 
+		flagPause = true;
+	 
+		super.onResume();
 	}
 
-	private int MAX_VOLUME;
+	
+	boolean flagPause;
+	
+	@Override
+	protected void onPause() {
+		
+		cleanUp();
+		System.out.println("ddddddddon pause");
+		
+		if(flagPause)
+		{
+			if (mediaPlayer1 != null) {
+				mediaPlayer1.pause();
+				 
+			}
+			if (mediaPlayer2 != null) {
+				mediaPlayer2.pause();
+				 
+			}
+			
+		}
+		 
+		super.onPause();
+	}
 
-	private boolean flagForSpeakerSpin;
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		System.out.println("ddddddddon destroy");
+		cleanUp();
+		if (mediaPlayer1 != null) {
+			mediaPlayer1.release();
+			mediaPlayer1 = null;
+		}
+		if (mediaPlayer2 != null) {
+			mediaPlayer2.release();
+			mediaPlayer2 = null;
+		}
+	
+	}
+
+	private void cleanUp() {
+		if (mPlayer != null) {
+			mVisualizerView.release();
+			mPlayer.release();
+			mPlayer = null;
+		}
+
+		if (mSilentPlayer != null) {
+			mSilentPlayer.release();
+			mSilentPlayer = null;
+		}
+
+	}
+	private int MAX_VOLUME;
 
 	SeekBar seekbar_second_first, seekbar_second_second, seekbarmain_first;
 
@@ -112,7 +190,6 @@ public class MainActivity extends Activity implements OnClickListener {
 						 * , progress, 0);
 						 */
 
-						System.out.println("ffffffffffffffff v2   " + progress);
 						float volume = (float) (1 - (Math.log(MAX_VOLUME
 								- progress) / Math.log(MAX_VOLUME)));
 
@@ -152,7 +229,6 @@ public class MainActivity extends Activity implements OnClickListener {
 						 * , progress, 0);
 						 */
 
-						System.out.println("ffffffffffffffff v2   " + progress);
 						float volume = (float) (1 - (Math.log(MAX_VOLUME
 								- progress) / Math.log(MAX_VOLUME)));
 
@@ -321,8 +397,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_MOVE:
-					if (flagForSpeakerSpin)
-						snd.play(explode);
+
+					snd.play(explode);
 					break;
 
 				default:
@@ -340,8 +416,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_MOVE:
-					if (flagForSpeakerSpin)
-						snd.play(pickup);
+
+					snd.play(pickup);
 					break;
 
 				default:
@@ -387,13 +463,20 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private boolean flagForRecord;
 
+	long timeDiffrence1, timeDiffrence2, currentTime1, currentTime2;
+
 	@SuppressLint("NewApi")
-	
 	@Override
 	public void onClick(View viewID) {
 		switch (viewID.getId()) {
 
 		case R.id.bt_mainactivity_loadfirst:
+			
+			flagPause = false;
+			
+			System.out.println("ddddddddon loadfirst ");
+			currentTime1 = System.currentTimeMillis();
+			timeDiffrence2 = System.currentTimeMillis() - currentTime2;
 
 			flagForRecord = false;
 
@@ -441,6 +524,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 			break;
 		case R.id.bt_mainactivity_loadsecond:
+			
+			flagPause = false;
+			
+			System.out.println("ddddddddon loadsecond ");
+			currentTime2 = System.currentTimeMillis();
+			timeDiffrence1 = System.currentTimeMillis() - currentTime1;
 
 			setLoadInt = 1;
 			flagForRecord = false;
@@ -478,6 +567,24 @@ public class MainActivity extends Activity implements OnClickListener {
 					wheelSet2.cancel();
 				}
 			});
+
+			break;
+
+		case R.id.bt_mainactivity_sync:
+
+			if (currentTime1 < currentTime2) {
+				if (mediaPlayer1 != null) {
+					mediaPlayer1.seekTo((int) timeDiffrence1);
+				}
+
+			} else {
+
+				if (mediaPlayer2 != null) {
+					mediaPlayer2.seekTo((int) timeDiffrence2);
+				}
+			}
+
+			timeDiffrence1 = timeDiffrence2 = 0;
 
 			break;
 
@@ -602,10 +709,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// ////////////////////////////
 
-		case R.id.bt_mainactivity_sync:
-			flagForSpeakerSpin = true;
-			break;
-
 		// /////////////////////////
 
 		case R.id.bt_mainactivity_first_load_play:
@@ -711,7 +814,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			timerComp.resetTimer();
 			timerComp.stopTimer();
 			flagForRecord = false;
-			flagForSpeakerSpin = false;
 
 			if (mediaPlayer1 != null)
 				mediaPlayer1.pause();
@@ -724,14 +826,12 @@ public class MainActivity extends Activity implements OnClickListener {
 				wheelSet1.cancel();
 
 			if (mediaPlayerRecord != null) {
-
 				mediaPlayerRecord.stop();
 				mediaPlayerRecord.release();
 				mediaPlayerRecord = null;
 			}
 
 			mediaPlayerRecord = new MediaPlayer();
-
 			setLoadInt = 2;
 			Intent callIntent = new Intent(MainActivity.this,
 					RecordService.class);
@@ -780,43 +880,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	// //////////////////////
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		initTunnelPlayerWorkaround();
-
-	}
-
-	@Override
-	protected void onPause() {
-		cleanUp();
-
-		if (mediaPlayer1 !=null && mediaPlayer1.isPlaying()) {
-			mediaPlayer1.stop();
-			mediaPlayer1.release();
-		}
-		if (mediaPlayer2 != null && mediaPlayer2.isPlaying()) {
-			mediaPlayer2.stop();
-			mediaPlayer2.release();
-		}
-
-		super.onPause();
-	}
-
-	@Override
-	protected void onDestroy() {
-		cleanUp();
-		if (mediaPlayer1 != null) {
-			mediaPlayer1.release();
-			mediaPlayer1 = null;
-		}
-		if (mediaPlayer2 != null) {
-			mediaPlayer2.release();
-			mediaPlayer2 = null;
-		}
-		super.onDestroy();
-	}
 
 	String path;
 	String ss1 = "", ss2 = "", ss3 = "";
@@ -912,19 +975,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		addLineRenderer();
 	}
 
-	private void cleanUp() {
-		if (mPlayer != null) {
-			mVisualizerView.release();
-			mPlayer.release();
-			mPlayer = null;
-		}
-
-		if (mSilentPlayer != null) {
-			mSilentPlayer.release();
-			mSilentPlayer = null;
-		}
-
-	}
 
 	private void initTunnelPlayerWorkaround() {
 		// Read "tunnel.decode" system property to determine

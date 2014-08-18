@@ -26,7 +26,6 @@ public class TabPagerActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab_pager);
 
-		 
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
@@ -62,6 +61,7 @@ public class TabPagerActivity extends FragmentActivity implements
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
+		 
 	}
 
 	@Override

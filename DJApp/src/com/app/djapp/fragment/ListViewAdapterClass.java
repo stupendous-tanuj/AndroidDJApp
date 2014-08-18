@@ -92,18 +92,14 @@ public class ListViewAdapterClass extends BaseAdapter {
 			public void onClick(View v) {
 
 				try {
-
+ 
 					if (MainActivity.setLoadInt == 0) { // first load
 						MainActivity.mediaPlayer1.setDataSource(d[1]);
 						MainActivity.mediaPlayer1.prepare();
 						MainActivity.mediaPlayer1.start();
 						MainActivity.wheelSet1.start();
 						
-						
-						
- 					} else 	if (MainActivity.setLoadInt == 1) { // second load
-						
-						
+ 					} else 	if (MainActivity.setLoadInt == 1) { // second load												
 						MainActivity.mediaPlayer2.setDataSource(d[1]);
 						MainActivity.mediaPlayer2.prepare();
 						MainActivity.mediaPlayer2.start();
@@ -114,7 +110,6 @@ public class ListViewAdapterClass extends BaseAdapter {
 						MainActivity.mediaPlayerRecord.prepare();
 						MainActivity.mediaPlayerRecord.start();
 					}
-					
 					 
 				  
 				} catch (Exception e) {
