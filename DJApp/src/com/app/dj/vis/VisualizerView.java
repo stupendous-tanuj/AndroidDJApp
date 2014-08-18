@@ -62,10 +62,17 @@ public class VisualizerView extends View {
     mBytes = null;
     mFFTBytes = null;
 
-    mFlashPaint.setColor(Color.argb(122, 255, 255, 255));
+   /* mFlashPaint.setColor(Color.argb(122, 255, 255, 255));
     mFadePaint.setColor(Color.argb(238, 255, 255, 255)); // Adjust alpha to change how quickly the image fades
     mFadePaint.setXfermode(new PorterDuffXfermode(Mode.MULTIPLY));
-
+*/
+  
+    mFlashPaint.setColor(Color.argb(122, 255, 255, 255));
+    
+    mFadePaint.setColor(Color.argb(238, 255, 255, 255)); // Adjust alpha to change how quickly the image fades
+    
+    mFadePaint.setXfermode(new PorterDuffXfermode(Mode.MULTIPLY));
+    
     mRenderers = new HashSet<Renderer>();
   }
 
@@ -179,8 +186,13 @@ public class VisualizerView extends View {
   @Override
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
+    
+    // set background on vis in light dark blue
+    
+    canvas.drawColor(Color.parseColor("#3C4766"));
 
     // Create canvas once we're ready to draw
+    
     mRect.set(0, 0, getWidth(), getHeight());
 
     if(mCanvasBitmap == null)

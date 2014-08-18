@@ -50,6 +50,8 @@ public class LineRenderer extends Renderer
   @Override
   public void onRender(Canvas canvas, AudioData data, Rect rect)
   {
+	  
+	  
     if(mCycleColor)
     {
       cycleColor();
@@ -83,6 +85,7 @@ public class LineRenderer extends Renderer
       // Amplitude is nothing special, reduce the amplitude
       amplitude *= 0.99;
       canvas.drawLines(mPoints, mPaint);
+      
     }
   }
 

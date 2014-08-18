@@ -1,6 +1,14 @@
 <resources>
 
     <!-- xhdpi 320 , per the Android Design guidelines. -->
+    
+    <!--  size for text in sp  -->
+    <dimen name="sp_time">13sp</dimen>
+ 
+    <!--  dimen for margin, padding, width  and height in  dp  -->
+    
+ 
+    
    <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="ll_btn_width">43dp</dimen>
@@ -36,5 +44,11 @@
     <dimen  name="dp_wt_mainslidder">140dp</dimen>
     <dimen  name="dp_ht_6_seekbar">65dp</dimen>
     <dimen  name="dp_margin_buttom_6_slidder">5dp</dimen>
+ 
+    <!--  menu dp  -->
+    
+     <dimen  name="sp_menu_buttontext">18sp</dimen>
+    <dimen name="dp_wt_menu_logo">140dp</dimen>
+    <dimen  name="dp_ht_menu_button">75dp</dimen>
 
 </resources>

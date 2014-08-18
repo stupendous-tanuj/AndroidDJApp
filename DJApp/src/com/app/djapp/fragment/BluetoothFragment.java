@@ -16,12 +16,13 @@ public class BluetoothFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_bluetooth, container, false);
+		    View rootView = inflater.inflate(R.layout.fragment_bluetooth, container, false);
 		  
 			ListView musicListView = (ListView) rootView.findViewById(R.id.listView_bluetooth);
 			ListViewAdapterClass ad = new ListViewAdapterClass(MainActivity.ctx , MainActivity.bluetoothArrayList);
 		    musicListView.setAdapter(ad);
-		return rootView;
+	
+		    return rootView;
 	}
 
 }

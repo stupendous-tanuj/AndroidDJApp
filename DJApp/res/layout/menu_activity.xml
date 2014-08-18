@@ -11,56 +11,56 @@
         android:gravity="center" >
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/dp_wt_menu_logo"
+            android:layout_height="@dimen/dp_wt_menu_logo"
             android:background="@drawable/image12" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" 
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical" >
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_ht_menu_button"
             android:background="@drawable/image13"
             android:text="Mixing"
-             
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_menu_buttontext" />
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             android:text="Settings"
-             
+            android:layout_height="@dimen/dp_ht_menu_button"
+            android:background="@drawable/image13"
+            android:text="Settings"
             android:textColor="#ffffff"
-            android:background="@drawable/image13" />
+            android:textSize="@dimen/sp_menu_buttontext" />
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             android:text="My Set"
-             
+            android:layout_height="@dimen/dp_ht_menu_button"
+            android:background="@drawable/image13"
+            android:text="My Set"
             android:textColor="#ffffff"
-            android:background="@drawable/image13" />
+            android:textSize="@dimen/sp_menu_buttontext" />
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             android:text="Store"
-             
+            android:layout_height="@dimen/dp_ht_menu_button"
+            android:background="@drawable/image13"
+            android:text="Store"
             android:textColor="#ffffff"
-            android:background="@drawable/image13" />
+            android:textSize="@dimen/sp_menu_buttontext" />
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             android:text="About"
-             
+            android:layout_height="@dimen/dp_ht_menu_button"
+            android:background="@drawable/image13"
+            android:text="About"
             android:textColor="#ffffff"
-            android:background="@drawable/image13" />
+            android:textSize="@dimen/sp_menu_buttontext" />
     </LinearLayout>
 
 </LinearLayout>

@@ -59,10 +59,12 @@ public class TimerComp {
 					
 					if(sec % 2 == 0)
 					{
-						((Button)viewRecord).setBackgroundResource(R.drawable.stop_btn1);
+						((Button)viewRecord).setBackgroundResource(R.drawable.stop_btn);
+						
 					}
 					else {
-						((Button)viewRecord).setBackgroundResource(R.drawable.stop_btn);
+							((Button)viewRecord).setBackgroundResource(R.drawable.stop_btn1);
+						
 					}
 					
 				}
@@ -78,6 +80,7 @@ public class TimerComp {
 		stopTimer();
 		sec = 0;
 		setDisplay();
+	 		
 	}
 
 	public void startTimer() {

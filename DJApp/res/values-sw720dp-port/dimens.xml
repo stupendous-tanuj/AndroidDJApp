@@ -1,6 +1,14 @@
 <resources>
 
     <!-- - 10 -->
+    
+    <!--  size for text in sp  -->
+    <dimen name="sp_time">25sp</dimen>
+ 
+    <!--  dimen for margin, padding, width  and height in  dp  -->
+    
+ 
+    
  <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="ll_btn_width">80dp</dimen>
@@ -36,5 +44,9 @@
     <dimen  name="dp_wt_mainslidder">180dp</dimen>
     <dimen  name="dp_ht_6_seekbar">130dp</dimen>
     <dimen  name="dp_margin_buttom_6_slidder">30dp</dimen>
-
+  <!--  menu dp  -->
+      <dimen  name="sp_menu_buttontext">42sp</dimen>
+    
+    <dimen name="dp_wt_menu_logo">350dp</dimen>
+    <dimen  name="dp_ht_menu_button">160dp</dimen>
 </resources>

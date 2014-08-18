@@ -3,7 +3,9 @@ package com.app.djapp.fragment;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
+import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,7 @@ public class ListViewAdapterClass extends BaseAdapter {
 
 	Context ctx;
 	ArrayList<String> arrayListData;
-	MusicFragment musicFragment;
+	 
 	private LayoutInflater inflater;
 
 	public ListViewAdapterClass(Context ctx, ArrayList<String> arrayListData) {
@@ -83,8 +85,7 @@ public class ListViewAdapterClass extends BaseAdapter {
 				songTitle.setText(d[0]);
 		}
 
-		MainActivity.flagMoveSpeakerSelectAudio = false;
-		
+		 	
 		songTitle.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -96,12 +97,17 @@ public class ListViewAdapterClass extends BaseAdapter {
 						MainActivity.mediaPlayer1.setDataSource(d[1]);
 						MainActivity.mediaPlayer1.prepare();
 						MainActivity.mediaPlayer1.start();
+						MainActivity.wheelSet1.start();
+						
+						
+						
  					} else 	if (MainActivity.setLoadInt == 1) { // second load
 						
 						
 						MainActivity.mediaPlayer2.setDataSource(d[1]);
 						MainActivity.mediaPlayer2.prepare();
 						MainActivity.mediaPlayer2.start();
+						MainActivity.wheelSet2.start();
 					}
 					else 	if (MainActivity.setLoadInt == 2) { // record audio 
 						MainActivity.mediaPlayerRecord.setDataSource(d[1]);
@@ -109,8 +115,8 @@ public class ListViewAdapterClass extends BaseAdapter {
 						MainActivity.mediaPlayerRecord.start();
 					}
 					
-					MainActivity.flagMoveSpeakerSelectAudio = true;
-					
+					 
+				  
 				} catch (Exception e) {
 					// TODO: handle exception
 				}

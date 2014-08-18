@@ -1,6 +1,12 @@
 <resources>
 
     <!-- tablet 7 , per the Android Design guidelines. -->
+    
+    <!--  size for text in sp  -->
+    <dimen name="sp_time">19sp</dimen>
+ 
+    <!--  dimen for margin, padding, width  and height in  dp  -->
+       
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="ll_btn_width">80dp</dimen>
@@ -36,4 +42,10 @@
     <dimen  name="dp_wt_mainslidder">170dp</dimen>
     <dimen  name="dp_ht_6_seekbar">90dp</dimen>
     <dimen  name="dp_margin_buttom_6_slidder">5dp</dimen>
+    
+      <!--  menu dp  -->
+      <dimen  name="sp_menu_buttontext">34sp</dimen>
+    
+    <dimen name="dp_wt_menu_logo">255dp</dimen>
+    <dimen  name="dp_ht_menu_button">125dp</dimen>
 </resources>
