@@ -208,11 +208,11 @@
                 android:background="#000000"
                 android:orientation="vertical" >
 
-                <com.app.dj.vis.VisualizerView
+                <com.app.dj.vis.VisualizerViewMain
                     android:id="@+id/visualizerView"
                     android:layout_width="@dimen/dp_wt_main_vis"
                     android:layout_height="@dimen/dp_ht_main_vis" >
-                </com.app.dj.vis.VisualizerView>
+                </com.app.dj.vis.VisualizerViewMain>
             </LinearLayout>
         </LinearLayout>
 
@@ -365,11 +365,11 @@
                 android:layout_marginTop="@dimen/dp_margin_3"
                 android:background="#000000" >
 
-                <com.app.dj.vis.VisualizerView
+                <com.app.dj.vis.VisualizerViewMain
                     android:id="@+id/vis_second_first"
                     android:layout_width="@dimen/dp_wt_vs_second"
                     android:layout_height="@dimen/dp_ht_vs_second" >
-                </com.app.dj.vis.VisualizerView>
+                </com.app.dj.vis.VisualizerViewMain>
             </LinearLayout>
         </LinearLayout>
 
@@ -394,11 +394,11 @@
                 android:layout_marginRight="@dimen/dp_vs_second_left"
                 android:background="#000000" >
 
-                <com.app.dj.vis.VisualizerView
+                <com.app.dj.vis.VisualizerViewMain
                     android:id="@+id/vis_second_second"
                     android:layout_width="@dimen/dp_wt_vs_second"
                     android:layout_height="@dimen/dp_ht_vs_second" >
-                </com.app.dj.vis.VisualizerView>
+                </com.app.dj.vis.VisualizerViewMain>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

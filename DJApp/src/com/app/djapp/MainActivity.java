@@ -30,7 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.dj.vis.LineRenderer;
-import com.app.dj.vis.VisualizerView;
+import com.app.dj.vis.VisualizerViewMain;
 import com.app.djapp.utils.TimerComp;
 import com.app.djapp.utils.TunnelPlayerWorkaround;
 
@@ -42,7 +42,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Intent intent;
 	private Cursor cursor;
 	private static ArrayList<GSC> songs = null;
-	private VisualizerView mVisualizerView, mVisSecondFirst, mVisSecondSecond;
+    VisualizerViewMain mVisualizerView, mVisSecondFirst, mVisSecondSecond;
 	private MediaPlayer mPlayer;
 	private MediaPlayer mSilentPlayer; /* to avoid tunnel player issue */
 
@@ -61,15 +61,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_main);
 		ctx = this;
 		initUI();
-
-		
-		System.out.println("ddddddddon create");
-	}
-
-	@Override
-	protected void onResume() {
-		
-		System.out.println("ddddddddon resume");
 		initTunnelPlayerWorkaround();
 		musicArrayList.clear();
 		bluetoothArrayList.clear();
@@ -84,26 +75,37 @@ public class MainActivity extends Activity implements OnClickListener {
 		MAX_VOLUME = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		seekBarMethod();
 		
+		System.out.println("ddddddddon create");
+	}
+
+	@Override
+	protected void onResume() {
 		
+		System.out.println("ddddddddon resume");
 		if(flagPause)
 		{
+			/*if(mVisualizerView != null)
+				mVisualizerView.release();*/
+			
 			if (mediaPlayer1 != null) {
 				mediaPlayer1.start();
-				 
+				wheelSet1.start();				 
+				//initVisSecondFirst(mediaPlayer1);
 			}
 			if (mediaPlayer2 != null) {
 				mediaPlayer2.start();
-				 
+				 wheelSet2.start();
+				// initVisSecondSecond(mediaPlayer2);
 			}
 		}
-		 
+		
+		//seekBarMethod();
 		flagPause = true;
-	 
 		super.onResume();
 	}
 
 	
-	boolean flagPause;
+	public static boolean flagPause;
 	
 	@Override
 	protected void onPause() {
@@ -115,11 +117,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		{
 			if (mediaPlayer1 != null) {
 				mediaPlayer1.pause();
+				wheelSet1.cancel();
 				 
 			}
 			if (mediaPlayer2 != null) {
 				mediaPlayer2.pause();
-				 
+				wheelSet2.cancel();
 			}
 			
 		}
@@ -132,6 +135,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onDestroy();
 		System.out.println("ddddddddon destroy");
 		cleanUp();
+	
 		if (mediaPlayer1 != null) {
 			mediaPlayer1.release();
 			mediaPlayer1 = null;
@@ -140,7 +144,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			mediaPlayer2.release();
 			mediaPlayer2 = null;
 		}
-	
+		
+		if(mediaPlayerRecord != null)
+		{
+			mediaPlayerRecord.release();
+			mediaPlayerRecord = null;			
+		}		
 	}
 
 	private void cleanUp() {
@@ -776,11 +785,19 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 
 		case R.id.bt_mainactivity_fx:
+			flagPause = false;
+			if(mVisualizerView != null)
+			{
+				mVisualizerView.release();
+			}
+			
 			intent = new Intent(MainActivity.this, SecondActivity_FX.class);
 			startActivity(intent);
 			break;
 
 		case R.id.bt_mainactivity_mixer:
+			flagPause = false;
+			
 			intent = new Intent(MainActivity.this, ThirtdActivity_MIXER.class);
 			startActivity(intent);
 
@@ -811,6 +828,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		case R.id.bt_mainactivity_load_mixer:
 
+			flagPause = false;
+			
 			timerComp.resetTimer();
 			timerComp.stopTimer();
 			flagForRecord = false;
@@ -950,25 +969,32 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private void initVisSecondFirst(MediaPlayer secondFirstMediaPlayer) {
 
-		mVisualizerView = (VisualizerView) findViewById(R.id.vis_second_first);
-		mVisualizerView.link(secondFirstMediaPlayer);
-
-		// Start with just line renderer
-		addLineRenderer();
+		if(secondFirstMediaPlayer != null)
+		{
+			mVisualizerView = (VisualizerViewMain) findViewById(R.id.vis_second_first);
+		
+			mVisualizerView.link(secondFirstMediaPlayer);
+			// Start with just line renderer
+			addLineRenderer();
+		}
+		
 	}
 
 	private void initVisSecondSecond(MediaPlayer secondSecondMediaPlayer) {
 
-		mVisualizerView = (VisualizerView) findViewById(R.id.vis_second_second);
-		mVisualizerView.link(secondSecondMediaPlayer);
-
-		// Start with just line renderer
-		addLineRenderer();
+		if(secondSecondMediaPlayer != null)
+		{
+			mVisualizerView = (VisualizerViewMain) findViewById(R.id.vis_second_second);
+			mVisualizerView.link(secondSecondMediaPlayer);
+			// Start with just line renderer
+			addLineRenderer();
+		}
+		
 	}
 
 	private void initVisMain(MediaPlayer mainMediaPlayer) {
 
-		mVisualizerView = (VisualizerView) findViewById(R.id.visualizerView);
+		mVisualizerView = (VisualizerViewMain) findViewById(R.id.visualizerView);
 		mVisualizerView.link(mainMediaPlayer);
 
 		// Start with just line renderer
@@ -1004,25 +1030,25 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	// Actions for buttons defined in xml
-	public void startPressed(View view) throws IllegalStateException,
+	/*public void startPressed(View view) throws IllegalStateException,
 			IOException {
 		if (mPlayer.isPlaying()) {
 			return;
 		}
 		mPlayer.prepare();
 		mPlayer.start();
-	}
+	}*/
 
-	public void stopPressed(View view) {
+	/*public void stopPressed(View view) {
 		mPlayer.stop();
-	}
+	}*/
 
-	public void linePressed(View view) {
+	/*public void linePressed(View view) {
 		addLineRenderer();
 	}
-
-	public void clearPressed(View view) {
+*/
+	/*public void clearPressed(View view) {
 		mVisualizerView.clearRenderers();
-	}
+	}*/
 
 }

@@ -317,12 +317,12 @@
                 android:gravity="right"
                 android:orientation="horizontal" >
 
-                <com.app.dj.vis.VisualizerView
+                <com.app.dj.vis.VisualizerViewMain
                     android:id="@+id/vis_second_first"
                     android:layout_width="@dimen/dp_wt_main_vis"
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp" >
-                </com.app.dj.vis.VisualizerView>
+                </com.app.dj.vis.VisualizerViewMain>
 
                 <ImageView
                     android:layout_width="130dp"

@@ -182,11 +182,11 @@
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <com.app.dj.vis.VisualizerView
+            <com.app.dj.vis.VisualizerViewFx
                 android:id="@+id/vis_fx"
                 android:layout_width="@dimen/dp_wt_vs_second"
                 android:layout_height="@dimen/dp_ht_vs_second" >
-            </com.app.dj.vis.VisualizerView>
+            </com.app.dj.vis.VisualizerViewFx>
 
             <SeekBar
                 android:id="@+id/seekbar_fx"

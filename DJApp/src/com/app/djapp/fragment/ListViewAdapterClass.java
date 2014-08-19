@@ -111,7 +111,9 @@ public class ListViewAdapterClass extends BaseAdapter {
 						MainActivity.mediaPlayerRecord.start();
 					}
 					 
-				  
+				 /* Intent i = new Intent(ctx , MainActivity.class);
+				  ctx.startActivity(i);
+				 */ 
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
