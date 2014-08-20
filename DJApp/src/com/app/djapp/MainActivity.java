@@ -150,6 +150,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			mediaPlayerRecord.release();
 			mediaPlayerRecord = null;			
 		}		
+		
+		Intent callIntent = new Intent(MainActivity.this, RecordService.class);
+		stopService(callIntent);
 	}
 
 	private void cleanUp() {
@@ -448,8 +451,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onStop();
 
-		Intent callIntent = new Intent(MainActivity.this, RecordService.class);
-		stopService(callIntent);
+	/*	Intent callIntent = new Intent(MainActivity.this, RecordService.class);
+		stopService(callIntent);*/
 		/*
 		 * mediaPlayer1.stop(); mediaPlayer2.stop();
 		 */

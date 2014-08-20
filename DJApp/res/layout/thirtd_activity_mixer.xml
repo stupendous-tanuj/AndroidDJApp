@@ -150,8 +150,8 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/mx_wt_track"
+            android:layout_height="@dimen/mx_ht_track"
             android:background="@drawable/track_info" />
     </LinearLayout>
 
@@ -162,100 +162,165 @@
         android:weightSum="1" >
 
         <LinearLayout
-            android:layout_width="238dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight=".80"
             android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="2dp"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal" >
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/image8" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical" >
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/image8" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/image8" />
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_knob"
+                            android:layout_height="@dimen/mx_wt_knob"
+                            android:background="@drawable/image8" />
+                    </LinearLayout>
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/image8" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal" >
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/image8" />
-            </LinearLayout>
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_mute"
+                            android:layout_height="@dimen/mx_wt_mute"
+                            android:background="@drawable/image10" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="6dp"
-                android:orientation="horizontal" >
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_mute"
+                            android:layout_height="@dimen/mx_wt_mute"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/image9" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image6" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical" >
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image6" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image6" />
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_knob"
+                            android:layout_height="@dimen/mx_wt_knob"
+                            android:background="@drawable/image8" />
+                    </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image6" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal" >
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image6" />
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_mute"
+                            android:layout_height="@dimen/mx_wt_mute"
+                            android:background="@drawable/image10" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image6" />
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_mute"
+                            android:layout_height="@dimen/mx_wt_mute"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/image9" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image6" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical" >
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image6" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image10" />
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_knob"
+                            android:layout_height="@dimen/mx_wt_knob"
+                            android:background="@drawable/image8" />
+                    </LinearLayout>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/image9" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_mute"
+                            android:layout_height="@dimen/mx_wt_mute"
+                            android:background="@drawable/image10" />
+
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_mute"
+                            android:layout_height="@dimen/mx_wt_mute"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/image9" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_knob"
+                            android:layout_height="@dimen/mx_wt_knob"
+                            android:background="@drawable/image8" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_mute"
+                            android:layout_height="@dimen/mx_wt_mute"
+                            android:background="@drawable/image10" />
+
+                        <ImageView
+                            android:layout_width="@dimen/mx_wt_mute"
+                            android:layout_height="@dimen/mx_wt_mute"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/image9" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -267,8 +332,8 @@
                 android:paddingTop="3dp" >
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="140dp"
+                    android:layout_width="@dimen/mx_wt_vrticalbar_ll"
+                    android:layout_height="@dimen/mx_ht_vrticalbar_ll"
                     android:background="@drawable/equ_bg"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal" >
@@ -277,36 +342,31 @@
                         android:id="@+id/vseekBar1"
                         style="@android:style/Widget.Holo.SeekBar"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_ht_5_seekbar_mixer"
-                        android:layout_marginRight="10dp" />
+                        android:layout_height="@dimen/mx_ht_5_seekbar_mixer"
+                        android:layout_marginRight="@dimen/mx_margin_right_vrt" />
 
                     <com.app.djapp.VerticalSeekBar
                         android:id="@+id/vseekBar1"
                         style="@android:style/Widget.Holo.SeekBar"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_ht_5_seekbar_mixer"
-                        android:layout_marginRight="10dp" />
+                        android:layout_height="@dimen/mx_ht_5_seekbar_mixer"
+                        android:layout_marginRight="@dimen/mx_margin_right_vrt" />
 
                     <com.app.djapp.VerticalSeekBar
                         android:id="@+id/vseekBar1"
                         style="@android:style/Widget.Holo.SeekBar"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_ht_5_seekbar_mixer"
-                        android:layout_marginRight="10dp" />
+                        android:layout_height="@dimen/mx_ht_5_seekbar_mixer"
+                        android:layout_marginRight="@dimen/mx_margin_right_vrt" />
 
                     <com.app.djapp.VerticalSeekBar
                         android:id="@+id/vseekBar1"
                         style="@android:style/Widget.Holo.SeekBar"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_ht_5_seekbar_mixer"
-                        android:layout_marginRight="10dp" />
+                        android:layout_height="@dimen/mx_ht_5_seekbar_mixer"
+                        android:layout_marginRight="@dimen/mx_margin_right_vrt" />
 
-                    <com.app.djapp.VerticalSeekBar
-                        android:id="@+id/vseekBar1"
-                        style="@android:style/Widget.Holo.SeekBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_ht_5_seekbar_mixer"
-                        android:layout_marginRight="10dp" />
+                   
                 </LinearLayout>
             </LinearLayout>
 
@@ -314,19 +374,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:gravity="right"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal" >
 
                 <com.app.dj.vis.VisualizerViewMain
                     android:id="@+id/vis_second_first"
-                    android:layout_width="@dimen/dp_wt_main_vis"
+                    android:layout_width="@dimen/mx_wt_main_vis"
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp" >
                 </com.app.dj.vis.VisualizerViewMain>
 
                 <ImageView
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="@dimen/mx_wt_round"
+                    android:layout_height="@dimen/mx_wt_round"
                     android:layout_marginRight="15dp"
                     android:background="@drawable/image5" />
             </LinearLayout>
@@ -335,19 +395,20 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.30"
+            android:layout_weight="0.20"
             android:orientation="vertical" >
 
             <LinearLayout
-                android:layout_width="79dp"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="25dp"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
                 android:orientation="vertical" >
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/image8" />
+                 <ImageView
+                            android:layout_width="@dimen/mx_wt_knob"
+                            android:layout_height="@dimen/mx_wt_knob"
+                            android:background="@drawable/image8" />
 
                 <com.app.djapp.VerticalSeekBar
                     android:id="@+id/vseekBar1"

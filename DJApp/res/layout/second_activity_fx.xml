@@ -37,14 +37,14 @@
                     android:layout_marginTop="@dimen/dp_margin_3"
                     android:background="@drawable/menu" />
 
-                <Button
-                    android:id="@+id/bt_second_fx"
+                <Spinner
+                    android:id="@+id/spinner_second_fx"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
                     android:layout_marginLeft="@dimen/dp_margin_3"
                     android:layout_marginTop="@dimen/dp_margin_3"
-                    android:background="@drawable/fx" />
+                    android:background="#ffffff" />
 
                 <Button
                     android:id="@+id/bt_mainactivity_mixer"
@@ -56,8 +56,6 @@
                     android:layout_marginTop="@dimen/dp_margin_3"
                     android:background="@drawable/mixer" />
             </LinearLayout>
-
-           
         </LinearLayout>
 
         <LinearLayout
@@ -167,9 +165,9 @@
 
             <LinearLayout
                 android:id="@+id/ll_fx_draw"
-                android:layout_width="160dp"
-                android:layout_height="210dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="@dimen/fx_wt_draw"
+                android:layout_height="@dimen/fx_ht_draw"
+                android:layout_marginTop="@dimen/fx_margin_top_lr" 
                 android:background="@drawable/image22"
                 android:orientation="horizontal" >
             </LinearLayout>
@@ -178,34 +176,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/fx_margin_top_pp"
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
             <com.app.dj.vis.VisualizerViewFx
                 android:id="@+id/vis_fx"
-                android:layout_width="@dimen/dp_wt_vs_second"
-                android:layout_height="@dimen/dp_ht_vs_second" >
+                android:layout_width="@dimen/fx_wt_vs_second"
+                android:layout_height="@dimen/fx_ht_vs_second" >
             </com.app.dj.vis.VisualizerViewFx>
 
             <SeekBar
                 android:id="@+id/seekbar_fx"
                 style="@android:style/Widget.Holo.SeekBar"
-                android:layout_width="@dimen/dp_wt_mainslidder"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_width="@dimen/fx_wt_mainslidder"
+                android:layout_height="@dimen/fx_ht_mainslider"
+                android:layout_marginTop="@dimen/fx_margin_top_pp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/fx_margin_top_pp"
             android:gravity="center_horizontal" >
 
             <Button
-                 android:id="@+id/bt_fx_mix"
-                android:layout_width="100dp"
-                android:layout_height="21dp"
+                android:id="@+id/bt_fx_mix"
+                android:layout_width="@dimen/fx_wt_right"
+                android:layout_height="@dimen/fx_ht_right"
                 android:background="@drawable/image14"
                 android:gravity="center"
                 android:text="Mix"
@@ -213,13 +211,13 @@
                 android:textSize="@dimen/sp_menu_buttontext" />
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="@dimen/fx_wt_tv_pp"
                 android:layout_height="wrap_content" />
 
             <Button
-                 android:id="@+id/bt_fx_pads"
-                android:layout_width="100dp"
-                android:layout_height="21dp"
+                android:id="@+id/bt_fx_pads"
+                android:layout_width="@dimen/fx_wt_right"
+                android:layout_height="@dimen/fx_ht_right"
                 android:background="@drawable/image14"
                 android:gravity="center"
                 android:text="Pads"
@@ -230,13 +228,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/fx_margin_top_lr"
             android:gravity="center_horizontal" >
 
             <Button
                 android:id="@+id/bt_fx_left"
-                android:layout_width="100dp"
-                android:layout_height="21dp"
+                android:layout_width="@dimen/fx_wt_right"
+                android:layout_height="@dimen/fx_ht_right"
                 android:background="@drawable/image14"
                 android:gravity="center"
                 android:text="Left"
@@ -244,13 +242,13 @@
                 android:textSize="@dimen/sp_menu_buttontext" />
 
             <TextView
-                android:layout_width="50dp"
+                android:layout_width="@dimen/fx_wt_tv_lr"
                 android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/bt_fx_right"
-                android:layout_width="100dp"
-                android:layout_height="21dp"
+                android:layout_width="@dimen/fx_wt_right"
+                android:layout_height="@dimen/fx_ht_right"
                 android:background="@drawable/image14"
                 android:gravity="center"
                 android:text="Right"

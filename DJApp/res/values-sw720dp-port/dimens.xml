@@ -1,15 +1,26 @@
 <resources>
 
     <!-- - 10 -->
+
+<!-- MX -->
+    <dimen name="mx_wt_track">155dp</dimen>
+    <dimen  name="mx_ht_track">45dp</dimen>
+    <dimen name="mx_wt_knob">130dp</dimen>
+    <dimen name="mx_wt_mute">44dp</dimen>
+    <dimen name="mx_ht_vrticalbar_ll">285dp</dimen>
+    <dimen name="mx_wt_round">304dp</dimen>
+    <dimen name="mx_wt_main_vis">180dp</dimen>
+    <dimen name="mx_margin_right_vrt">50dp</dimen>
+    <dimen name="mx_ht_5_seekbar_mixer">260dp</dimen>
+    <dimen name="mx_wt_vrticalbar_ll">510dp</dimen>
+    <dimen  name="mx_wt_seek">55dp</dimen>
     
-    <!--  size for text in sp  -->
+    <!-- size for text in sp -->
     <dimen name="sp_time">25sp</dimen>
- 
-    <!--  dimen for margin, padding, width  and height in  dp  -->
-    
- 
-    
- <dimen name="activity_horizontal_margin">16dp</dimen>
+
+    <!-- dimen for margin, padding, width  and height in  dp -->
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="ll_btn_width">80dp</dimen>
     <dimen name="ll_btn_height">46dp</dimen>
@@ -36,17 +47,31 @@
     <dimen name="dp_wt_vs_second">155dp</dimen>
     <dimen name="dp_ht_vs_second">70dp</dimen>
     <dimen name="dp_ht_seekbar">29dp</dimen>
-    <dimen  name="dp_morgin_top_main">25dp</dimen>
-    <dimen  name="dp_vseekbar_margin_left">20dp</dimen>
-    <dimen  name="dp_margin_top_3_btn">10dp</dimen>
-    <dimen  name="dp_margin_top_two_slider">10dp</dimen>
-     <!-- - new  -->
-    <dimen  name="dp_wt_mainslidder">180dp</dimen>
-    <dimen  name="dp_ht_6_seekbar">130dp</dimen>
-    <dimen  name="dp_margin_buttom_6_slidder">30dp</dimen>
-  <!--  menu dp  -->
-      <dimen  name="sp_menu_buttontext">42sp</dimen>
-    
+    <dimen name="dp_morgin_top_main">25dp</dimen>
+    <dimen name="dp_vseekbar_margin_left">20dp</dimen>
+    <dimen name="dp_margin_top_3_btn">10dp</dimen>
+    <dimen name="dp_margin_top_two_slider">10dp</dimen>
+    <!-- - new -->
+    <dimen name="dp_wt_mainslidder">180dp</dimen>
+    <dimen name="dp_ht_6_seekbar">130dp</dimen>
+    <dimen name="dp_margin_buttom_6_slidder">30dp</dimen>
+    <!-- menu dp -->
+    <dimen name="sp_menu_buttontext">42sp</dimen>
     <dimen name="dp_wt_menu_logo">350dp</dimen>
-    <dimen  name="dp_ht_menu_button">160dp</dimen>
+    <dimen name="dp_ht_menu_button">160dp</dimen>
+
+    <!-- FX Screen -->
+    <dimen name="fx_wt_right">270dp</dimen>
+    <dimen name="fx_ht_right">60dp</dimen>
+    <dimen name="fx_wt_tv_pp">80dp</dimen>
+    <dimen name="fx_wt_tv_lr">125dp</dimen>
+    <dimen name="fx_margin_top_lr">55dp</dimen>
+    <dimen name="fx_margin_top_pp">30dp</dimen>
+    <dimen name="fx_wt_draw">455dp</dimen>
+    <dimen name="fx_ht_draw">495dp</dimen>
+    <dimen name="fx_wt_vs_second">175dp</dimen>
+    <dimen name="fx_ht_vs_second">70dp</dimen>
+    <dimen name="fx_wt_mainslidder">180dp</dimen>
+    <dimen name="fx_ht_mainslider">55dp</dimen>
+
 </resources>

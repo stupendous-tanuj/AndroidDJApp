@@ -1,12 +1,25 @@
 <resources>
 
     <!-- tablet 7 , per the Android Design guidelines. -->
-    
-    <!--  size for text in sp  -->
+
+
+    <!-- MX -->
+    <dimen name="mx_wt_track">140dp</dimen>
+    <dimen  name="mx_ht_track">35dp</dimen>
+    <dimen name="mx_wt_knob">105dp</dimen>
+    <dimen name="mx_wt_mute">36dp</dimen>
+    <dimen name="mx_ht_vrticalbar_ll">235dp</dimen>
+    <dimen name="mx_wt_round">264dp</dimen>
+    <dimen name="mx_wt_main_vis">150dp</dimen>
+    <dimen name="mx_margin_right_vrt">40dp</dimen>
+    <dimen name="mx_ht_5_seekbar_mixer">210dp</dimen>
+    <dimen name="mx_wt_vrticalbar_ll">410dp</dimen>
+<dimen  name="mx_wt_seek">40dp</dimen>
+    <!-- size for text in sp -->
     <dimen name="sp_time">19sp</dimen>
- 
-    <!--  dimen for margin, padding, width  and height in  dp  -->
-       
+
+    <!-- dimen for margin, padding, width  and height in  dp -->
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="ll_btn_width">80dp</dimen>
@@ -34,18 +47,32 @@
     <dimen name="dp_wt_vs_second">145dp</dimen>
     <dimen name="dp_ht_vs_second">35dp</dimen>
     <dimen name="dp_ht_seekbar">33dp</dimen>
-    <dimen  name="dp_morgin_top_main">5dp</dimen>
-    <dimen  name="dp_vseekbar_margin_left">12dp</dimen>
-    <dimen  name="dp_margin_top_3_btn">2dp</dimen>
-    <dimen  name="dp_margin_top_two_slider">2dp</dimen>
-     <!-- - new  -->
-    <dimen  name="dp_wt_mainslidder">170dp</dimen>
-    <dimen  name="dp_ht_6_seekbar">90dp</dimen>
-    <dimen  name="dp_margin_buttom_6_slidder">5dp</dimen>
-    
-      <!--  menu dp  -->
-      <dimen  name="sp_menu_buttontext">34sp</dimen>
-    
+    <dimen name="dp_morgin_top_main">5dp</dimen>
+    <dimen name="dp_vseekbar_margin_left">12dp</dimen>
+    <dimen name="dp_margin_top_3_btn">2dp</dimen>
+    <dimen name="dp_margin_top_two_slider">2dp</dimen>
+    <!-- - new -->
+    <dimen name="dp_wt_mainslidder">170dp</dimen>
+    <dimen name="dp_ht_6_seekbar">90dp</dimen>
+    <dimen name="dp_margin_buttom_6_slidder">5dp</dimen>
+
+    <!-- menu dp -->
+    <dimen name="sp_menu_buttontext">34sp</dimen>
     <dimen name="dp_wt_menu_logo">255dp</dimen>
-    <dimen  name="dp_ht_menu_button">125dp</dimen>
+    <dimen name="dp_ht_menu_button">125dp</dimen>
+
+    <!-- FX Screen -->
+    <dimen name="fx_wt_right">190dp</dimen>
+    <dimen name="fx_ht_right">50dp</dimen>
+    <dimen name="fx_wt_tv_pp">50dp</dimen>
+    <dimen name="fx_wt_tv_lr">90dp</dimen>
+    <dimen name="fx_margin_top_lr">45dp</dimen>
+    <dimen name="fx_margin_top_pp">35dp</dimen>
+    <dimen name="fx_wt_draw">295dp</dimen>
+    <dimen name="fx_ht_draw">355dp</dimen>
+    <dimen name="fx_wt_vs_second">155dp</dimen>
+    <dimen name="fx_ht_vs_second">35dp</dimen>
+    <dimen name="fx_wt_mainslidder">170dp</dimen>
+    <dimen name="fx_ht_mainslider">30dp</dimen>
+
 </resources>

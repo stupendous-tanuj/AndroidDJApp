@@ -15,74 +15,108 @@ public final class R {
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
-  dimen for margin, padding, width  and height in  dp  
-  dimen for margin, padding, width  and height in  dp  
-  dimen for margin, padding, width  and height in  dp  
-  dimen for margin, padding, width  and height in  dp  
-  dimen for margin, padding, width  and height in  dp  
+ dimen for margin, padding, width  and height in  dp 
+ dimen for margin, padding, width  and height in  dp 
+ dimen for margin, padding, width  and height in  dp 
+ dimen for margin, padding, width  and height in  dp 
+ dimen for margin, padding, width  and height in  dp 
          */
         public static final int activity_horizontal_margin=0x7f060000;
         public static final int activity_vertical_margin=0x7f060001;
-        public static final int dp_ht_5_seekbar_mixer=0x7f060023;
-        public static final int dp_ht_6_seekbar=0x7f060021;
-        public static final int dp_ht_image3=0x7f06000a;
-        public static final int dp_ht_ll_vrtcl_progressbar=0x7f06000c;
-        public static final int dp_ht_main_vis=0x7f060016;
-        public static final int dp_ht_menu_button=0x7f060026;
-        public static final int dp_ht_scroll_btn=0x7f060008;
-        public static final int dp_ht_seekbar=0x7f06001b;
-        public static final int dp_ht_speaker_left=0x7f060006;
-        public static final int dp_ht_vs_second=0x7f06001a;
-        public static final int dp_margin_3=0x7f06000d;
-        public static final int dp_margin_buttom_6_slidder=0x7f060022;
-        public static final int dp_margin_seek_bar=0x7f060013;
-        public static final int dp_margin_top=0x7f060012;
-        public static final int dp_margin_top_3_btn=0x7f06001e;
-        public static final int dp_margin_top_load=0x7f060017;
-        public static final int dp_margin_top_two_slider=0x7f06001f;
-        public static final int dp_morgin_top_main=0x7f06001c;
-        public static final int dp_pad_size=0x7f06000f;
-        public static final int dp_padding_6_slider=0x7f060010;
-        public static final int dp_scroll_margin=0x7f060011;
-        public static final int dp_speaker_margin=0x7f06000e;
-        public static final int dp_vis_ht=0x7f060014;
-        public static final int dp_vs_second_left=0x7f060018;
-        public static final int dp_vseekbar_margin_left=0x7f06001d;
-        public static final int dp_wt_image3=0x7f060009;
-        public static final int dp_wt_main_vis=0x7f060015;
-        /**  - new  
- - new  
- - new  
- - new  
- - new  
+        public static final int dp_ht_6_seekbar=0x7f06002c;
+        public static final int dp_ht_image3=0x7f060015;
+        public static final int dp_ht_ll_vrtcl_progressbar=0x7f060017;
+        public static final int dp_ht_main_vis=0x7f060021;
+        public static final int dp_ht_menu_button=0x7f060030;
+        public static final int dp_ht_scroll_btn=0x7f060013;
+        public static final int dp_ht_seekbar=0x7f060026;
+        public static final int dp_ht_speaker_left=0x7f060011;
+        public static final int dp_ht_vs_second=0x7f060025;
+        public static final int dp_margin_3=0x7f060018;
+        public static final int dp_margin_buttom_6_slidder=0x7f06002d;
+        public static final int dp_margin_seek_bar=0x7f06001e;
+        public static final int dp_margin_top=0x7f06001d;
+        public static final int dp_margin_top_3_btn=0x7f060029;
+        public static final int dp_margin_top_load=0x7f060022;
+        public static final int dp_margin_top_two_slider=0x7f06002a;
+        public static final int dp_morgin_top_main=0x7f060027;
+        public static final int dp_pad_size=0x7f06001a;
+        public static final int dp_padding_6_slider=0x7f06001b;
+        public static final int dp_scroll_margin=0x7f06001c;
+        public static final int dp_speaker_margin=0x7f060019;
+        public static final int dp_vis_ht=0x7f06001f;
+        public static final int dp_vs_second_left=0x7f060023;
+        public static final int dp_vseekbar_margin_left=0x7f060028;
+        public static final int dp_wt_image3=0x7f060014;
+        public static final int dp_wt_main_vis=0x7f060020;
+        /**  - new 
+ - new 
+ - new 
+ - new 
+ - new 
          */
-        public static final int dp_wt_mainslidder=0x7f060020;
-        public static final int dp_wt_menu_logo=0x7f060025;
-        public static final int dp_wt_progress=0x7f06000b;
-        public static final int dp_wt_scroll_btn=0x7f060007;
-        public static final int dp_wt_speaker_left=0x7f060005;
-        public static final int dp_wt_vs_second=0x7f060019;
+        public static final int dp_wt_mainslidder=0x7f06002b;
+        public static final int dp_wt_menu_logo=0x7f06002f;
+        public static final int dp_wt_progress=0x7f060016;
+        public static final int dp_wt_scroll_btn=0x7f060012;
+        public static final int dp_wt_speaker_left=0x7f060010;
+        public static final int dp_wt_vs_second=0x7f060024;
+        public static final int fx_ht_draw=0x7f060038;
+        public static final int fx_ht_mainslider=0x7f06003c;
+        public static final int fx_ht_right=0x7f060032;
+        public static final int fx_ht_vs_second=0x7f06003a;
+        public static final int fx_margin_top_lr=0x7f060035;
+        public static final int fx_margin_top_pp=0x7f060036;
+        public static final int fx_wt_draw=0x7f060037;
+        public static final int fx_wt_mainslidder=0x7f06003b;
+        /**  FX Screen 
+ FX Screen 
+ FX Screen 
+ FX Screen 
+ FX Screen 
+         */
+        public static final int fx_wt_right=0x7f060031;
+        public static final int fx_wt_tv_lr=0x7f060034;
+        public static final int fx_wt_tv_pp=0x7f060033;
+        public static final int fx_wt_vs_second=0x7f060039;
         public static final int ll_btn_height=0x7f060003;
         public static final int ll_btn_width=0x7f060002;
-        /**   menu dp  
-  menu dp  
-  menu dp  
-  menu dp  
-  menu dp  
-         */
-        public static final int sp_menu_buttontext=0x7f060024;
+        public static final int mx_ht_5_seekbar_mixer=0x7f06000c;
+        public static final int mx_ht_track=0x7f060005;
+        public static final int mx_ht_vrticalbar_ll=0x7f060008;
+        public static final int mx_margin_right_vrt=0x7f06000b;
+        public static final int mx_wt_knob=0x7f060006;
+        public static final int mx_wt_main_vis=0x7f06000a;
+        public static final int mx_wt_mute=0x7f060007;
+        public static final int mx_wt_round=0x7f060009;
+        public static final int mx_wt_seek=0x7f06000e;
         /**  hdpi 240 , per the Android Design guidelines. 
-  size for text in sp  
+ MX 
  xhdpi 320 , per the Android Design guidelines. 
-  size for text in sp  
+ MX 
  xxhdpi 480, per the Android Design guidelines. 
-  size for text in sp  
+ MX 
  tablet 7 , per the Android Design guidelines. 
-  size for text in sp  
+ MX 
  - 10 
-  size for text in sp  
+ MX 
          */
-        public static final int sp_time=0x7f060004;
+        public static final int mx_wt_track=0x7f060004;
+        public static final int mx_wt_vrticalbar_ll=0x7f06000d;
+        /**  menu dp 
+ menu dp 
+ menu dp 
+ menu dp 
+ menu dp 
+         */
+        public static final int sp_menu_buttontext=0x7f06002e;
+        /**  size for text in sp 
+ size for text in sp 
+ size for text in sp 
+ size for text in sp 
+ size for text in sp 
+         */
+        public static final int sp_time=0x7f06000f;
     }
     public static final class drawable {
         public static final int about=0x7f020000;
@@ -135,7 +169,7 @@ public final class R {
         public static final int vertical_equlizer_bg=0x7f02002f;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0041;
+        public static final int action_settings=0x7f0a0042;
         public static final int bt_fx_left=0x7f0a003c;
         public static final int bt_fx_mix=0x7f0a003a;
         public static final int bt_fx_pads=0x7f0a003b;
@@ -179,7 +213,7 @@ public final class R {
         public static final int bt_mainactivity_second_load_pause=0x7f0a000e;
         public static final int bt_mainactivity_second_load_play=0x7f0a000f;
         public static final int bt_mainactivity_sync=0x7f0a0009;
-        public static final int bt_second_fx=0x7f0a0036;
+        public static final int bt_second_fx=0x7f0a0041;
         public static final int iv_audio_image=0x7f0a003f;
         public static final int iv_speaker_left=0x7f0a0006;
         public static final int iv_speaker_right=0x7f0a0010;
@@ -194,6 +228,7 @@ public final class R {
         public static final int seekbar_second_first=0x7f0a0013;
         public static final int seekbar_second_second=0x7f0a0015;
         public static final int seekbarmain_first=0x7f0a0017;
+        public static final int spinner_second_fx=0x7f0a0036;
         public static final int tv_mainactivity_record_timer=0x7f0a000b;
         public static final int tv_tab_pager_custom_songname=0x7f0a0040;
         public static final int vis_fx=0x7f0a0038;

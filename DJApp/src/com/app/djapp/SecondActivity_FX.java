@@ -1,5 +1,7 @@
 package com.app.djapp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.app.dj.vis.LineRenderer;
@@ -17,24 +19,31 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-public class SecondActivity_FX extends Activity implements OnClickListener {
+public class SecondActivity_FX extends Activity implements OnClickListener,
+		OnItemSelectedListener {
 
 	private LinearLayout ll_fx_draw;
 	private Equalizer mEqualizer;
 	short bands;
 	private Button bt_fx_left, bt_fx_right;
 	VisualizerViewFx mVisualizerView;
+	Spinner spinner_second_fx;
 
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		
+
 		MainActivity.flagPause = true;
- 
+
 	}
 
 	@Override
@@ -55,8 +64,36 @@ public class SecondActivity_FX extends Activity implements OnClickListener {
 
 		bt_fx_left = (Button) findViewById(R.id.bt_fx_left);
 		bt_fx_right = (Button) findViewById(R.id.bt_fx_right);
+
+		spinner_second_fx = (Spinner) findViewById(R.id.spinner_second_fx);
+
 		bt_fx_left.setOnClickListener(this);
 		bt_fx_right.setOnClickListener(this);
+
+		List<String> categories = new ArrayList<String>();
+		// / Flanger, Phaser, Gate, Reverb, Bit crusher, 3D,
+
+		categories.add("Flanger");
+		categories.add("Phaser");
+		categories.add("Gate");
+		categories.add("Reverb");
+		categories.add("Bit Crusher");
+		categories.add("3D");
+
+		// Spinner click listener
+		spinner_second_fx.setOnItemSelectedListener(this);
+
+		// Creating adapter for spinner
+
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, categories);
+
+		// Drop down layout style - list view with radio button
+		dataAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		// attaching data adapter to spinner
+		spinner_second_fx.setAdapter(dataAdapter);
 
 	}
 
@@ -113,8 +150,10 @@ public class SecondActivity_FX extends Activity implements OnClickListener {
 			mEqualizer = new Equalizer(0,
 					MainActivity.mediaPlayer1.getAudioSessionId());
 			mEqualizer.setEnabled(true);
-			bands = mEqualizer.getNumberOfBands();
 
+			Toast.makeText(getApplicationContext(),
+					"ddd  " + mEqualizer.getNumberOfPresets(),
+					Toast.LENGTH_LONG).show();
 			initVisSecondFirst(MainActivity.mediaPlayer1);
 
 		} else if (posMedia.equalsIgnoreCase("right")
@@ -122,7 +161,7 @@ public class SecondActivity_FX extends Activity implements OnClickListener {
 			mEqualizer = new Equalizer(0,
 					MainActivity.mediaPlayer2.getAudioSessionId());
 			mEqualizer.setEnabled(true);
-			bands = mEqualizer.getNumberOfBands();
+
 			initVisSecondFirst(MainActivity.mediaPlayer2);
 		}
 
@@ -167,6 +206,19 @@ public class SecondActivity_FX extends Activity implements OnClickListener {
 
 			}
 		}
+
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
+			long arg3) {
+if(mEqualizer != null)	
+		   mEqualizer.usePreset((short) pos);
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
 
 	}
 }
