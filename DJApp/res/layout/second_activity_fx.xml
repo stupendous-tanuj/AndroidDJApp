@@ -190,7 +190,7 @@
                 android:id="@+id/seekbar_fx"
                 style="@android:style/Widget.Holo.SeekBar"
                 android:layout_width="@dimen/fx_wt_mainslidder"
-                android:layout_height="@dimen/fx_ht_mainslider"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/fx_margin_top_pp" />
         </LinearLayout>
 

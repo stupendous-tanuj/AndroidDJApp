@@ -89,7 +89,7 @@ public class VisualizerViewMain extends View {
 
     // Create the Visualizer object and attach it to our media player.
     mVisualizer = new Visualizer(player.getAudioSessionId());
-    if(!mVisualizer.getEnabled())
+     
     mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
 
     // Pass through Visualizer data to VisualizerView

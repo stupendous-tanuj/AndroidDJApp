@@ -74,7 +74,7 @@
     <dimen name="fx_margin_top_lr">20dp</dimen>
     <dimen name="fx_margin_top_pp">10dp</dimen>
     <dimen name="fx_wt_draw">160dp</dimen>
-    <dimen name="fx_ht_draw">210dp</dimen>
+    <dimen name="fx_ht_draw">200dp</dimen>
     <dimen name="fx_wt_vs_second">95dp</dimen>
     <dimen name="fx_ht_vs_second">20dp</dimen>
     <dimen name="fx_wt_mainslidder">130dp</dimen>

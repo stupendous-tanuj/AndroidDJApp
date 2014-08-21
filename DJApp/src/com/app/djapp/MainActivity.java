@@ -801,6 +801,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.bt_mainactivity_mixer:
 			flagPause = false;
 			
+			if(mVisualizerView != null)
+			{
+				mVisualizerView.release();
+			}
 			intent = new Intent(MainActivity.this, ThirtdActivity_MIXER.class);
 			startActivity(intent);
 
