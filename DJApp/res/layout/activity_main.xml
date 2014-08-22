@@ -61,7 +61,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               
                 android:orientation="horizontal" >
 
                 <Button
@@ -86,11 +85,11 @@
                     android:id="@+id/bt_mainactivity_bmp"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
-                     android:gravity="center_horizontal"
                     android:layout_marginLeft="@dimen/dp_margin_3"
                     android:layout_marginRight="@dimen/dp_margin_3"
                     android:layout_marginTop="@dimen/dp_margin_3"
-                    android:background="@drawable/bpm" />
+                    android:background="@drawable/bpm"
+                    android:gravity="center_horizontal" />
             </LinearLayout>
 
             <LinearLayout
@@ -162,7 +161,6 @@
                 android:layout_height="wrap_content"
                 android:background="#000000"
                 android:orientation="vertical" >
- 
 
                 <Button
                     android:id="@+id/bt_mainactivity_sync"
@@ -173,8 +171,6 @@
                     android:layout_marginRight="@dimen/dp_margin_3"
                     android:layout_marginTop="@dimen/dp_margin_3"
                     android:background="@drawable/sunc" />
-
-             
             </LinearLayout>
 
             <LinearLayout
@@ -461,7 +457,7 @@
             android:orientation="vertical" >
 
             <SeekBar
-                android:id="@+id/seekBar1"
+                android:id="@+id/seekBar_mainactivity_seocndmain"
                 style="@android:style/Widget.Holo.SeekBar"
                 android:layout_width="@dimen/dp_wt_mainslidder"
                 android:layout_height="wrap_content" />
@@ -506,40 +502,52 @@
         android:orientation="horizontal" >
 
         <com.app.djapp.VerticalSeekBar
-            android:id="@+id/vseekBar1"
+            android:id="@+id/vs_mainactivity_1"
             style="@android:style/Widget.Holo.SeekBar"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_ht_6_seekbar" />
+            android:layout_height="@dimen/dp_ht_6_seekbar"
+            android:max="100"
+            android:progress="100" />
 
         <com.app.djapp.VerticalSeekBar
-            android:id="@+id/vseekBar1"
+            android:id="@+id/vs_mainactivity_2"
             style="@android:style/Widget.Holo.SeekBar"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_ht_6_seekbar" />
+            android:layout_height="@dimen/dp_ht_6_seekbar"
+            android:max="100"
+            android:progress="100" />
 
         <com.app.djapp.VerticalSeekBar
-            android:id="@+id/vseekBar1"
+            android:id="@+id/vs_mainactivity_3"
             style="@android:style/Widget.Holo.SeekBar"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_ht_6_seekbar" />
+            android:layout_height="@dimen/dp_ht_6_seekbar"
+            android:max="100"
+            android:progress="100" />
 
         <com.app.djapp.VerticalSeekBar
-            android:id="@+id/vseekBar1"
+            android:id="@+id/vs_mainactivity_4"
             style="@android:style/Widget.Holo.SeekBar"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_ht_6_seekbar" />
+            android:layout_height="@dimen/dp_ht_6_seekbar"
+            android:max="100"
+            android:progress="100" />
 
         <com.app.djapp.VerticalSeekBar
-            android:id="@+id/vseekBar1"
+            android:id="@+id/vs_mainactivity_5"
             style="@android:style/Widget.Holo.SeekBar"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_ht_6_seekbar" />
+            android:layout_height="@dimen/dp_ht_6_seekbar"
+            android:max="100"
+            android:progress="100" />
 
         <com.app.djapp.VerticalSeekBar
-            android:id="@+id/vseekBar1"
+            android:id="@+id/vs_mainactivity_6"
             style="@android:style/Widget.Holo.SeekBar"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_ht_6_seekbar" />
+            android:layout_height="@dimen/dp_ht_6_seekbar"
+            android:max="100"
+            android:progress="100" />
     </LinearLayout>
 
     <LinearLayout

@@ -1,9 +1,5 @@
 package com.app.djapp;
 
-import com.app.dj.vis.LineRenderer;
-import com.app.dj.vis.VisualizerViewMX;
-import com.app.dj.vis.VisualizerViewMain;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,6 +8,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.SeekBar;
+
+import com.app.dj.vis.LineRenderer;
+import com.app.dj.vis.VisualizerViewMX;
 
 public class ThirtdActivity_MIXER extends Activity {
 

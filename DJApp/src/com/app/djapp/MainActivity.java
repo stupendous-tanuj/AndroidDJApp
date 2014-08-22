@@ -42,18 +42,46 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Intent intent;
 	private Cursor cursor;
 	private static ArrayList<GSC> songs = null;
-    VisualizerViewMain mVisualizerView, mVisSecondFirst, mVisSecondSecond;
+	VisualizerViewMain mVisualizerView, mVisSecondFirst, mVisSecondSecond;
 	private MediaPlayer mPlayer;
 	private MediaPlayer mSilentPlayer; /* to avoid tunnel player issue */
 
 	public static MediaPlayer mediaPlayer1, mediaPlayer2, mediaPlayerRecord;
 
-	SoundManager snd;
+	SoundManager snd_speaker_left, snd_speaker_right;
+	SoundManager snd_pad_left[] = new SoundManager[9];
+	SoundManager snd_pad_right[] = new SoundManager[9];
+
 	int explode, pickup;
 
 	private AudioManager audioManager;
 
 	ImageView iv_speaker_left, iv_speaker_right;
+
+	private void initSoundPool() {
+
+		snd_speaker_left = new SoundManager(getApplicationContext());
+
+		for (int i = 0; i < snd_pad_left.length; i++) {
+			snd_pad_left[i] = new SoundManager(getApplicationContext());
+			if (i % 2 == 0) {
+				explode = snd_pad_left[i].load(R.raw.explosion);
+
+			} else {
+				pickup = snd_pad_left[i].load(R.raw.pickup);
+			}
+		}
+		for (int i = 0; i < snd_pad_right.length; i++) {
+			snd_pad_right[i] = new SoundManager(getApplicationContext());
+			if (i % 2 == 0) {
+				explode = snd_pad_right[i].load(R.raw.explosion);
+
+			} else {
+				pickup = snd_pad_right[i].load(R.raw.pickup);
+			}
+		}
+
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,59 +102,58 @@ public class MainActivity extends Activity implements OnClickListener {
 		audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
 		MAX_VOLUME = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		seekBarMethod();
-		
+		initSoundPool();
+
 		System.out.println("ddddddddon create");
 	}
 
 	@Override
 	protected void onResume() {
-		
+
 		System.out.println("ddddddddon resume");
-		if(flagPause)
-		{
-			/*if(mVisualizerView != null)
-				mVisualizerView.release();*/
-			
+		if (flagPause) {
+			/*
+			 * if(mVisualizerView != null) mVisualizerView.release();
+			 */
+
 			if (mediaPlayer1 != null) {
 				mediaPlayer1.start();
-				wheelSet1.start();				 
-				//initVisSecondFirst(mediaPlayer1);
+				wheelSet1.start();
+				// initVisSecondFirst(mediaPlayer1);
 			}
 			if (mediaPlayer2 != null) {
 				mediaPlayer2.start();
-				 wheelSet2.start();
+				wheelSet2.start();
 				// initVisSecondSecond(mediaPlayer2);
 			}
 		}
-		
-		//seekBarMethod();
+
+		// seekBarMethod();
 		flagPause = true;
 		super.onResume();
 	}
 
-	
 	public static boolean flagPause;
-	
+
 	@Override
 	protected void onPause() {
-		
+
 		cleanUp();
 		System.out.println("ddddddddon pause");
-		
-		if(flagPause)
-		{
+
+		if (flagPause) {
 			if (mediaPlayer1 != null) {
 				mediaPlayer1.pause();
 				wheelSet1.cancel();
-				 
+
 			}
 			if (mediaPlayer2 != null) {
 				mediaPlayer2.pause();
 				wheelSet2.cancel();
 			}
-			
+
 		}
-		 
+
 		super.onPause();
 	}
 
@@ -135,7 +162,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onDestroy();
 		System.out.println("ddddddddon destroy");
 		cleanUp();
-	
+
 		if (mediaPlayer1 != null) {
 			mediaPlayer1.release();
 			mediaPlayer1 = null;
@@ -144,13 +171,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			mediaPlayer2.release();
 			mediaPlayer2 = null;
 		}
-		
-		if(mediaPlayerRecord != null)
-		{
+
+		if (mediaPlayerRecord != null) {
 			mediaPlayerRecord.release();
-			mediaPlayerRecord = null;			
-		}		
-		
+			mediaPlayerRecord = null;
+		}
+
 		Intent callIntent = new Intent(MainActivity.this, RecordService.class);
 		stopService(callIntent);
 	}
@@ -167,122 +193,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			mSilentPlayer = null;
 		}
 
-	}
-	private int MAX_VOLUME;
-
-	SeekBar seekbar_second_first, seekbar_second_second, seekbarmain_first;
-
-	private void seekBarMethod() {
-
-		seekbarmain_first.setMax(audioManager
-				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-		seekbarmain_first.setProgress(audioManager
-				.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2);
-		seekbarmain_first
-				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-					@Override
-					public void onStopTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onStartTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onProgressChanged(SeekBar seekBar,
-							int progress, boolean fromUser) {
-						// TODO Auto-generated method stub
-						/*
-						 * audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
-						 * , progress, 0);
-						 */
-
-						float volume = (float) (1 - (Math.log(MAX_VOLUME
-								- progress) / Math.log(MAX_VOLUME)));
-
-						if (mediaPlayer1 != null && mediaPlayer2 != null) {
-							mediaPlayer2.setVolume(volume, volume);
-							mediaPlayer1.setVolume(1 - volume, 1 - volume);
-						}
-
-					}
-				});
-
-		seekbar_second_first.setMax(audioManager
-				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-		seekbar_second_first.setProgress(audioManager
-				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-		seekbar_second_first
-				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-					@Override
-					public void onStopTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onStartTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onProgressChanged(SeekBar seekBar,
-							int progress, boolean fromUser) {
-						// TODO Auto-generated method stub
-						/*
-						 * audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
-						 * , progress, 0);
-						 */
-
-						float volume = (float) (1 - (Math.log(MAX_VOLUME
-								- progress) / Math.log(MAX_VOLUME)));
-
-						if (mediaPlayer1 != null)
-							mediaPlayer1.setVolume(volume, volume);
-					}
-				});
-
-		seekbar_second_second.setMax(audioManager
-				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-		seekbar_second_second.setProgress(audioManager
-				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-		seekbar_second_second
-				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-					@Override
-					public void onStopTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onStartTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onProgressChanged(SeekBar seekBar,
-							int progress, boolean fromUser) {
-						// TODO Auto-generated method stub
-						/*
-						 * audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
-						 * , progress, 0);
-						 */
-						float volume = (float) (1 - (Math.log(MAX_VOLUME
-								- progress) / Math.log(MAX_VOLUME)));
-
-						if (mediaPlayer2 != null)
-							mediaPlayer2.setVolume(volume, volume);
-					}
-				});
 	}
 
 	private TimerComp timerComp;
@@ -374,6 +284,14 @@ public class MainActivity extends Activity implements OnClickListener {
 		seekbar_second_first = (SeekBar) findViewById(R.id.seekbar_second_first);
 		seekbar_second_second = (SeekBar) findViewById(R.id.seekbar_second_second);
 		seekbarmain_first = (SeekBar) findViewById(R.id.seekbarmain_first);
+		seekBar_mainactivity_seocndmain = (SeekBar) findViewById(R.id.seekBar_mainactivity_seocndmain);
+		
+		vs_mainactivity_1 = (VerticalSeekBar) findViewById(R.id.vs_mainactivity_1);
+		vs_mainactivity_2 = (VerticalSeekBar) findViewById(R.id.vs_mainactivity_2);
+		vs_mainactivity_3 = (VerticalSeekBar) findViewById(R.id.vs_mainactivity_3);
+		vs_mainactivity_4 = (VerticalSeekBar) findViewById(R.id.vs_mainactivity_4);
+		vs_mainactivity_5 = (VerticalSeekBar) findViewById(R.id.vs_mainactivity_5);
+		vs_mainactivity_6 = (VerticalSeekBar) findViewById(R.id.vs_mainactivity_6);
 
 		Button bt_mainactivity_b1 = (Button) findViewById(R.id.bt_mainactivity_b1);
 		Button bt_mainactivity_b2 = (Button) findViewById(R.id.bt_mainactivity_b2);
@@ -410,7 +328,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_MOVE:
 
-					snd.play(explode);
+					snd_speaker_left.play(explode);
 					break;
 
 				default:
@@ -429,7 +347,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_MOVE:
 
-					snd.play(pickup);
+					snd_speaker_left.play(pickup);
 					break;
 
 				default:
@@ -440,10 +358,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 		});
 
-		snd = new SoundManager(getApplicationContext());
-		explode = snd.load(R.raw.explosion);
-		pickup = snd.load(R.raw.pickup);
-
 	}
 
 	@Override
@@ -451,8 +365,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onStop();
 
-	/*	Intent callIntent = new Intent(MainActivity.this, RecordService.class);
-		stopService(callIntent);*/
+		/*
+		 * Intent callIntent = new Intent(MainActivity.this,
+		 * RecordService.class); stopService(callIntent);
+		 */
 		/*
 		 * mediaPlayer1.stop(); mediaPlayer2.stop();
 		 */
@@ -483,9 +399,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		switch (viewID.getId()) {
 
 		case R.id.bt_mainactivity_loadfirst:
-			
+
 			flagPause = false;
-			
+
 			System.out.println("ddddddddon loadfirst ");
 			currentTime1 = System.currentTimeMillis();
 			timeDiffrence2 = System.currentTimeMillis() - currentTime2;
@@ -536,9 +452,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 			break;
 		case R.id.bt_mainactivity_loadsecond:
-			
+
 			flagPause = false;
-			
+
 			System.out.println("ddddddddon loadsecond ");
 			currentTime2 = System.currentTimeMillis();
 			timeDiffrence1 = System.currentTimeMillis() - currentTime1;
@@ -630,93 +546,94 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// ///////////////// first pad /////////////////
 		case R.id.bt_mainactivity_f_f1:
-			snd.play(explode);
+			snd_pad_left[0].play(explode);
 			break;
 		case R.id.bt_mainactivity_f_f2:
-			snd.play(pickup);
+			snd_pad_left[1].play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_f_f3:
-			snd.play(explode);
+			snd_pad_left[2].play(explode);
 			break;
 		case R.id.bt_mainactivity_f_f4:
-			snd.play(pickup);
+			snd_pad_left[3].play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_f_f5:
-			snd.play(explode);
+			snd_pad_left[4].play(explode);
 			break;
 		case R.id.bt_mainactivity_f_f6:
-			snd.play(pickup);
+			snd_pad_left[5].play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_f_f7:
-			snd.play(explode);
+			snd_pad_left[6].play(explode);
 			break;
 		case R.id.bt_mainactivity_f_f8:
-			snd.play(pickup);
+			snd_pad_left[7].play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_f_f9:
-			snd.play(explode);
+			snd_pad_left[8].play(explode);
 			break;
 
 		// /////// second pad ///////////
 
 		case R.id.bt_mainactivity_s_f1:
-			snd.play(explode);
+			snd_pad_right[0].play(explode);
 			break;
 		case R.id.bt_mainactivity_s_f2:
-			snd.play(pickup);
+			snd_pad_right[1].play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_s_f3:
-			snd.play(explode);
+			snd_pad_right[2].play(explode);
 			break;
 		case R.id.bt_mainactivity_s_f4:
-			snd.play(pickup);
+			snd_pad_right[3].play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_s_f5:
-			snd.play(explode);
+			snd_pad_right[4].play(explode);
 			break;
 		case R.id.bt_mainactivity_s_f6:
-			snd.play(pickup);
+			snd_pad_right[5].play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_s_f7:
-			snd.play(explode);
+			snd_pad_right[6].play(explode);
 			break;
 		case R.id.bt_mainactivity_s_f8:
-			snd.play(pickup);
+			snd_pad_right[7].play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_s_f9:
-			snd.play(explode);
+			snd_pad_right[8].play(explode);
 			break;
 
 		// //////////////////////////// six btn ///////////////////////////////
 
 		case R.id.bt_mainactivity_b1:
-			snd.play(pickup);
+			snd_speaker_left.play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_b2:
-			snd.play(explode);
+			snd_speaker_left.play(explode);
 			break;
 		case R.id.bt_mainactivity_b3:
-			snd.play(pickup);
+			snd_speaker_left.play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_b4:
-			snd.play(explode);
+			snd_speaker_left.play(explode);
 			break;
 		case R.id.bt_mainactivity_b5:
-			snd.play(pickup);
+			snd_speaker_left.play(pickup);
 			break;
 
 		case R.id.bt_mainactivity_b6:
-			snd.play(explode);
+			snd_speaker_left.play(explode);
+
 			break;
 
 		// ////////////////////////////
@@ -789,20 +706,18 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		case R.id.bt_mainactivity_fx:
 			flagPause = false;
-			if(mVisualizerView != null)
-			{
+			if (mVisualizerView != null) {
 				mVisualizerView.release();
 			}
-			
+
 			intent = new Intent(MainActivity.this, SecondActivity_FX.class);
 			startActivity(intent);
 			break;
 
 		case R.id.bt_mainactivity_mixer:
 			flagPause = false;
-			
-			if(mVisualizerView != null)
-			{
+
+			if (mVisualizerView != null) {
 				mVisualizerView.release();
 			}
 			intent = new Intent(MainActivity.this, ThirtdActivity_MIXER.class);
@@ -836,7 +751,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.bt_mainactivity_load_mixer:
 
 			flagPause = false;
-			
+
 			timerComp.resetTimer();
 			timerComp.stopTimer();
 			flagForRecord = false;
@@ -976,27 +891,25 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private void initVisSecondFirst(MediaPlayer secondFirstMediaPlayer) {
 
-		if(secondFirstMediaPlayer != null)
-		{
+		if (secondFirstMediaPlayer != null) {
 			mVisualizerView = (VisualizerViewMain) findViewById(R.id.vis_second_first);
-		
+
 			mVisualizerView.link(secondFirstMediaPlayer);
 			// Start with just line renderer
 			addLineRenderer();
 		}
-		
+
 	}
 
 	private void initVisSecondSecond(MediaPlayer secondSecondMediaPlayer) {
 
-		if(secondSecondMediaPlayer != null)
-		{
+		if (secondSecondMediaPlayer != null) {
 			mVisualizerView = (VisualizerViewMain) findViewById(R.id.vis_second_second);
 			mVisualizerView.link(secondSecondMediaPlayer);
 			// Start with just line renderer
 			addLineRenderer();
 		}
-		
+
 	}
 
 	private void initVisMain(MediaPlayer mainMediaPlayer) {
@@ -1007,7 +920,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Start with just line renderer
 		addLineRenderer();
 	}
-
 
 	private void initTunnelPlayerWorkaround() {
 		// Read "tunnel.decode" system property to determine
@@ -1036,26 +948,330 @@ public class MainActivity extends Activity implements OnClickListener {
 		mVisualizerView.addRenderer(lineRenderer);
 	}
 
-	// Actions for buttons defined in xml
-	/*public void startPressed(View view) throws IllegalStateException,
-			IOException {
-		if (mPlayer.isPlaying()) {
-			return;
-		}
-		mPlayer.prepare();
-		mPlayer.start();
-	}*/
+	private int MAX_VOLUME;
 
-	/*public void stopPressed(View view) {
-		mPlayer.stop();
-	}*/
+	SeekBar seekbar_second_first, seekbar_second_second, seekbarmain_first, seekBar_mainactivity_seocndmain;
+	VerticalSeekBar vs_mainactivity_1, vs_mainactivity_2, vs_mainactivity_3,
+			vs_mainactivity_4, vs_mainactivity_5, vs_mainactivity_6;
 
-	/*public void linePressed(View view) {
-		addLineRenderer();
+	private void seekBarMethod() {
+
+		seekbarmain_first.setMax(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekbarmain_first.setProgress(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2);
+		seekbarmain_first
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						// TODO Auto-generated method stub
+						/*
+						 * audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
+						 * , progress, 0);
+						 */
+
+						float volume = (float) (1 - (Math.log(MAX_VOLUME
+								- progress) / Math.log(MAX_VOLUME)));
+
+						if (mediaPlayer1 != null && mediaPlayer2 != null) {
+							mediaPlayer2.setVolume(volume, volume);
+							mediaPlayer1.setVolume(1 - volume, 1 - volume);
+						}
+
+					}
+				});
+
+		seekbar_second_first.setMax(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekbar_second_first.setProgress(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2);
+		seekbar_second_first
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						// TODO Auto-generated method stub
+						/*
+						 * audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
+						 * , progress, 0);
+						 */
+
+						float volume = (float) (1 - (Math.log(MAX_VOLUME
+								- progress) / Math.log(MAX_VOLUME)));
+
+						if (mediaPlayer1 != null)
+							mediaPlayer1.setVolume(volume, volume);
+					}
+				});
+
+		seekbar_second_second.setMax(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekbar_second_second.setProgress(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2);
+		seekbar_second_second
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						// TODO Auto-generated method stub
+						/*
+						 * audioManager.setStreamVolume(AudioManager.STREAM_MUSIC
+						 * , progress, 0);
+						 */
+						float volume = (float) (1 - (Math.log(MAX_VOLUME
+								- progress) / Math.log(MAX_VOLUME)));
+
+						if (mediaPlayer2 != null)
+							mediaPlayer2.setVolume(volume, volume);
+					}
+				});
+
+		vs_mainactivity_1
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						snd_pad_left[0].setVolume((float) progress / 100.0f);
+						snd_pad_left[3].setVolume((float) progress / 100.0f);
+						snd_pad_left[6].setVolume((float) progress / 100.0f);
+					}
+				});
+
+		vs_mainactivity_2
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						snd_pad_left[1].setVolume((float) progress / 100.0f);
+						snd_pad_left[4].setVolume((float) progress / 100.0f);
+						snd_pad_left[7].setVolume((float) progress / 100.0f);
+					}
+				});
+
+		vs_mainactivity_3
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						snd_pad_left[2].setVolume((float) progress / 100.0f);
+						snd_pad_left[5].setVolume((float) progress / 100.0f);
+						snd_pad_left[8].setVolume((float) progress / 100.0f);
+					}
+				});
+
+		vs_mainactivity_4
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						snd_pad_right[0].setVolume((float) progress / 100.0f);
+						snd_pad_right[3].setVolume((float) progress / 100.0f);
+						snd_pad_right[6].setVolume((float) progress / 100.0f);
+					}
+				});
+
+		vs_mainactivity_5
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						snd_pad_right[1].setVolume((float) progress / 100.0f);
+						snd_pad_right[4].setVolume((float) progress / 100.0f);
+						snd_pad_right[7].setVolume((float) progress / 100.0f);
+					}
+				});
+
+		vs_mainactivity_6
+				.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+					@Override
+					public void onStopTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onStartTrackingTouch(SeekBar seekBar) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onProgressChanged(SeekBar seekBar,
+							int progress, boolean fromUser) {
+						snd_pad_right[2].setVolume((float) progress / 100.0f);
+						snd_pad_right[5].setVolume((float) progress / 100.0f);
+						snd_pad_right[8].setVolume((float) progress / 100.0f);
+					}
+				});
+		
+		seekBar_mainactivity_seocndmain.setMax(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+		seekBar_mainactivity_seocndmain.setProgress(audioManager
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2);
+		seekBar_mainactivity_seocndmain
+		.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar,
+					int progress, boolean fromUser) {
+				
+				 float volume = (float) (1 - (Math.log(MAX_VOLUME
+						- progress) / Math.log(MAX_VOLUME)));
+
+				/*if (mediaPlayer1 != null && mediaPlayer2 != null) {
+					mediaPlayer2.setVolume(volume, volume);
+					mediaPlayer1.setVolume(1 - volume, 1 - volume);
+				}*/
+				 if(volume > 1)
+				 {
+					 volume = 1; 
+				 }
+				if(volume < 0)
+				{
+					volume = 0;
+				}
+				
+				 
+			 	snd_pad_left[0].setVolume(1- volume);
+				snd_pad_left[1].setVolume(1- volume);
+				snd_pad_left[2].setVolume(1- volume);
+				snd_pad_left[3].setVolume(1- volume);
+				snd_pad_left[4].setVolume(1- volume);
+				snd_pad_left[5].setVolume(1- volume);
+				snd_pad_left[6].setVolume(1- volume);
+				snd_pad_left[7].setVolume(1- volume);
+				snd_pad_left[8].setVolume(1- volume);
+			 
+				
+				snd_pad_right[0].setVolume(volume);
+				snd_pad_right[1].setVolume(volume);
+				snd_pad_right[2].setVolume(volume);
+				snd_pad_right[3].setVolume(volume);
+				snd_pad_right[4].setVolume(volume);
+				snd_pad_right[5].setVolume(volume);
+				snd_pad_right[6].setVolume(volume);
+				snd_pad_right[7].setVolume(volume);
+				snd_pad_right[8].setVolume(volume);
+			}
+		});
+
 	}
-*/
-	/*public void clearPressed(View view) {
-		mVisualizerView.clearRenderers();
-	}*/
-
 }
