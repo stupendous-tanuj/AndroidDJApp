@@ -150,7 +150,6 @@
         android:orientation="vertical" >
 
         <ImageView
-            
             android:id="@+id/iv_mx_trackinfo"
             android:layout_width="@dimen/mx_wt_track"
             android:layout_height="@dimen/mx_ht_track"
@@ -186,11 +185,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 
-                        <ImageView
+                        <com.app.djapp.WheelMenu
                             android:id="@+id/iv_mx_knob_1"
                             android:layout_width="@dimen/mx_wt_knob"
-                            android:layout_height="@dimen/mx_wt_knob"
-                            android:background="@drawable/image8" />
+                            android:layout_height="@dimen/mx_wt_knob" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -202,13 +200,13 @@
                         android:orientation="horizontal" >
 
                         <ImageView
-                             android:id="@+id/iv_mx_knob_1_s"
+                            android:id="@+id/iv_mx_knob_1_s"
                             android:layout_width="@dimen/mx_wt_mute"
                             android:layout_height="@dimen/mx_wt_mute"
                             android:background="@drawable/image10" />
 
                         <ImageView
-                             android:id="@+id/iv_mx_knob_1_m"
+                            android:id="@+id/iv_mx_knob_1_m"
                             android:layout_width="@dimen/mx_wt_mute"
                             android:layout_height="@dimen/mx_wt_mute"
                             android:layout_marginLeft="5dp"
@@ -226,11 +224,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 
-                        <ImageView
+                        <com.app.djapp.WheelMenu
                             android:id="@+id/iv_mx_knob_2"
                             android:layout_width="@dimen/mx_wt_knob"
-                            android:layout_height="@dimen/mx_wt_knob"
-                            android:background="@drawable/image8" />
+                            android:layout_height="@dimen/mx_wt_knob" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -242,13 +239,13 @@
                         android:orientation="horizontal" >
 
                         <ImageView
-                             android:id="@+id/iv_mx_knob_2_s"
+                            android:id="@+id/iv_mx_knob_2_s"
                             android:layout_width="@dimen/mx_wt_mute"
                             android:layout_height="@dimen/mx_wt_mute"
                             android:background="@drawable/image10" />
 
                         <ImageView
-                             android:id="@+id/iv_mx_knob_2_m"
+                            android:id="@+id/iv_mx_knob_2_m"
                             android:layout_width="@dimen/mx_wt_mute"
                             android:layout_height="@dimen/mx_wt_mute"
                             android:layout_marginLeft="5dp"
@@ -266,11 +263,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 
-                        <ImageView
+                        <com.app.djapp.WheelMenu
                             android:id="@+id/iv_mx_knob_3"
                             android:layout_width="@dimen/mx_wt_knob"
-                            android:layout_height="@dimen/mx_wt_knob"
-                            android:background="@drawable/image8" />
+                            android:layout_height="@dimen/mx_wt_knob" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -282,13 +278,13 @@
                         android:orientation="horizontal" >
 
                         <ImageView
-                             android:id="@+id/iv_mx_knob_3_s"
+                            android:id="@+id/iv_mx_knob_3_s"
                             android:layout_width="@dimen/mx_wt_mute"
                             android:layout_height="@dimen/mx_wt_mute"
                             android:background="@drawable/image10" />
 
                         <ImageView
-                             android:id="@+id/iv_mx_knob_3_m"
+                            android:id="@+id/iv_mx_knob_3_m"
                             android:layout_width="@dimen/mx_wt_mute"
                             android:layout_height="@dimen/mx_wt_mute"
                             android:layout_marginLeft="5dp"
@@ -306,11 +302,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 
-                        <ImageView
+                        <com.app.djapp.WheelMenu
                             android:id="@+id/iv_mx_knob_4"
                             android:layout_width="@dimen/mx_wt_knob"
-                            android:layout_height="@dimen/mx_wt_knob"
-                            android:background="@drawable/image8" />
+                            android:layout_height="@dimen/mx_wt_knob" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -322,7 +317,7 @@
                         android:orientation="horizontal" >
 
                         <ImageView
-                             android:id="@+id/iv_mx_knob_4_s"
+                            android:id="@+id/iv_mx_knob_4_s"
                             android:layout_width="@dimen/mx_wt_mute"
                             android:layout_height="@dimen/mx_wt_mute"
                             android:background="@drawable/image10" />
@@ -379,8 +374,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/mx_ht_5_seekbar_mixer"
                         android:layout_marginRight="@dimen/mx_margin_right_vrt" />
-
-                   
                 </LinearLayout>
             </LinearLayout>
 
@@ -414,15 +407,15 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_marginTop="25dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
                 android:orientation="vertical" >
 
-                 <ImageView
-                            android:layout_width="@dimen/mx_wt_knob"
-                            android:layout_height="@dimen/mx_wt_knob"
-                            android:background="@drawable/image8" />
+                <ImageView
+                    android:layout_width="@dimen/mx_wt_knob"
+                    android:layout_height="@dimen/mx_wt_knob"
+                    android:background="@drawable/image8" />
 
                 <com.app.djapp.VerticalSeekBar
                     android:id="@+id/sb_mx_vseekBar5"

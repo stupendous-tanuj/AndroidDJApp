@@ -82,7 +82,7 @@
                     android:background="@drawable/image2" />
 
                 <Button
-                    android:id="@+id/bt_mainactivity_bmp"
+                    android:id="@+id/bt_mainactivity_bmp_left"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginLeft="@dimen/dp_margin_3"
@@ -258,7 +258,7 @@
                 android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/bt_mainactivity_bmp"
+                    android:id="@+id/bt_mainactivity_bmp_right"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginLeft="@dimen/dp_margin_3"

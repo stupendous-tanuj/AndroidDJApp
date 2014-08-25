@@ -16,7 +16,7 @@ public class ThirtdActivity_MIXER extends Activity {
 
 	private VerticalSeekBar sb_mx_vseekBar1, sb_mx_vseekBar2, sb_mx_vseekBar3,
 			sb_mx_vseekBar4, sb_mx_vseekBar5;
-	
+	private WheelMenu iv_mx_knob_1, iv_mx_knob_2, iv_mx_knob_3, iv_mx_knob_4;
 	private VisualizerViewMX mVisualizerView;
 
 	@Override
@@ -30,6 +30,19 @@ public class ThirtdActivity_MIXER extends Activity {
 	}
 
 	private void initUI() {
+
+		iv_mx_knob_1 = (WheelMenu) findViewById(R.id.iv_mx_knob_1);
+		iv_mx_knob_1.setWheelImage(R.drawable.image8);
+
+		iv_mx_knob_2 = (WheelMenu) findViewById(R.id.iv_mx_knob_2);
+		iv_mx_knob_2.setWheelImage(R.drawable.image8);
+
+		iv_mx_knob_3 = (WheelMenu) findViewById(R.id.iv_mx_knob_3);
+		iv_mx_knob_3.setWheelImage(R.drawable.image8);
+
+		iv_mx_knob_4 = (WheelMenu) findViewById(R.id.iv_mx_knob_4);
+		iv_mx_knob_4.setWheelImage(R.drawable.image8);
+
 		sb_mx_vseekBar1 = (VerticalSeekBar) findViewById(R.id.sb_mx_vseekBar1);
 		sb_mx_vseekBar2 = (VerticalSeekBar) findViewById(R.id.sb_mx_vseekBar2);
 		sb_mx_vseekBar3 = (VerticalSeekBar) findViewById(R.id.sb_mx_vseekBar3);

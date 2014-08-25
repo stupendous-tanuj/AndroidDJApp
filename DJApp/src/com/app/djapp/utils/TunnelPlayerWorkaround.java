@@ -54,7 +54,7 @@ public class TunnelPlayerWorkaround {
       mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
       // NOTE: start() is no needed
-      // mp.start();
+      mp.start();
 
       result = true;
     } catch (RuntimeException e) {

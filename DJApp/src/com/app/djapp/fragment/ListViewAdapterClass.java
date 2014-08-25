@@ -98,12 +98,18 @@ public class ListViewAdapterClass extends BaseAdapter {
 						MainActivity.mediaPlayer1.prepare();
 						MainActivity.mediaPlayer1.start();
 						MainActivity.wheelSet1.start();
+					
+						MainActivity.finalTime1 = MainActivity.mediaPlayer1.getDuration();
+						MainActivity.startTime1 = MainActivity.mediaPlayer1.getCurrentPosition();
 						
  					} else 	if (MainActivity.setLoadInt == 1) { // second load												
 						MainActivity.mediaPlayer2.setDataSource(d[1]);
 						MainActivity.mediaPlayer2.prepare();
 						MainActivity.mediaPlayer2.start();
 						MainActivity.wheelSet2.start();
+						
+						MainActivity.finalTime2 = MainActivity.mediaPlayer2.getDuration();
+						MainActivity.startTime2 = MainActivity.mediaPlayer2.getCurrentPosition();
 					}
 					else 	if (MainActivity.setLoadInt == 2) { // record audio 
 						MainActivity.mediaPlayerRecord.setDataSource(d[1]);
