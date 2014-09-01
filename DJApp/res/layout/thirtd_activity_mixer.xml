@@ -30,6 +30,7 @@
                 android:orientation="horizontal" >
 
                 <Button
+                    android:id="@+id/bt_mx_menu"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -38,7 +39,7 @@
                     android:background="@drawable/menu" />
 
                 <Button
-                    android:id="@+id/bt_second_fx"
+                    android:id="@+id/bt_mx_fx"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -47,7 +48,8 @@
                     android:background="@drawable/fx" />
 
                 <Button
-                    android:id="@+id/bt_mainactivity_mixer"
+                    
+                    android:id="@+id/bt_mx_mixer"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -112,7 +114,7 @@
                 android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/bt_mainactivity_load_mixer"
+                    android:id="@+id/bt_mx_load_mixer"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -349,31 +351,43 @@
 
                     <com.app.djapp.VerticalSeekBar
                         android:id="@+id/sb_mx_vseekBar1"
-                        style="@android:style/Widget.Holo.SeekBar"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/mx_ht_5_seekbar_mixer"
-                        android:layout_marginRight="@dimen/mx_margin_right_vrt" />
+                        android:layout_marginRight="@dimen/mx_margin_right_vrt"
+                        android:max="15"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/progress_blank"
+                        android:thumb="@drawable/scroll_btn1" />
 
                     <com.app.djapp.VerticalSeekBar
                         android:id="@+id/sb_mx_vseekBar2"
-                        style="@android:style/Widget.Holo.SeekBar"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/mx_ht_5_seekbar_mixer"
-                        android:layout_marginRight="@dimen/mx_margin_right_vrt" />
+                        android:layout_marginRight="@dimen/mx_margin_right_vrt"
+                        android:max="15"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/progress_blank"
+                        android:thumb="@drawable/scroll_btn1" />
 
                     <com.app.djapp.VerticalSeekBar
                         android:id="@+id/sb_mx_vseekBar3"
-                        style="@android:style/Widget.Holo.SeekBar"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/mx_ht_5_seekbar_mixer"
-                        android:layout_marginRight="@dimen/mx_margin_right_vrt" />
+                        android:layout_marginRight="@dimen/mx_margin_right_vrt"
+                        android:max="15"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/progress_blank"
+                        android:thumb="@drawable/scroll_btn1" />
 
                     <com.app.djapp.VerticalSeekBar
                         android:id="@+id/sb_mx_vseekBar4"
-                        style="@android:style/Widget.Holo.SeekBar"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/mx_ht_5_seekbar_mixer"
-                        android:layout_marginRight="@dimen/mx_margin_right_vrt" />
+                        android:layout_marginRight="@dimen/mx_margin_right_vrt"
+                        android:max="15"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/progress_blank"
+                        android:thumb="@drawable/scroll_btn1" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -388,14 +402,13 @@
                     android:id="@+id/vis_mx_vis"
                     android:layout_width="@dimen/mx_wt_main_vis"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="5dp" >
+                    android:layout_marginRight="35dp" >
                 </com.app.dj.vis.VisualizerViewMX>
 
-                <ImageView
+                <com.app.djapp.MainWheel
+                    android:id="@+id/mw_round"
                     android:layout_width="@dimen/mx_wt_round"
-                    android:layout_height="@dimen/mx_wt_round"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/image5" />
+                    android:layout_height="@dimen/mx_wt_round" />
             </LinearLayout>
         </LinearLayout>
 
@@ -408,21 +421,25 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
                 android:layout_marginTop="25dp"
                 android:orientation="vertical" >
 
-                <ImageView
+                <com.app.djapp.WheelMenu
+                    android:id="@+id/iv_mx_knob_5"
                     android:layout_width="@dimen/mx_wt_knob"
                     android:layout_height="@dimen/mx_wt_knob"
                     android:background="@drawable/image8" />
 
                 <com.app.djapp.VerticalSeekBar
                     android:id="@+id/sb_mx_vseekBar5"
-                    style="@android:style/Widget.Holo.SeekBar"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp" />
+                    android:layout_marginBottom="20dp"
+                    android:max="15"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/progress_blank"
+                    android:thumb="@drawable/scroll_btn1" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

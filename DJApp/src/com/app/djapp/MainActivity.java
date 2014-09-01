@@ -1,8 +1,8 @@
 package com.app.djapp;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
@@ -18,7 +18,6 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -28,7 +27,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.dj.vis.LineRenderer;
 import com.app.dj.vis.VisualizerViewMain;
@@ -37,6 +35,15 @@ import com.app.djapp.utils.TunnelPlayerWorkaround;
 
 public class MainActivity extends Activity implements OnClickListener {
 
+	/* <com.app.djapp.VerticalSeekBar
+     android:id="@+id/vs_mainactivity_2"
+     style="@android:style/Widget.Holo.SeekBar"
+     android:layout_width="wrap_content"
+     android:layout_height="@dimen/dp_ht_6_seekbar"
+     android:max="15"
+     android:progress="100" />
+*/
+	
 	public static int setLoadInt = 0;
 
 	public static Context ctx;
@@ -49,39 +56,38 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	public static MediaPlayer mediaPlayer1, mediaPlayer2, mediaPlayerRecord;
 
-	SoundManager snd_speaker_left, snd_speaker_right;
-	SoundManager snd_pad_left[] = new SoundManager[9];
-	SoundManager snd_pad_right[] = new SoundManager[9];
+	SoundManager snd_speaker_left;
 
-	int explode, pickup;
+	public static MediaPlayer mPlayerPadLeft[];
+	public static MediaPlayer mPlayerPadRight[];
+
+	static int explode, pickup;
 
 	private AudioManager audioManager;
 
 	ImageView iv_speaker_left, iv_speaker_right;
 
-	private void initSoundPool() {
+	public void initSoundPool() {
 
-		snd_speaker_left = new SoundManager(getApplicationContext());
+		mPlayerPadLeft = new MediaPlayer[9];
+		mPlayerPadRight = new MediaPlayer[9];
 
-		for (int i = 0; i < snd_pad_left.length; i++) {
-			snd_pad_left[i] = new SoundManager(getApplicationContext());
+		for (int i = 0; i < mPlayerPadLeft.length; i++) {
 			if (i % 2 == 0) {
-				explode = snd_pad_left[i].load(R.raw.explosion);
+				mPlayerPadLeft[i] = MediaPlayer.create(this, R.raw.explosion);
 
 			} else {
-				pickup = snd_pad_left[i].load(R.raw.pickup);
+				mPlayerPadLeft[i] = MediaPlayer.create(this, R.raw.pickup);
 			}
 		}
-		for (int i = 0; i < snd_pad_right.length; i++) {
-			snd_pad_right[i] = new SoundManager(getApplicationContext());
+		for (int i = 0; i < mPlayerPadRight.length; i++) {
 			if (i % 2 == 0) {
-				explode = snd_pad_right[i].load(R.raw.explosion);
+				mPlayerPadRight[i] = MediaPlayer.create(this, R.raw.explosion);
 
 			} else {
-				pickup = snd_pad_right[i].load(R.raw.pickup);
+				mPlayerPadRight[i] = MediaPlayer.create(this, R.raw.pickup);
 			}
 		}
-
 	}
 
 	@Override
@@ -105,6 +111,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		seekBarMethod();
 		initSoundPool();
 
+		snd_speaker_left = new SoundManager(MainActivity.this);
+
+		explode = snd_speaker_left.load(R.raw.explosion);
+
+		pickup = snd_speaker_left.load(R.raw.pickup);
+
 		System.out.println("ddddddddon create");
 	}
 
@@ -113,23 +125,33 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		System.out.println("ddddddddon resume");
 		if (flagPause) {
-			/*
-			 * if(mVisualizerView != null) mVisualizerView.release();
-			 */
 
 			if (mediaPlayer1 != null) {
-				mediaPlayer1.start();
-				wheelSet1.start();
-				// initVisSecondFirst(mediaPlayer1);
+
+				if (!mediaPlayer1.isPlaying()) {
+					wheelSet1.start();
+					mediaPlayer1.start();
+				}
+				else
+				{
+					wheelSet1.cancel();
+					mediaPlayer1.pause();
+				}
+
 			}
 			if (mediaPlayer2 != null) {
-				mediaPlayer2.start();
-				wheelSet2.start();
-				// initVisSecondSecond(mediaPlayer2);
+
+				if (!mediaPlayer2.isPlaying()) {
+					mediaPlayer2.start();
+					wheelSet2.start();
+				}
+				else
+				{
+					mediaPlayer2.pause();
+					wheelSet2.cancel();
+				}
 			}
 		}
-
-		// seekBarMethod();
 		flagPause = true;
 		super.onResume();
 	}
@@ -151,6 +173,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			if (mediaPlayer2 != null) {
 				mediaPlayer2.pause();
 				wheelSet2.cancel();
+			}
+
+			if (mPlayerPadLeft != null) {
+				for (int i = 0; i < mPlayerPadLeft.length; i++) {
+					mPlayerPadLeft[i].pause();
+				}
 			}
 
 		}
@@ -176,6 +204,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		if (mediaPlayerRecord != null) {
 			mediaPlayerRecord.release();
 			mediaPlayerRecord = null;
+		}
+
+		if (mPlayerPadLeft != null) {
+
+			mPlayerPadLeft = null;
+
 		}
 
 		Intent callIntent = new Intent(MainActivity.this, RecordService.class);
@@ -373,70 +407,78 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onStop();
 
-		/*
-		 * Intent callIntent = new Intent(MainActivity.this,
-		 * RecordService.class); stopService(callIntent);
-		 */
-		/*
-		 * mediaPlayer1.stop(); mediaPlayer2.stop();
-		 */
-
 	}
 
-	/*
-	 * @Override protected void onActivityResult(int requestCode, int
-	 * resultCode, Intent data) { // TODO Auto-generated method stub
-	 * super.onActivityResult(requestCode, resultCode, data);
-	 * 
-	 * if(resultCode == Activity.RESULT_OK) { if(requestCode == 0) {
-	 * System.out.println("dddddddddddd sdfsdhsdfds  "); } }
-	 * 
-	 * System.out.println("dddddddddddd hhh "+requestCode + " ,  "+resultCode);
-	 * }
-	 */
-	boolean flag_play_1, flag_play_2, flag_pause_1, flag_pause_2,
-			flag_record_audio;
-
 	private boolean flagForRecord;
-
 	long timeDiffrence1, timeDiffrence2, currentTime1, currentTime2;
 
-	public static double startTime1 = 0;
-	public static double finalTime1 = 0;
-	public static int forwardTime1 = 5000;
+	double startTime1 = 0;
 
-	public static double startTime2 = 0;
-	public static double finalTime2 = 0;
-	public static int forwardTime2 = 5000;
+	double startTime2 = 0;
+	private Timer timer1, timer2;
 
 	public void forward(int i) {
-		if (i == 1) {
-			int temp = (int) startTime1;
-			if ((temp + forwardTime1) <= finalTime1) {
-				startTime1 = startTime1 + forwardTime1;
 
-				if (mediaPlayer1 != null)
-					mediaPlayer1.seekTo((int) startTime1);
-			} else {
-				Toast.makeText(getApplicationContext(),
-						"Cannot jump forward 1 5 seconds", Toast.LENGTH_SHORT)
-						.show();
+		if (i == 1) {
+
+			if (timer1 == null) {
+				timer1 = new Timer();
+				timer1.scheduleAtFixedRate(new TimerTask() {
+					@Override
+					public void run() {
+
+						startTime1 = startTime1 + 25000;
+						if (mediaPlayer1 != null) {
+							mediaPlayer1.seekTo((int) startTime1);
+
+							System.out.println("rrrrrrrrr s  " + startTime1);
+							mediaPlayer1
+									.setOnCompletionListener(new OnCompletionListener() {
+
+										@Override
+										public void onCompletion(
+												MediaPlayer arg0) {
+											// TODO Auto-generated method stub
+											System.out.println("rrrrrrrrr  ");
+											wheelSet1.cancel();
+											timer1.cancel();
+
+										}
+									});
+						}
+					}
+				}, 500, 2000);
 			}
 		} else {
-			int temp = (int) startTime2;
-			if ((temp + forwardTime2) <= finalTime2) {
-				startTime2 = startTime2 + forwardTime2;
+			if (timer2 == null) {
+				timer2 = new Timer();
+				timer2.scheduleAtFixedRate(new TimerTask() {
+					@Override
+					public void run() {
 
-				if (mediaPlayer2 != null)
-					mediaPlayer2.seekTo((int) startTime2);
-			} else {
-				Toast.makeText(getApplicationContext(),
-						"Cannot jump forward 5 seconds", Toast.LENGTH_SHORT)
-						.show();
+						startTime2 = startTime2 + 25000;
+						if(mediaPlayer2 != null)
+						{
+							mediaPlayer2.seekTo((int) startTime2);
+
+							System.out.println("rrrrrrrrr s2  " + startTime1);
+							mediaPlayer2
+									.setOnCompletionListener(new OnCompletionListener() {
+
+										@Override
+										public void onCompletion(MediaPlayer arg0) {
+											// TODO Auto-generated method stub
+											System.out.println("rrrrrrrrr2  ");
+											wheelSet2.cancel();
+											timer2.cancel();
+
+										}
+									});
+						}
+					}
+				}, 500, 2000);
 			}
-
 		}
-
 	}
 
 	@SuppressLint("NewApi")
@@ -455,7 +497,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.bt_mainactivity_loadfirst:
 
 			flagPause = false;
-
+			if (timer1 != null) {
+				startTime1 = 0;
+				timer1.cancel();
+				timer1 = null;
+			}
 			System.out.println("ddddddddon loadfirst ");
 			currentTime1 = System.currentTimeMillis();
 			timeDiffrence2 = System.currentTimeMillis() - currentTime2;
@@ -471,16 +517,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 					mediaPlayer1 = null;
 				}
-				/*
-				 * if (mediaPlayerRecord != null) {
-				 * 
-				 * mediaPlayerRecord.stop(); mediaPlayerRecord.release();
-				 * mediaPlayerRecord = null; }
-				 */
 
 				startTime1 = 0;
-				finalTime1 = 0;
-				forwardTime1 = 30000;
 
 				setLoadInt = 0;
 				mediaPlayer1 = new MediaPlayer();
@@ -512,6 +550,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.bt_mainactivity_loadsecond:
 
+			if (timer2 != null) {
+				startTime2 = 0;
+				timer2.cancel();
+				timer2 = null;
+			}
 			flagPause = false;
 
 			System.out.println("ddddddddon loadsecond ");
@@ -521,8 +564,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			setLoadInt = 1;
 
 			startTime2 = 0;
-			finalTime2 = 0;
-			forwardTime2 = 30000;
 
 			flagForRecord = false;
 			wheelSet2.cancel();
@@ -584,15 +625,39 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 
 		case R.id.bt_mainactivity_cue_left:
-			if (mediaPlayer1 != null) {
-				mediaPlayer1.setLooping(true);
+			if (mediaPlayer1 != null && mediaPlayer2 != null) {
+
+				if (mediaPlayer2.isPlaying()) {
+					wheelSet2.cancel();
+					mediaPlayer2.pause();
+				}
+
+				if (!mediaPlayer1.isPlaying()) {
+					wheelSet1.start();
+					mediaPlayer1.start();
+				}
+
 				mediaPlayer1
 						.setOnCompletionListener(new OnCompletionListener() {
 
 							@Override
 							public void onCompletion(MediaPlayer arg0) {
 								// TODO Auto-generated method stub
+								wheelSet1.cancel();
+								wheelSet2.start();
+								mediaPlayer2.start();
+							}
+						});
 
+				mediaPlayer2
+						.setOnCompletionListener(new OnCompletionListener() {
+
+							@Override
+							public void onCompletion(MediaPlayer arg0) {
+								// TODO Auto-generated method stub
+								wheelSet1.start();
+								wheelSet2.cancel();
+								mediaPlayer1.start();
 							}
 						});
 			}
@@ -600,8 +665,45 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		case R.id.bt_mainactivity_cue_right:
 
-			if (mediaPlayer2 != null) {
-				mediaPlayer2.setLooping(true);
+			if (mediaPlayer1 != null && mediaPlayer2 != null) {
+
+				if (mediaPlayer1.isPlaying()) {
+					wheelSet1.cancel();
+					mediaPlayer1.pause();
+
+				}
+
+				if (!mediaPlayer2.isPlaying()) {
+					wheelSet2.start();
+					mediaPlayer2.start();
+				}
+
+				mediaPlayer2
+						.setOnCompletionListener(new OnCompletionListener() {
+
+							@Override
+							public void onCompletion(MediaPlayer arg0) {
+								// TODO Auto-generated method stub
+
+								wheelSet2.cancel();
+								wheelSet1.start();
+								mediaPlayer1.start();
+							}
+						});
+
+				mediaPlayer1
+						.setOnCompletionListener(new OnCompletionListener() {
+
+							@Override
+							public void onCompletion(MediaPlayer arg0) {
+								// TODO Auto-generated method stub
+
+								wheelSet1.cancel();
+								wheelSet2.start();
+								mediaPlayer2.start();
+							}
+						});
+
 			}
 			break;
 
@@ -613,69 +715,125 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// ///////////////// first pad /////////////////
 		case R.id.bt_mainactivity_f_f1:
-			snd_pad_left[0].play(explode);
+
+			if (!mPlayerPadLeft[0].isPlaying()) {
+				mPlayerPadLeft[0].start();
+				mPlayerPadLeft[0].setLooping(true);
+			}
+
 			break;
 		case R.id.bt_mainactivity_f_f2:
-			snd_pad_left[1].play(pickup);
+			if (!mPlayerPadLeft[1].isPlaying()) {
+				mPlayerPadLeft[1].start();
+				mPlayerPadLeft[1].setLooping(true);
+			}
+
 			break;
 
 		case R.id.bt_mainactivity_f_f3:
-			snd_pad_left[2].play(explode);
+			if (!mPlayerPadLeft[2].isPlaying()) {
+				mPlayerPadLeft[2].start();
+				mPlayerPadLeft[2].setLooping(true);
+			}
+
 			break;
 		case R.id.bt_mainactivity_f_f4:
-			snd_pad_left[3].play(pickup);
+			if (!mPlayerPadLeft[3].isPlaying()) {
+				mPlayerPadLeft[3].start();
+				mPlayerPadLeft[3].setLooping(true);
+			}
+
 			break;
 
 		case R.id.bt_mainactivity_f_f5:
-			snd_pad_left[4].play(explode);
+			if (!mPlayerPadLeft[4].isPlaying()) {
+				mPlayerPadLeft[4].start();
+				mPlayerPadLeft[4].setLooping(true);
+			}
+
 			break;
 		case R.id.bt_mainactivity_f_f6:
-			snd_pad_left[5].play(pickup);
+			if (!mPlayerPadLeft[5].isPlaying()) {
+				mPlayerPadLeft[5].start();
+				mPlayerPadLeft[5].setLooping(true);
+			}
+
 			break;
 
 		case R.id.bt_mainactivity_f_f7:
-			snd_pad_left[6].play(explode);
+			if (!mPlayerPadLeft[6].isPlaying()) {
+				mPlayerPadLeft[6].start();
+				mPlayerPadLeft[6].setLooping(true);
+			}
+
 			break;
 		case R.id.bt_mainactivity_f_f8:
-			snd_pad_left[7].play(pickup);
+			if (!mPlayerPadLeft[7].isPlaying()) {
+				mPlayerPadLeft[7].start();
+				mPlayerPadLeft[7].setLooping(true);
+			}
+
 			break;
 
 		case R.id.bt_mainactivity_f_f9:
-			snd_pad_left[8].play(explode);
+			if (!mPlayerPadLeft[8].isPlaying()) {
+				mPlayerPadLeft[8].start();
+				mPlayerPadLeft[8].setLooping(true);
+			}
+
 			break;
 
 		// /////// second pad ///////////
 
 		case R.id.bt_mainactivity_s_f1:
-			snd_pad_right[0].play(explode);
+			if (!mPlayerPadRight[0].isPlaying()) {
+				mPlayerPadRight[0].start();
+			}
+
 			break;
 		case R.id.bt_mainactivity_s_f2:
-			snd_pad_right[1].play(pickup);
+			if (!mPlayerPadRight[1].isPlaying()) {
+				mPlayerPadRight[1].start();
+			}
 			break;
 
 		case R.id.bt_mainactivity_s_f3:
-			snd_pad_right[2].play(explode);
+			if (!mPlayerPadRight[2].isPlaying()) {
+				mPlayerPadRight[2].start();
+			}
 			break;
 		case R.id.bt_mainactivity_s_f4:
-			snd_pad_right[3].play(pickup);
+			if (!mPlayerPadRight[3].isPlaying()) {
+				mPlayerPadRight[3].start();
+			}
 			break;
 
 		case R.id.bt_mainactivity_s_f5:
-			snd_pad_right[4].play(explode);
+			if (!mPlayerPadRight[4].isPlaying()) {
+				mPlayerPadRight[4].start();
+			}
 			break;
 		case R.id.bt_mainactivity_s_f6:
-			snd_pad_right[5].play(pickup);
+			if (!mPlayerPadRight[5].isPlaying()) {
+				mPlayerPadRight[5].start();
+			}
 			break;
 
 		case R.id.bt_mainactivity_s_f7:
-			snd_pad_right[6].play(explode);
+			if (!mPlayerPadRight[6].isPlaying()) {
+				mPlayerPadRight[6].start();
+			}
 			break;
 		case R.id.bt_mainactivity_s_f8:
-			snd_pad_right[7].play(pickup);
+			if (!mPlayerPadRight[7].isPlaying()) {
+				mPlayerPadRight[7].start();
+			}
 			break;
 
 		case R.id.bt_mainactivity_s_f9:
-			snd_pad_right[8].play(explode);
+			if (!mPlayerPadRight[8].isPlaying()) {
+				mPlayerPadRight[8].start();
+			}
 			break;
 
 		// //////////////////////////// six btn ///////////////////////////////
@@ -709,66 +867,47 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		case R.id.bt_mainactivity_first_load_play:
 
-			// if (flag_play_1)
-
-			// {
-			// bt_mainactivity_first_load_play.setBackgroundResource(R.drawable.image2_1);
-			if (mediaPlayer1 != null)
+			if (mediaPlayer1 != null && !mediaPlayer1.isPlaying()) {
 				mediaPlayer1.start();
-
-			wheelSet1.start();
-
-			flag_pause_1 = false;
-			flag_pause_1 = true;
-
-			// bt_mainactivity_first_load_pause.setBackgroundResource(R.drawable.image3);
-			// }
+				wheelSet1.start();
+			}
 
 			break;
 
 		case R.id.bt_mainactivity_first_load_pause:
 
-			// if(!flag_pause_1)
-			// {
-			// bt_mainactivity_first_load_pause.setBackgroundResource(R.drawable.image3_1);
-			if (mediaPlayer1 != null)
+			if (mediaPlayer1 != null && mediaPlayer1.isPlaying()) {
 				mediaPlayer1.pause();
-
-			wheelSet1.cancel();
-			flag_play_1 = true;
-			flag_pause_1 = true;
-
-			// bt_mainactivity_first_load_play.setBackgroundResource(R.drawable.image2);
-
-			// }
-
+				wheelSet1.cancel();
+			}
+			if (timer1 != null) {
+				startTime1 = 0;
+				timer1.cancel();
+				timer1 = null;
+			}
 			break;
 
 		case R.id.bt_mainactivity_second_load_play:
 
-			// if (flag_play_2) {
-			// bt_mainactivity_second_load_play.setBackgroundResource(R.drawable.image2_1);
-
-			if (mediaPlayer2 != null)
+			if (mediaPlayer2 != null && !mediaPlayer2.isPlaying()) {
 				mediaPlayer2.start();
-
-			wheelSet2.start();
-			flag_pause_2 = true;
-			flag_play_2 = false;
-			// }
+				wheelSet2.start();
+			}
 
 			break;
 
 		case R.id.bt_mainactivity_second_load_pause:
 
-			flag_play_2 = true;
-
-			// bt_mainactivity_second_load_pause.setBackgroundResource(R.drawable.image3_1);
-
-			if (mediaPlayer2 != null)
+			if (mediaPlayer2 != null && mediaPlayer2.isPlaying()) {
 				mediaPlayer2.pause();
+				wheelSet2.cancel();
+			}
+			if (timer2 != null) {
+				startTime1 = 0;
+				timer2.cancel();
+				timer2 = null;
+			}
 
-			wheelSet2.cancel();
 			break;
 
 		case R.id.bt_mainactivity_fx:
@@ -1154,9 +1293,23 @@ public class MainActivity extends Activity implements OnClickListener {
 					@Override
 					public void onProgressChanged(SeekBar seekBar,
 							int progress, boolean fromUser) {
-						snd_pad_left[0].setVolume((float) progress / 100.0f);
-						snd_pad_left[3].setVolume((float) progress / 100.0f);
-						snd_pad_left[6].setVolume((float) progress / 100.0f);
+
+						float v = (float) (1 - (Math.log(MAX_VOLUME - progress) / Math
+								.log(MAX_VOLUME)));
+
+						System.out.println("ddddddddd p  " + progress);
+
+						System.out.println("dddddddd  1  " + v);
+						if (v > 1) {
+							v = 1;
+						}
+						if (v < 0) {
+							v = 0;
+						}
+						System.out.println("dddddddd 2 " + v);
+						mPlayerPadLeft[0].setVolume(v, v);
+						mPlayerPadLeft[3].setVolume(v, v);
+						mPlayerPadLeft[6].setVolume(v, v);
 					}
 				});
 
@@ -1178,9 +1331,19 @@ public class MainActivity extends Activity implements OnClickListener {
 					@Override
 					public void onProgressChanged(SeekBar seekBar,
 							int progress, boolean fromUser) {
-						snd_pad_left[1].setVolume((float) progress / 100.0f);
-						snd_pad_left[4].setVolume((float) progress / 100.0f);
-						snd_pad_left[7].setVolume((float) progress / 100.0f);
+						float v = (float) (1 - (Math.log(MAX_VOLUME - progress) / Math
+								.log(MAX_VOLUME)));
+
+						if (v > 1) {
+							v = 1;
+						}
+						if (v < 0) {
+							v = 0;
+						}
+						mPlayerPadLeft[1].setVolume(v, v);
+						mPlayerPadLeft[4].setVolume(v, v);
+						mPlayerPadLeft[7].setVolume(v, v);
+
 					}
 				});
 
@@ -1202,9 +1365,18 @@ public class MainActivity extends Activity implements OnClickListener {
 					@Override
 					public void onProgressChanged(SeekBar seekBar,
 							int progress, boolean fromUser) {
-						snd_pad_left[2].setVolume((float) progress / 100.0f);
-						snd_pad_left[5].setVolume((float) progress / 100.0f);
-						snd_pad_left[8].setVolume((float) progress / 100.0f);
+						float v = (float) (1 - (Math.log(MAX_VOLUME - progress) / Math
+								.log(MAX_VOLUME)));
+
+						if (v > 1) {
+							v = 1;
+						}
+						if (v < 0) {
+							v = 0;
+						}
+						mPlayerPadLeft[2].setVolume(v, v);
+						mPlayerPadLeft[5].setVolume(v, v);
+						mPlayerPadLeft[8].setVolume(v, v);
 					}
 				});
 
@@ -1226,9 +1398,20 @@ public class MainActivity extends Activity implements OnClickListener {
 					@Override
 					public void onProgressChanged(SeekBar seekBar,
 							int progress, boolean fromUser) {
-						snd_pad_right[0].setVolume((float) progress / 100.0f);
-						snd_pad_right[3].setVolume((float) progress / 100.0f);
-						snd_pad_right[6].setVolume((float) progress / 100.0f);
+
+						float v = (float) (1 - (Math.log(MAX_VOLUME - progress) / Math
+								.log(MAX_VOLUME)));
+
+						if (v > 1) {
+							v = 1;
+						}
+						if (v < 0) {
+							v = 0;
+						}
+						mPlayerPadRight[0].setVolume(v, v);
+						mPlayerPadRight[3].setVolume(v, v);
+						mPlayerPadRight[6].setVolume(v, v);
+
 					}
 				});
 
@@ -1250,9 +1433,19 @@ public class MainActivity extends Activity implements OnClickListener {
 					@Override
 					public void onProgressChanged(SeekBar seekBar,
 							int progress, boolean fromUser) {
-						snd_pad_right[1].setVolume((float) progress / 100.0f);
-						snd_pad_right[4].setVolume((float) progress / 100.0f);
-						snd_pad_right[7].setVolume((float) progress / 100.0f);
+						float v = (float) (1 - (Math.log(MAX_VOLUME - progress) / Math
+								.log(MAX_VOLUME)));
+
+						if (v > 1) {
+							v = 1;
+						}
+						if (v < 0) {
+							v = 0;
+						}
+						mPlayerPadRight[1].setVolume(v, v);
+						mPlayerPadRight[4].setVolume(v, v);
+						mPlayerPadRight[7].setVolume(v, v);
+
 					}
 				});
 
@@ -1274,9 +1467,19 @@ public class MainActivity extends Activity implements OnClickListener {
 					@Override
 					public void onProgressChanged(SeekBar seekBar,
 							int progress, boolean fromUser) {
-						snd_pad_right[2].setVolume((float) progress / 100.0f);
-						snd_pad_right[5].setVolume((float) progress / 100.0f);
-						snd_pad_right[8].setVolume((float) progress / 100.0f);
+						float v = (float) (1 - (Math.log(MAX_VOLUME - progress) / Math
+								.log(MAX_VOLUME)));
+
+						if (v > 1) {
+							v = 1;
+						}
+						if (v < 0) {
+							v = 0;
+						}
+						mPlayerPadRight[2].setVolume(v, v);
+						mPlayerPadRight[5].setVolume(v, v);
+						mPlayerPadRight[8].setVolume(v, v);
+
 					}
 				});
 
@@ -1306,39 +1509,41 @@ public class MainActivity extends Activity implements OnClickListener {
 						float volume = (float) (1 - (Math.log(MAX_VOLUME
 								- progress) / Math.log(MAX_VOLUME)));
 
-						/*
-						 * if (mediaPlayer1 != null && mediaPlayer2 != null) {
-						 * mediaPlayer2.setVolume(volume, volume);
-						 * mediaPlayer1.setVolume(1 - volume, 1 - volume); }
-						 */
+						System.out.println("ddddddddd mpp   " + progress);
+
+						System.out.println("ddddddddd m  " + volume);
+
 						if (volume > 1) {
 							volume = 1;
 						}
 						if (volume < 0) {
 							volume = 0;
 						}
+						System.out.println("ddddddddd m2  " + volume);
 
-						snd_pad_left[0].setVolume(1 - volume);
-						snd_pad_left[1].setVolume(1 - volume);
-						snd_pad_left[2].setVolume(1 - volume);
-						snd_pad_left[3].setVolume(1 - volume);
-						snd_pad_left[4].setVolume(1 - volume);
-						snd_pad_left[5].setVolume(1 - volume);
-						snd_pad_left[6].setVolume(1 - volume);
-						snd_pad_left[7].setVolume(1 - volume);
-						snd_pad_left[8].setVolume(1 - volume);
+						mPlayerPadLeft[0].setVolume(1 - volume, 1 - volume);
+						mPlayerPadLeft[1].setVolume(1 - volume, 1 - volume);
+						mPlayerPadLeft[2].setVolume(1 - volume, 1 - volume);
+						mPlayerPadLeft[3].setVolume(1 - volume, 1 - volume);
+						mPlayerPadLeft[4].setVolume(1 - volume, 1 - volume);
+						mPlayerPadLeft[5].setVolume(1 - volume, 1 - volume);
+						mPlayerPadLeft[6].setVolume(1 - volume, 1 - volume);
+						mPlayerPadLeft[7].setVolume(1 - volume, 1 - volume);
+						mPlayerPadLeft[8].setVolume(1 - volume, 1 - volume);
 
-						snd_pad_right[0].setVolume(volume);
-						snd_pad_right[1].setVolume(volume);
-						snd_pad_right[2].setVolume(volume);
-						snd_pad_right[3].setVolume(volume);
-						snd_pad_right[4].setVolume(volume);
-						snd_pad_right[5].setVolume(volume);
-						snd_pad_right[6].setVolume(volume);
-						snd_pad_right[7].setVolume(volume);
-						snd_pad_right[8].setVolume(volume);
+						mPlayerPadRight[0].setVolume(volume, volume);
+						mPlayerPadRight[1].setVolume(volume, volume);
+						mPlayerPadRight[2].setVolume(volume, volume);
+						mPlayerPadRight[3].setVolume(volume, volume);
+						mPlayerPadRight[4].setVolume(volume, volume);
+						mPlayerPadRight[5].setVolume(volume, volume);
+						mPlayerPadRight[6].setVolume(volume, volume);
+						mPlayerPadRight[7].setVolume(volume, volume);
+						mPlayerPadRight[8].setVolume(volume, volume);
+
 					}
 				});
 
 	}
+
 }

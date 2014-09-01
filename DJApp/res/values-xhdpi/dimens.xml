@@ -2,7 +2,8 @@
 
     <!-- xhdpi 320 , per the Android Design guidelines. -->
 
-
+  <dimen name="dp_ht_layout_seek_vt">110dp</dimen>
+    <dimen name="dp_seekbar_first_wt">130dp</dimen>
     <!-- MX -->
     <dimen name="mx_wt_track">115dp</dimen>
     <dimen name="mx_ht_track">22dp</dimen>

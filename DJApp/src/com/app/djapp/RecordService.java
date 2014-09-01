@@ -21,7 +21,6 @@ public class RecordService extends Service implements
 		MediaRecorder.OnInfoListener, MediaRecorder.OnErrorListener {
 	private static final String TAG = "DJRecorder";
 
-	
 	public static final String DEFAULT_STORAGE_LOCATION = "/sdcard/AudioRecordingDj";
 	private static final int RECORDING_NOTIFICATION_ID = 1;
 	private MediaRecorder recorder = null;
@@ -29,22 +28,20 @@ public class RecordService extends Service implements
 	private File recording = null;;
 	private final int audioformat = 3;
 
-	private File makeOutputFile(SharedPreferences prefs) 
-	{
-	 
-		
+	private File makeOutputFile(SharedPreferences prefs) {
+
 		File dir = new File(DEFAULT_STORAGE_LOCATION);
 		// test dir for existence and writeability
 		if (!dir.exists()) {
 			try {
 				dir.mkdirs();
 			} catch (Exception e) {
-				 
+
 				return null;
 			}
 		} else {
 			if (!dir.canWrite()) {
-				 
+
 				return null;
 			}
 		}
@@ -57,27 +54,22 @@ public class RecordService extends Service implements
 		// prefix = sdf.format(new Date()) + "-callrecording";
 
 		// add info to file name about what audio channel we were recording
-		String d = System.currentTimeMillis()+"";
-		prefix += d.substring(12, d.length()) ;
+		String d = System.currentTimeMillis() + "";
+		prefix += d.substring(12, d.length());
 
 		// create suffix based on format
 		String suffix = ".mp3";
-		/*switch (audioformat) {
-		case MediaRecorder.OutputFormat.THREE_GPP:
-			suffix = ".3gpp";
-			break;
-		case MediaRecorder.OutputFormat.MPEG_4:
-			suffix = ".mpg";
-			break;
-		case MediaRecorder.OutputFormat.RAW_AMR:
-			suffix = ".amr";
-			break;
-*/		//}
+		/*
+		 * switch (audioformat) { case MediaRecorder.OutputFormat.THREE_GPP:
+		 * suffix = ".3gpp"; break; case MediaRecorder.OutputFormat.MPEG_4:
+		 * suffix = ".mpg"; break; case MediaRecorder.OutputFormat.RAW_AMR:
+		 * suffix = ".amr"; break;
+		 */// }
 
 		try {
 			return File.createTempFile(prefix, suffix, dir);
 		} catch (IOException e) {
-			 
+
 			return null;
 		}
 	}
@@ -85,18 +77,17 @@ public class RecordService extends Service implements
 	public void onCreate() {
 		super.onCreate();
 		recorder = new MediaRecorder();
-	 
+
 	}
 
-	 
 	public void onStart(Intent intent, int startId) {
-		
+
 		if (isRecording)
 			return;
 		Context c = getApplicationContext();
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(c);
- 
+
 		recording = makeOutputFile(prefs);
 		if (recording == null) {
 			recorder = null;
@@ -104,31 +95,33 @@ public class RecordService extends Service implements
 		}
 
 		try {
-		 
+			recorder = new MediaRecorder();
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-	 
-			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-			 recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+			recorder.setAudioEncoder(MediaRecorder.getAudioSourceMax());
+			recorder.setAudioEncodingBitRate(16);
+			recorder.setAudioSamplingRate(44100);
 			recorder.setOutputFile(recording.getAbsolutePath());
-			 
+
 			recorder.setOnInfoListener(this);
 			recorder.setOnErrorListener(this);
 
 			try {
 				recorder.prepare();
 			} catch (java.io.IOException e) {
-			 
+
 				recorder = null;
 				return; // return 0; //START_STICKY;
 			}
-		 
+
 			recorder.start();
 			isRecording = true;
-			 
+
 			updateNotification(true);
-			
+
 		} catch (java.lang.Exception e) {
-		 
+
 			recorder = null;
 		}
 
@@ -139,10 +132,10 @@ public class RecordService extends Service implements
 		super.onDestroy();
 
 		if (null != recorder) {
-			 
+
 			isRecording = false;
 			recorder.release();
-			 
+
 		}
 
 		updateNotification(false);
@@ -171,7 +164,9 @@ public class RecordService extends Service implements
 
 		if (status) {
 			int icon = R.drawable.ic_launcher;
-			CharSequence tickerText = "Recording audio in SD Card ";// + prefs.getString(Preferences.PREF_AUDIO_SOURCE, "1");
+			CharSequence tickerText = "Recording audio in SD Card ";// +
+																	// prefs.getString(Preferences.PREF_AUDIO_SOURCE,
+																	// "1");
 			long when = System.currentTimeMillis();
 
 			Notification notification = new Notification(icon, tickerText, when);
@@ -194,13 +189,13 @@ public class RecordService extends Service implements
 
 	// MediaRecorder.OnInfoListener
 	public void onInfo(MediaRecorder mr, int what, int extra) {
-		 
+
 		isRecording = false;
 	}
 
 	// MediaRecorder.OnErrorListener
 	public void onError(MediaRecorder mr, int what, int extra) {
-	 
+
 		isRecording = false;
 		mr.release();
 	}

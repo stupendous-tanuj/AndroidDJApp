@@ -47,6 +47,30 @@ public class WheelMenu extends ImageView {
 				MainActivity.mediaPlayer2.setVolume(l1, l2);
 			System.out.println("dddddddddddd second ");
 		}
+
+		if (knobMoveString.equals("3")) {
+			if (MainActivity.mPlayerPadLeft != null) {
+				for (int i = 0; i < MainActivity.mPlayerPadLeft.length; i++) {
+					MainActivity.mPlayerPadLeft[i].setVolume(l1, l2);
+				}
+			}
+		}
+
+		if (knobMoveString.equals("5")) {
+
+			if (MainActivity.mediaPlayer1 != null)
+				MainActivity.mediaPlayer1.setVolume(l1, l2);
+
+			if (MainActivity.mediaPlayer2 != null)
+				MainActivity.mediaPlayer2.setVolume(l1, l2);
+
+			if (MainActivity.mPlayerPadLeft != null) {
+				for (int i = 0; i < MainActivity.mPlayerPadLeft.length; i++) {
+					MainActivity.mPlayerPadLeft[i].setVolume(l1, l2);
+				}
+			}
+		}
+
 	}
 
 	// initializations
@@ -59,6 +83,7 @@ public class WheelMenu extends ImageView {
 		}
 		// touch events listener
 
+		setWheelImage(R.drawable.image8);
 		this.setOnTouchListener(new WheelTouchListener());
 
 	}
@@ -182,10 +207,71 @@ public class WheelMenu extends ImageView {
 				}
 			}
 			if (v.getId() == R.id.iv_mx_knob_3) {
-				System.out.println("ddddd right move 3333 ");
+
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_MOVE:
+					// get the total angle rotated in 360 degrees
+					startAngle = getAngle(event.getX(), event.getY());
+
+					if (0 <= startAngle && startAngle <= 90) { // for right
+
+						if (angle != 180) {
+							anim(60f, true, "3");
+						}
+					} else if (90 <= startAngle && startAngle < 180) { // for
+																		// left
+						System.out.println("aaaaaaaaa left move ");
+						if (angle != -180) {
+							anim(-60f, false, "3");
+						}
+					}
+					break;
+				}
 			}
 			if (v.getId() == R.id.iv_mx_knob_4) {
-				System.out.println("ddddd right move 44444 ");
+
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_MOVE:
+					// get the total angle rotated in 360 degrees
+					startAngle = getAngle(event.getX(), event.getY());
+
+					if (0 <= startAngle && startAngle <= 90) { // for right
+
+						if (angle != 180) {
+							anim(60f, true, "4");
+						}
+					} else if (90 <= startAngle && startAngle < 180) { // for
+																		// left
+						System.out.println("aaaaaaaaa left move ");
+						if (angle != -180) {
+							anim(-60f, false, "4");
+						}
+					}
+					break;
+				}
+			}
+
+			if (v.getId() == R.id.iv_mx_knob_5) {
+
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_MOVE:
+					// get the total angle rotated in 360 degrees
+					startAngle = getAngle(event.getX(), event.getY());
+
+					if (0 <= startAngle && startAngle <= 90) { // for right
+
+						if (angle != 180) {
+							anim(60f, true, "5");
+						}
+					} else if (90 <= startAngle && startAngle < 180) { // for
+																		// left
+						System.out.println("aaaaaaaaa left move ");
+						if (angle != -180) {
+							anim(-60f, false, "5");
+						}
+					}
+					break;
+				}
 			}
 
 			return true;
@@ -250,7 +336,6 @@ public class WheelMenu extends ImageView {
 					setVolume(0.0f, 1.0f, s);
 				}
 
-				System.out.println("ssssss  right  " + vo + " , " + vor);
 			}
 
 			private void leftIN_And_RightDC(float angle, String s) {
@@ -279,7 +364,6 @@ public class WheelMenu extends ImageView {
 					setVolume(1.0f, 0.0f, s);
 				}
 
-				System.out.println("ssssss  left  " + vo + " , " + vor);
 			}
 		});
 	}

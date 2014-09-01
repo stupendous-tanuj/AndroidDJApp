@@ -2,6 +2,9 @@
 
     <!-- - 10 -->
 
+  <dimen name="dp_ht_layout_seek_vt">155dp</dimen>
+    <dimen name="dp_seekbar_first_wt">170dp</dimen>
+
 <!-- MX -->
     <dimen name="mx_wt_track">155dp</dimen>
     <dimen  name="mx_ht_track">45dp</dimen>
@@ -26,7 +29,7 @@
     <dimen name="ll_btn_height">46dp</dimen>
     <dimen name="dp_wt_speaker_left">210dp</dimen>
     <dimen name="dp_ht_speaker_left">210dp</dimen>
-    <dimen name="dp_wt_scroll_btn">60dp</dimen>
+    <dimen name="dp_wt_scroll_btn">50dp</dimen>
     <dimen name="dp_ht_scroll_btn">60dp</dimen>
     <dimen name="dp_wt_image3">62dp</dimen>
     <dimen name="dp_ht_image3">62dp</dimen>

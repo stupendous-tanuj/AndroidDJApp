@@ -9,6 +9,7 @@ import com.app.dj.vis.VisualizerViewFx;
 import com.app.dj.vis.VisualizerViewMain;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
@@ -36,6 +37,7 @@ public class SecondActivity_FX extends Activity implements OnClickListener,
 	private Button bt_fx_left, bt_fx_right;
 	VisualizerViewFx mVisualizerView;
 	Spinner spinner_second_fx;
+	private Button bt_fx_menu, bt_fx_mixer, bt_fx_load_mixer;
 
 	@Override
 	public void onBackPressed() {
@@ -50,6 +52,7 @@ public class SecondActivity_FX extends Activity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.second_activity_fx);
+		
 		ll_fx_draw = (LinearLayout) findViewById(R.id.ll_fx_draw);
 		new Handler().postDelayed(new Runnable() {
 			private DrawingViewFX view;
@@ -61,15 +64,21 @@ public class SecondActivity_FX extends Activity implements OnClickListener,
 				ll_fx_draw.addView(view);
 			}
 		}, 500);
-
+		
 		bt_fx_left = (Button) findViewById(R.id.bt_fx_left);
 		bt_fx_right = (Button) findViewById(R.id.bt_fx_right);
-
+		bt_fx_menu =  (Button) findViewById(R.id.bt_fx_menu);
+		bt_fx_load_mixer =  (Button) findViewById(R.id.bt_fx_load_mixer);
+		bt_fx_mixer =  (Button) findViewById(R.id.bt_fx_mixer);
+		
 		spinner_second_fx = (Spinner) findViewById(R.id.spinner_second_fx);
 
 		bt_fx_left.setOnClickListener(this);
 		bt_fx_right.setOnClickListener(this);
-
+		bt_fx_menu.setOnClickListener(this);
+		bt_fx_load_mixer.setOnClickListener(this);
+		bt_fx_mixer.setOnClickListener(this);
+		
 		List<String> categories = new ArrayList<String>();
 		// / Flanger, Phaser, Gate, Reverb, Bit crusher, 3D,
 
@@ -184,7 +193,26 @@ public class SecondActivity_FX extends Activity implements OnClickListener,
 				mEqualizer.release();
 			initMedia("right");
 			break;
+			
+		case R.id.bt_fx_menu:
+			
+			Intent i = new Intent(this , MenuActivity.class);
+			startActivity(i);
+			
+			break;
 
+			
+		case R.id.bt_fx_mixer:
+			  i = new Intent(this , ThirtdActivity_MIXER.class);
+			startActivity(i);
+			
+			break;
+			
+		case R.id.bt_fx_load_mixer:
+			
+			  i = new Intent(this , RecordFileActivity.class);
+			startActivity(i);
+			break;
 		default:
 			break;
 		}
@@ -212,8 +240,8 @@ public class SecondActivity_FX extends Activity implements OnClickListener,
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
 			long arg3) {
-if(mEqualizer != null)	
-		   mEqualizer.usePreset((short) pos);
+		if (mEqualizer != null)
+			mEqualizer.usePreset((short) pos);
 	}
 
 	@Override

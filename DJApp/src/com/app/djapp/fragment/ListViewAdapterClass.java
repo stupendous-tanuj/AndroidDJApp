@@ -2,14 +2,19 @@ package com.app.djapp.fragment;
 
 import java.util.ArrayList;
 
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +26,7 @@ public class ListViewAdapterClass extends BaseAdapter {
 
 	Context ctx;
 	ArrayList<String> arrayListData;
-	 
+
 	private LayoutInflater inflater;
 
 	public ListViewAdapterClass(Context ctx, ArrayList<String> arrayListData) {
@@ -30,15 +35,7 @@ public class ListViewAdapterClass extends BaseAdapter {
 		inflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-
-	/*
-	 * public ListViewAdapterClass(MusicFragment musicFragment,
-	 * ArrayList<String> arrayListData) { this.arrayListData = arrayListData;
-	 * this.musicFragment = musicFragment;
-	 * 
-	 * }
-	 */
-
+ 
 	@Override
 	public int getCount() {
 		if (arrayListData.size() <= 0)
@@ -66,17 +63,15 @@ public class ListViewAdapterClass extends BaseAdapter {
 		View rowView = inflater.inflate(R.layout.tab_pager_custom, null, true);
 		TextView songTitle = (TextView) rowView
 				.findViewById(R.id.tv_tab_pager_custom_songname);
-		ImageView iv_audio_image = (ImageView) rowView.findViewById(R.id.iv_audio_image);
-		
-		if(pos % 2 == 0)
-		{
+		ImageView iv_audio_image = (ImageView) rowView
+				.findViewById(R.id.iv_audio_image);
+
+		if (pos % 2 == 0) {
 			iv_audio_image.setBackgroundResource(R.drawable.audio_image1);
-		}
-		else
-		{
+		} else {
 			iv_audio_image.setBackgroundResource(R.drawable.audio_image2);
 		}
-		
+
 		if (arrayListData.size() > 0) {
 			String dataTitle = arrayListData.get(pos);
 			d = Split.splitclass(dataTitle, "~");
@@ -85,41 +80,31 @@ public class ListViewAdapterClass extends BaseAdapter {
 				songTitle.setText(d[0]);
 		}
 
-		 	
 		songTitle.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
 				try {
- 
+
 					if (MainActivity.setLoadInt == 0) { // first load
 						MainActivity.mediaPlayer1.setDataSource(d[1]);
 						MainActivity.mediaPlayer1.prepare();
 						MainActivity.mediaPlayer1.start();
 						MainActivity.wheelSet1.start();
-					
-						MainActivity.finalTime1 = MainActivity.mediaPlayer1.getDuration();
-						MainActivity.startTime1 = MainActivity.mediaPlayer1.getCurrentPosition();
-						
- 					} else 	if (MainActivity.setLoadInt == 1) { // second load												
+
+					} else if (MainActivity.setLoadInt == 1) { // second load
 						MainActivity.mediaPlayer2.setDataSource(d[1]);
 						MainActivity.mediaPlayer2.prepare();
 						MainActivity.mediaPlayer2.start();
 						MainActivity.wheelSet2.start();
-						
-						MainActivity.finalTime2 = MainActivity.mediaPlayer2.getDuration();
-						MainActivity.startTime2 = MainActivity.mediaPlayer2.getCurrentPosition();
-					}
-					else 	if (MainActivity.setLoadInt == 2) { // record audio 
-						MainActivity.mediaPlayerRecord.setDataSource(d[1]);
-						MainActivity.mediaPlayerRecord.prepare();
-						MainActivity.mediaPlayerRecord.start();
-					}
-					 
-				 /* Intent i = new Intent(ctx , MainActivity.class);
-				  ctx.startActivity(i);
-				 */ 
+ 
+					}  
+
+					/*
+					 * Intent i = new Intent(ctx , MainActivity.class);
+					 * ctx.startActivity(i);
+					 */
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -131,5 +116,7 @@ public class ListViewAdapterClass extends BaseAdapter {
 
 		return rowView;
 	}
+    
 
+	 
 }

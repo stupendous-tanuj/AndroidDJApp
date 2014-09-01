@@ -189,8 +189,7 @@ public class VisualizerView extends View {
     
     // set background on vis in light dark blue
     
-    canvas.drawColor(Color.parseColor("#3C4766"));
-
+    canvas.drawColor(Color.parseColor("#25283a"));
     // Create canvas once we're ready to draw
     
     mRect.set(0, 0, getWidth(), getHeight());

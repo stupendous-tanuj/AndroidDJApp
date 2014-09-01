@@ -3,7 +3,7 @@
 	android:ordering="sequentially" >
 
 	<objectAnimator
-		android:duration="40"
+		android:duration="7"
 		android:propertyName="rotation"
 		android:repeatCount="infinite"
 		android:repeatMode="restart"

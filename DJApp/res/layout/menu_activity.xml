@@ -23,6 +23,7 @@
         android:orientation="vertical" >
 
         <Button
+            android:id="@+id/bt_menu_mixing"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_ht_menu_button"
             android:background="@drawable/image13"

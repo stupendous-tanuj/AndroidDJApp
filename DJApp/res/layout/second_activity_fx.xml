@@ -30,6 +30,7 @@
                 android:orientation="horizontal" >
 
                 <Button
+                    android:id="@+id/bt_fx_menu"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -47,7 +48,7 @@
                     android:background="#ffffff" />
 
                 <Button
-                    android:id="@+id/bt_mainactivity_mixer"
+                    android:id="@+id/bt_fx_mixer"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -72,6 +73,7 @@
                 android:orientation="horizontal" >
 
                 <Button
+                    android:id="@+id/bt_fx_about"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginLeft="@dimen/dp_margin_3"
@@ -87,7 +89,7 @@
                 android:orientation="vertical" >
 
                 <Button
-                    android:id="@+id/bt_mainactivity_bmp"
+                    android:id="@+id/bt_fx_bmp"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginLeft="@dimen/dp_margin_3"
@@ -96,7 +98,7 @@
                     android:background="@drawable/bpm" />
 
                 <Button
-                    android:id="@+id/bt_mainactivity_sync"
+                    android:id="@+id/bt_fx_sync"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -121,7 +123,7 @@
                 android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/bt_mainactivity_load_mixer"
+                    android:id="@+id/bt_fx_load_mixer"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -130,6 +132,7 @@
                     android:background="@drawable/load_mix" />
 
                 <Button
+                    android:id="@+id/bt_fx_buy"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -138,6 +141,7 @@
                     android:background="@drawable/buy" />
 
                 <Button
+                    android:id="@+id/bt_fx_like_us"
                     android:layout_width="@dimen/ll_btn_width"
                     android:layout_height="@dimen/ll_btn_height"
                     android:layout_marginBottom="@dimen/dp_margin_3"
@@ -167,7 +171,7 @@
                 android:id="@+id/ll_fx_draw"
                 android:layout_width="@dimen/fx_wt_draw"
                 android:layout_height="@dimen/fx_ht_draw"
-                android:layout_marginTop="@dimen/fx_margin_top_lr" 
+                android:layout_marginTop="@dimen/fx_margin_top_lr"
                 android:background="@drawable/image22"
                 android:orientation="horizontal" >
             </LinearLayout>
@@ -188,10 +192,11 @@
 
             <SeekBar
                 android:id="@+id/seekbar_fx"
-                style="@android:style/Widget.Holo.SeekBar"
                 android:layout_width="@dimen/fx_wt_mainslidder"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/fx_margin_top_pp" />
+                android:layout_marginTop="@dimen/fx_margin_top_pp"
+                android:progressDrawable="@drawable/progress_blank"
+                android:thumb="@drawable/scroll_btn1" />
         </LinearLayout>
 
         <LinearLayout

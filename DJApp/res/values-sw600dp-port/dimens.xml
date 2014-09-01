@@ -1,11 +1,12 @@
 <resources>
 
     <!-- tablet 7 , per the Android Design guidelines. -->
-
+    <dimen name="dp_ht_layout_seek_vt">155dp</dimen>
+    <dimen name="dp_seekbar_first_wt">150dp</dimen>
 
     <!-- MX -->
     <dimen name="mx_wt_track">140dp</dimen>
-    <dimen  name="mx_ht_track">35dp</dimen>
+    <dimen name="mx_ht_track">35dp</dimen>
     <dimen name="mx_wt_knob">105dp</dimen>
     <dimen name="mx_wt_mute">36dp</dimen>
     <dimen name="mx_ht_vrticalbar_ll">235dp</dimen>
@@ -14,7 +15,7 @@
     <dimen name="mx_margin_right_vrt">40dp</dimen>
     <dimen name="mx_ht_5_seekbar_mixer">210dp</dimen>
     <dimen name="mx_wt_vrticalbar_ll">410dp</dimen>
-<dimen  name="mx_wt_seek">40dp</dimen>
+    <dimen name="mx_wt_seek">40dp</dimen>
     <!-- size for text in sp -->
     <dimen name="sp_time">19sp</dimen>
 
